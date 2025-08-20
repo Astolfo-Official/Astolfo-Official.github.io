@@ -11,7 +11,7 @@ redirect_from:
 
 Education
 ======
-* Ph.D in University of Delaware, 2024.9-
+* Ph.D in University of Delaware, 2024.9-now
 * B.S. in Universitas Amoiensis, 2020.9-2024.6
 
 Work experience
@@ -48,19 +48,17 @@ Publications
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
+<!--
 Talks
 ======
   <ul>{% for post in site.talks reversed %}
     {% include archive-single-talk-cv.html  %}
   {% endfor %}</ul>
-  
+--> 
+<!--
 Teaching
 ======
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+--> 

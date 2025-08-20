@@ -1,13 +1,13 @@
 ---
-title: "Evaluating the transition state stabilization/destabilization effects of the electric fields from scaffold residues by a QM/MM approach"
+title: "On the entanglement of chromophore and solvent orbitals"
 collection: publications
 category: manuscripts
-permalink: /publication/yan2023evaluating
+permalink: /publication/ji2025entanglement
 excerpt: #'This paper is about the number 1. The number 2 is left for future work.'
-date: 2023-05-08
-venue: 'May 8'
+date: 2025-02-10
+venue: 'Feb. 10'
 slidesurl: #'http://academicpages.github.io/files/slides1.pdf'
-paperurl: 'https://doi.org/10.1021/acs.jpcb.3c01054'
+paperurl: 'https://doi.org/10.1063/5.0242844'
 bibtexurl: #'http://academicpages.github.io/files/bibtex1.bib'
 citation: #''
 ---

@@ -29,7 +29,7 @@ author:
   location         : "US"
   employer         : "University of Delaware"
   uri              : # URL
-  email            : "astolfo@udel.edu" 
+  email            : #"astolfo@udel.edu" 
 
   # Academic websites
   academia         : # URL

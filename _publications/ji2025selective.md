@@ -1,5 +1,5 @@
 ---
-title: "Selective Excitation of IR-Inactive Modes via Vibrational Polaritons: Insights from Atomistic SimulationsC"
+title: "Selective Excitation of IR-Inactive Modes via Vibrational Polaritons: Insights from Atomistic Simulations"
 collection: publications
 category: manuscripts
 permalink: /publication/ji2025selective

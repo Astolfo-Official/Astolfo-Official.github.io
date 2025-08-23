@@ -38,10 +38,20 @@ Skills
 * Chemistry Packages:
   * PySCF
   * i-PI
-  * LAMMPS
-  * ORCA
-  * Q-Chem
-  * Gaussian
+
+Personal Best
+======
+* 1100          :    3:27
+* 1500          :    5:37
+* 3000          :   12:37
+* 5000
+  * 5000 track  : in plan
+  * 5k road     :   21:20
+* 10000
+  * 10000 track : in plan
+  * 10k road    : in plan
+* Half marathon : 1:45:26
+* Marathon      : 1:45:26
 
 Publications
 ======

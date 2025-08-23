@@ -41,8 +41,9 @@ Skills
 
 Personal Best
 ======
-* 1100          :    3:27
+* 1000          :    3:27
 * 1500          :    5:37
+* mile          : On plan 
 * 3000          :   12:37
 * 5000
   * 5000 track  : On plan

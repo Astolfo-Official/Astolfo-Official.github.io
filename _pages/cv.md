@@ -44,7 +44,7 @@ Personal Best
 * 1000          :    3:27
 * 1500          :    5:37
 * Mile          : On plan 
-* 3000          :   12:37
+* 3000          :   12:17
 * 5000
   * 5000 track  : On plan
   * 5k road     :   21:20

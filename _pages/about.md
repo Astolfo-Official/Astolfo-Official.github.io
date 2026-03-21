@@ -1,6 +1,6 @@
 ---
-layout: Astolfo' Home
-title: Astolfo' Home
+layout: about
+title: about
 permalink: /
 subtitle: <a href='https://www.udel.edu/academics/colleges/cas/units/departments/physics-astronomy/'>Department of Physics & Astronomy, University of Delaware</a>.
 
@@ -14,7 +14,7 @@ profile:
     <p>Newark, DE 19716.</p>
 
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: false # includes social icons at the bottom of the page
+social: true # includes social icons at the bottom of the page
 
 announcements:
   enabled: true # includes a list of news items
@@ -27,4 +27,10 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Here is the Astolfo's personal website.
+Here is Astolfo, a 2nd-year Ph.D. student at University of Delaware, specializing in Chemical Physics.
+
+My research interests lie primarily at the intersection of light-matter interaction and nuclear quantum effects. Currently, I am working on my doctoral dissertation under the supervision of <a href='https://www.taoeli.org/taos-cv'>Tao E. Li</a>.
+
+Before starting my Ph.D., I received my B.S. in Chemistry from Xiamen University , with a background in quantum chemistry.
+
+If you are interested in my research or would like to discuss potential collaboration opportunities, please feel free to reach out via email.

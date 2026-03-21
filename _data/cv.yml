@@ -86,14 +86,7 @@ cv:
         icon: fa-solid fa-hashtag
         keywords: "PySCF, i-PI, LAMMPS, MaxwellLink, LaTeX"
 
-    Languages:
-      - name: Chinese
-        summary: "Native speaker"
-
-      - name: English
-
     Interests:
       - name: Chemical Physics
         icon: fa-solid fa-tag
         keywords: "Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research"
-      - name: AI-enhanced Scientific Research

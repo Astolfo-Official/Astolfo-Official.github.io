@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: <a href='https://www.udel.edu/academics/colleges/cas/units/departments/physics-astronomy/'>Department of Physics & Astronomy, University of Delaware</a>.
 
 profile:
   align: right
@@ -14,7 +14,7 @@ profile:
     <p>Newark, DE 19716</p>
 
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+social: false # includes social icons at the bottom of the page
 
 announcements:
   enabled: true # includes a list of news items

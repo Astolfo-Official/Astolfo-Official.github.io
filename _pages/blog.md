@@ -25,7 +25,13 @@ pagination:
 
   <div class="header-bar">
     <h1>{{ site.blog_name }}</h1>
-    <h2>{{ site.blog_description }}</h2>
+    {% if site.blog_superlink %}
+      <a href="{{ site.blog_superlink | relative_url }}">
+        <h2>{{ site.blog_description }}</h2>
+      </a>
+    {% else %}
+      <h2>{{ site.blog_description }}</h2>
+    {% endif %}
   </div>
   {% endif %}
 

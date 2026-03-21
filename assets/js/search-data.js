@@ -476,8 +476,8 @@ ninja.data = [{
           window.open("https://scholar.google.com/citations?user=8WzTBusAAAAJ&hl", "_blank");
         },
       },{
-        id: 'social-custom_social',
-        title: 'Custom_social',
+        id: 'social-github',
+        title: 'GitHub',
         section: 'Socials',
         handler: () => {
           window.open("https://github.com/Astolfo-Official", "_blank");

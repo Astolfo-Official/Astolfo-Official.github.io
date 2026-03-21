@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: home
 permalink: /
 subtitle: <a href='https://www.udel.edu/academics/colleges/cas/units/departments/physics-astronomy/'>Department of Physics & Astronomy, University of Delaware</a>.
 

@@ -1,14 +1,10 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - Astolfo-Official
 
 repo_description_lines_max: 2
 
 github_repos:
-  - alshedivat/al-folio
-  - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  - Astolfo-Official/Strange-handouts
+  - Astolfo-Official/Note-for-Functional-Analysis
+  - Astolfo-Official/Mathematics-in-Quantum-Chemistry
+  - Astolfo-Official/XMU-template

@@ -33,4 +33,4 @@ My research interests lie primarily at the intersection of light-matter interact
 
 Before starting my Ph.D., I received my B.S. in Chemistry from Xiamen University , with a background in quantum chemistry.
 
-If you are interested in my research or would like to discuss potential collaboration opportunities, please feel free to reach out via email.
+If you are interested in my research or would like to discuss potential collaboration opportunities, please feel free to reach out via email. And if you want to join our group, please feel free to visit <a href='https://www.taoeli.org'>our group website</a>.

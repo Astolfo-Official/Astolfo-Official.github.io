@@ -3,9 +3,9 @@
 # -----------------------------------------------------------------------------
 
 title: Astolfo's Home # the website title (if blank, full name will be used instead)
-first_name: Astolfo
+first_name: Xinwei
 #middle_name: 
-#last_name: Name
+last_name: Ji
 contact_note: >
   You can even add a little note about which of these is the best way to reach you.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
@@ -29,7 +29,7 @@ back_to_top: true # set to false to disable the back to top button
 # -----------------------------------------------------------------------------
 
 # repo color theme
-repo_theme_light: omni # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
+repo_theme_light: buefy # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
 repo_theme_dark: dark # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
 repo_trophies:
   enabled: true
@@ -204,6 +204,9 @@ exclude:
   - README.md
   - readme_preview/
   - vendor
+  - _pages/teaching.md
+  - _pages/projects.md
+  - _pages/profiles.md
 keep_files:
   - CNAME
   - .nojekyll

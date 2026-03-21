@@ -1,7 +1,7 @@
 ---
 layout: Astolfo' Home
 title: Astolfo' Home
-permalink: https://scholar.google.com/citations?user=8WzTBusAAAAJ&hl=en
+permalink: /
 subtitle: <a href='https://www.udel.edu/academics/colleges/cas/units/departments/physics-astronomy/'>Department of Physics & Astronomy, University of Delaware</a>.
 
 profile:

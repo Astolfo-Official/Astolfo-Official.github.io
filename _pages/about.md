@@ -29,7 +29,7 @@ latest_posts:
 
 Here is Astolfo, a 2nd-year Ph.D. student at University of Delaware, specializing in Chemical Physics.
 
-My research interests lie primarily at the intersection of light-matter interaction and nuclear quantum effects. Currently, I am working on my doctoral dissertation under the supervision of <a href='https://www.taoeli.org/taos-cv'>Tao E. Li</a>.
+My research interests lie primarily at the intersection of light-matter interaction, nuclear quantum effects and AI-enhanced Scientific Research. Currently, I am working on my doctoral dissertation under the supervision of <a href='https://www.taoeli.org/taos-cv'>Tao E. Li</a>.
 
 Before starting my Ph.D., I received my B.S. in Chemistry from Xiamen University , with a background in quantum chemistry.
 

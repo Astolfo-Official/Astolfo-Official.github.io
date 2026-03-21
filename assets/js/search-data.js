@@ -9,12 +9,12 @@ ninja.data = [{
     handler: () => {
       window.location.href = "/";
     },
-  },{id: "nav-blog",
-          title: "blog",
+  },{id: "nav-cv",
+          title: "CV",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/blog/";
+            window.location.href = "/cv/";
           },
         },{id: "nav-publications",
           title: "publications",
@@ -23,19 +23,19 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/publications/";
           },
+        },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
         },{id: "nav-repositories",
           title: "repositories",
           description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/repositories/";
-          },
-        },{id: "nav-cv",
-          title: "CV",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/cv/";
           },
         },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x-by-residue-theorem",
         

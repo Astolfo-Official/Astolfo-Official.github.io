@@ -1,7 +1,7 @@
 ---
-layout: about
-title: about
-permalink: /
+layout: Astolfo' Home
+title: Astolfo' Home
+permalink: https://scholar.google.com/citations?user=8WzTBusAAAAJ&hl=en
 subtitle: <a href='https://www.udel.edu/academics/colleges/cas/units/departments/physics-astronomy/'>Department of Physics & Astronomy, University of Delaware</a>.
 
 profile:
@@ -9,9 +9,9 @@ profile:
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>305 Sharp Laboratory</p>
-    <p>104 The Green</p>
-    <p>Newark, DE 19716</p>
+    <p>305 Sharp Laboratory,</p>
+    <p>104 The Green,</p>
+    <p>Newark, DE 19716.</p>
 
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page

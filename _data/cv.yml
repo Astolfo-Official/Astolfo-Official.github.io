@@ -5,15 +5,6 @@ cv:
   location: Newark, DE
   image: "prof_pic.jpg"
 
-
-  social_networks:
-    - network: X
-      username: AlbertEinstein
-    - network: GitHub
-      username: example
-    - network: LinkedIn
-      username: example
-
   address:
     street: 104 The Green
     city: Newark
@@ -105,3 +96,4 @@ cv:
       - name: Chemical Physics
         icon: fa-solid fa-tag
         keywords: "Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research"
+      - name: AI-enhanced Scientific Research

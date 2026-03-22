@@ -108,11 +108,9 @@
       <d-bibliography src="{{ page.bibliography | prepend: '/assets/bibliography/' | relative_url }}"></d-bibliography>
 
       <d-article>
-        {% if site.related_blog_posts and site.related_blog_posts.enabled %}
-          {% if page.related_posts == null or page.related_posts %}
-            {% include related_posts.liquid %}
-          {% endif %}
-        {% endif %}
+        {% comment %}
+        related_posts section intentionally disabled
+        {% endcomment %}
         <br>
         <br>
         {% if site.disqus_shortname and page.disqus_comments %}{% include disqus.liquid %}{% endif %}

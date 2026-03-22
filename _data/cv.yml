@@ -87,30 +87,29 @@ cv:
         keywords: "PySCF, i-PI, LAMMPS, MaxwellLink, LaTeX"
 
     Research Interests:
-      - name: Chemical Physics
-        icon: fa-solid fa-tag
-        keywords: "Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research"
+      - label: Chemical Physics
+        details: Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research
 
     Personal Best:
-      - name: 400 m
-        keywords: "1:03"
-      - name: 800 m
-        keywords: "TBD"
-      - name: 1000 m
-        keywords: "3:27"
-      - name: 1500 m
-        keywords: "5:37"
-      - name: 3000 m
-        keywords: "12:17"
-      - name: 5000 m
-        keywords: "22:40"
-      - name: 10000 m
-        keywords: "TBD"
-      - name: 5 k
-        keywords: "21:22"
-      - name: 10 k
-        keywords: "TBD"
-      - name: Half Marathon
-        keywords: "1:45:29"
-      - name: Marathon
-        keywords: "TBD"
+      - label: 400 m
+        details: "1:03"
+      - label: 800 m
+        details: TBD
+      - label: 1000 m
+        details: "3:27"
+      - label: 1500 m
+        details: "5:37"
+      - label: 3000 m
+        details: "12:17"
+      - label: 5000 m
+        details: "22:40"
+      - label: 10000 m
+        details: TBD
+      - label: 5 k
+        details: "21:22"
+      - label: 10 k
+        details: TBD
+      - label: Half Marathon
+        details: "1:45:29"
+      - label: Marathon
+        details: TBD

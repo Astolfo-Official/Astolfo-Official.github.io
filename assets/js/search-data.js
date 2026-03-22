@@ -39,7 +39,7 @@ ninja.data = [{
           },
         },{id: "post-bounds-for-int-l-x-mathrm-d-s-on-curve-y-sin-x",
         
-          title: "Bounds for $$\int_L x\,\mathrm{d}s$$ on Curve  $y=\sin x$",
+          title: "Bounds for $\int_L x\,\mathrm{d}s$ on Curve  $y=\sin x$",
         
         description: "Use parametrization and monotonicity to bound the line integral $\int_L x\,\mathrm{d}s$.",
         section: "Posts",

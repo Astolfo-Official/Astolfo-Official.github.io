@@ -4,7 +4,7 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - Astolfo-Official/Strange-handouts
   - Astolfo-Official/Note-for-Functional-Analysis
   - Astolfo-Official/Mathematics-in-Quantum-Chemistry
+  - Astolfo-Official/Strange-handouts
   - Astolfo-Official/XMU-template

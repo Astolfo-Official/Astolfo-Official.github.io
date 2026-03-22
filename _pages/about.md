@@ -27,7 +27,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Here is Astolfo, a 2nd-year Ph.D. student at University of Delaware, specializing in Chemical Physics.
+Here is Xinwei Ji (纪鑫炜), a 2nd-year Ph.D. student at University of Delaware, specializing in Chemical Physics.
 
 My research interests lie primarily at the intersection of light-matter interaction, nuclear quantum effects and AI-enhanced Scientific Research. Currently, I am working on my doctoral dissertation under the supervision of <a href='https://www.taoeli.org/taos-cv'>Tao E. Li</a>.
 

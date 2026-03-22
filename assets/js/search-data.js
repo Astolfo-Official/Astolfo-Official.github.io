@@ -37,11 +37,11 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x-by-residue-theorem",
+        },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
         
-          title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\) by Residue Theorem",
+          title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",
         
-        description: "A residue theorem evaluation of a logarithmic real integral.",
+        description: "A residue theorem evaluation of a superhard real integral.",
         section: "Posts",
         handler: () => {
           

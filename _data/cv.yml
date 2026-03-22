@@ -83,8 +83,7 @@ cv:
 
     Skills:
       - name: Chemical Physics
-        icon: fa-solid fa-hashtag
-        keywords: "PySCF, i-PI, LAMMPS, MaxwellLink, LaTeX"
+        keywords: "PySCF, i-PI, MaxwellLink"
 
     Research Interests:
       - label: Chemical Physics

@@ -81,10 +81,6 @@ cv:
         releaseDate: 2026
         url: https://doi.org/10.1021/acs.jctc.5c02028
 
-    Skills:
-      - name: Chemical Physics
-        keywords: "PySCF, i-PI, MaxwellLink"
-
     Research Interests:
       - label: Chemical Physics
         details: Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research

@@ -259,10 +259,14 @@ let setCookieConsentTheme = (theme) => {
 };
 
 let transTheme = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
   document.documentElement.classList.add("transition");
   window.setTimeout(() => {
     document.documentElement.classList.remove("transition");
-  }, 500);
+  }, 160);
 };
 
 // Determine the expected state of the theme toggle, which can be "dark", "light", or

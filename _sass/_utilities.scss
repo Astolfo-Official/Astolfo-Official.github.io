@@ -118,8 +118,17 @@ html.transition,
 html.transition *,
 html.transition *:before,
 html.transition *:after {
-  transition: all 750ms !important;
+  transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease, fill 120ms ease, stroke 120ms ease !important;
   transition-delay: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.transition,
+  html.transition *,
+  html.transition *:before,
+  html.transition *:after {
+    transition: none !important;
+  }
 }
 
 // Copy button

@@ -4,9 +4,9 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - Astolfo-Official/Note-for-Functional-Analysis
-  - Astolfo-Official/Mathematics-in-Quantum-Chemistry
+  - Astolfo-Official/Note-on-Functional-Analysis
+  - Astolfo-Official/Mathematics-on-Quantum-Chemistry
   - Astolfo-Official/Note-on-Theoretical-Chemistry
   - Astolfo-Official/Computational-Physics
-  - Astolfo-Official/XMU-template
+  - Astolfo-Official/XMU-Undergraduate-Thesis-Template
   - Astolfo-Official/rtda-tddft-solver

@@ -75,8 +75,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-let-s-go",
-          title: 'Let’s go!',
+            },},{id: "news-let-s-go-today-is-the-birthday-of-my-personal-website",
+          title: 'Let’s go! Today is the birthday of my personal website!',
+          description: "",
+          section: "News",},{id: "news-new-10k-road-personal-best-pb-44-38-today",
+          title: 'New 10k road personal best (PB) 44:38 today!',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',

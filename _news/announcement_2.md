@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-New 10k road personal best (PB) 44:38 today!
+New 10k road PB 44:38 today!

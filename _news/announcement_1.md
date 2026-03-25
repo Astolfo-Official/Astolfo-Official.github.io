@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Let's go!
+Let's go! Today is the birthday of my personal website!

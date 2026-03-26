@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
+        },{id: "post-how-to-get-the-casida-equation-in-tddft",
+        
+          title: "How to Get the Casida Equation in TDDFT",
+        
+        description: "A compact derivation of the Casida eigenvalue problem from linear-response TDDFT.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/how-to-get-casida-equation-in-tddft/";
+          
+        },
+      },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
         
           title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",
         

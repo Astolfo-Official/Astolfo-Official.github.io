@@ -37,29 +37,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-bounds-for-int-l-x-mathrm-d-s-on-curve-y-sin-x",
-        
-          title: "Bounds for $\int_L x\,\mathrm{d}s$ on Curve  $y=\sin x$",
-        
-        description: "Use parametrization and monotonicity to bound the line integral $\int_L x\,\mathrm{d}s$.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/integal3/";
-          
-        },
-      },{id: "post-evaluate-a-double-integral-using-a-rotation-and-stretch-transformation",
-        
-          title: "Evaluate a Double Integral Using a Rotation and Stretch Transformation",
-        
-        description: "Transform a cubic bounded region to a symmetric region and evaluate the double integral.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/integal2/";
-          
-        },
-      },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
+        },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
         
           title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",
         

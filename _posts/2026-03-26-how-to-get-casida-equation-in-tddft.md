@@ -2,253 +2,282 @@
 layout: post
 title: How to Get the Casida Equation in TDDFT
 date: 2026-03-26
-description: A compact derivation of the Casida eigenvalue problem from linear-response TDDFT.
+description: A note-faithful walkthrough of how linear-response TDDFT becomes the Casida equation.
 tags: tddft quantum-chemistry excited-states
 categories: physics
 ---
 
-If you have seen the final Casida equation
+This post follows the note `Casida_TDDFT Linear Response.pdf` closely. The main idea in that note is simple: excitation energies are the poles of a response function, so the whole TDDFT problem is to rewrite that response in a form we can actually solve. Throughout I keep the note's spin-orbital notation and set $\hbar = 1$.
+
+## 1. Start from linear response
+
+The note begins with a general perturbation
 
 $$
-\sum_{q'}
-\left[
-\omega_q^2 \delta_{q q'} + 4 \sqrt{\omega_q \omega_{q'}} K_{q q'}
-\right]
-F_{q'} = \Omega^2 F_q,
+\hat b(t) = \hat b \cos \omega_0 t,
 $$
 
-it can look like it appears out of nowhere. It does not. It is just the linear-response TDDFT Dyson equation projected onto the basis of Kohn-Sham single excitations $q = (i \to a)$.
-
-In this note I will use a closed-shell, real-orbital notation to keep the algebra short. Different books move factors of 2 between the response function, spin summation, and the kernel, so if your favorite reference looks slightly different, that is usually a convention issue rather than a physics issue.
-
-## 1. Start from the density-response equation
-
-The induced density is related to the external perturbation by the interacting response function:
+and asks for the response of some observable $\hat a$. If
 
 $$
-\delta n(\mathbf{r}, \omega) = \int \chi(\mathbf{r}, \mathbf{r}', \omega)\,\delta v_{\mathrm{ext}}(\mathbf{r}', \omega)\,\mathrm{d}\mathbf{r}'.
+\hat H \Psi_I = E_I \Psi_I,
 $$
 
-In TDDFT, the interacting response satisfies the Dyson-like equation
+then first-order time-dependent perturbation theory gives, in the frequency domain,
 
 $$
-\chi = \chi_s + \chi_s f_{\mathrm{Hxc}} \chi,
-$$
-
-where
-
-$$
-f_{\mathrm{Hxc}}(\mathbf{r}, \mathbf{r}', \omega)
+\hat b(\omega)\Psi_0
 =
-\frac{1}{|\mathbf{r} - \mathbf{r}'|}
-+ f_{\mathrm{xc}}(\mathbf{r}, \mathbf{r}', \omega).
+(\omega - \hat H + E_0)\,\delta \Psi_0(\omega),
 $$
 
-The true excitation energies are the poles of $\chi$. To find them, we look for nontrivial density oscillations at frequency $\Omega$ even with no external driving. In other words, at an excitation we can write
+so that
 
 $$
-\delta n(\mathbf{r}, \Omega)
+\delta \Psi_0(\omega)
 =
-\int \chi_s(\mathbf{r}, \mathbf{r}', \Omega)\,
-\delta v_s(\mathbf{r}', \Omega)\,\mathrm{d}\mathbf{r}',
+\sum_{I \ne 0}
+\Psi_I
+\frac{\langle \Psi_I | \hat b(\omega) | \Psi_0 \rangle}{\omega - \omega_I},
+\qquad
+\omega_I = E_I - E_0.
 $$
 
-with the induced Kohn-Sham potential
+For spectroscopy, the key example is the dynamic polarizability:
 
 $$
-\delta v_s(\mathbf{r}, \Omega)
+\alpha_{r_i,r_j}(\omega)
 =
-\int f_{\mathrm{Hxc}}(\mathbf{r}, \mathbf{r}', \Omega)\,
-\delta n(\mathbf{r}', \Omega)\,\mathrm{d}\mathbf{r}'.
+\sum_{I \ne 0}
+\frac{
+2\omega_I
+\langle \Psi_0 | r_i | \Psi_I \rangle
+\langle \Psi_I | r_j | \Psi_0 \rangle
+}{
+\omega_I^2 - \omega^2
+}.
 $$
 
-So the whole problem reduces to solving the homogeneous self-consistent response equation.
-
-## 2. Write the Kohn-Sham response in the particle-hole basis
-
-Let $i,j$ denote occupied orbitals and $a,b$ virtual orbitals. Define the Kohn-Sham transition energies
+The note also writes this as a sum-over-states formula,
 
 $$
-\omega_{i a} = \varepsilon_a - \varepsilon_i
-$$
-
-and the transition densities
-
-$$
-\Phi_{i a}(\mathbf{r}) = \phi_i(\mathbf{r}) \phi_a(\mathbf{r}).
-$$
-
-For a closed-shell system, the noninteracting response can be written as
-
-$$
-\chi_s(\mathbf{r}, \mathbf{r}', \omega)
+\alpha(\omega)
 =
-2 \sum_{i a}
-\Phi_{i a}(\mathbf{r}) \Phi_{i a}(\mathbf{r}')
-\left[
-\frac{1}{\omega - \omega_{i a}}
-- \frac{1}{\omega + \omega_{i a}}
-\right].
+\sum_{I \ne 0}
+\frac{f_I}{\omega_I^2 - \omega^2},
 $$
 
-Combining the two fractions gives the symmetric form
+with oscillator strengths
 
 $$
-\chi_s(\mathbf{r}, \mathbf{r}', \omega)
+f_I
 =
-\sum_{i a}
-\frac{4 \omega_{i a}}{\omega^2 - \omega_{i a}^2}
-\Phi_{i a}(\mathbf{r}) \Phi_{i a}(\mathbf{r}').
-$$
-
-This is the key step: once the Kohn-Sham response is expressed in the space of single excitations, the Casida matrix drops out by projection.
-
-## 3. Project the response equation onto transition space
-
-Define the projection of the induced Kohn-Sham potential onto a given transition:
-
-$$
-g_{i a}(\omega)
-=
-\int \Phi_{i a}(\mathbf{r})\,\delta v_s(\mathbf{r}, \omega)\,\mathrm{d}\mathbf{r}.
-$$
-
-Using the symmetric form of $\chi_s$, the density variation becomes
-
-$$
-\delta n(\mathbf{r}, \omega)
-=
-\sum_{i a}
-\frac{4 \omega_{i a}}{\omega^2 - \omega_{i a}^2}
-\Phi_{i a}(\mathbf{r})\,g_{i a}(\omega).
-$$
-
-Now project the induced potential back onto the same basis:
-
-$$
-g_{i a}(\omega)
-=
-\int \Phi_{i a}(\mathbf{r})
-\left[
-\int
-f_{\mathrm{Hxc}}(\mathbf{r}, \mathbf{r}', \omega)\,
-\delta n(\mathbf{r}', \omega)\,\mathrm{d}\mathbf{r}'
-\right]
-\mathrm{d}\mathbf{r}.
-$$
-
-Substituting the expansion of $\delta n$ gives
-
-$$
-g_{i a}(\omega)
-=
-\sum_{j b}
-K_{i a, j b}(\omega)
-\frac{4 \omega_{j b}}{\omega^2 - \omega_{j b}^2}
-g_{j b}(\omega),
-$$
-
-where the coupling matrix is
-
-$$
-K_{i a, j b}(\omega)
-=
-\iint
-\Phi_{i a}(\mathbf{r})\,
-f_{\mathrm{Hxc}}(\mathbf{r}, \mathbf{r}', \omega)\,
-\Phi_{j b}(\mathbf{r}')
-\mathrm{d}\mathbf{r}\,\mathrm{d}\mathbf{r}'.
-$$
-
-So far nothing has been approximated beyond the usual linear-response framework.
-
-## 4. Turn the projected equation into an eigenvalue problem
-
-At an excitation frequency $\Omega$, define scaled amplitudes
-
-$$
-F_{i a}
-=
-\frac{\sqrt{\omega_{i a}}}{\Omega^2 - \omega_{i a}^2}\,
-g_{i a}(\Omega).
-$$
-
-Equivalently,
-
-$$
-g_{i a}(\Omega)
-=
-\frac{\Omega^2 - \omega_{i a}^2}{\sqrt{\omega_{i a}}}\,
-F_{i a}.
-$$
-
-Insert this into the projected equation:
-
-$$
-\frac{\Omega^2 - \omega_{i a}^2}{\sqrt{\omega_{i a}}}\,F_{i a}
-=
-\sum_{j b}
-K_{i a, j b}(\Omega)
-\frac{4 \omega_{j b}}{\Omega^2 - \omega_{j b}^2}
-\frac{\Omega^2 - \omega_{j b}^2}{\sqrt{\omega_{j b}}}\,
-F_{j b}.
-$$
-
-The factors $(\Omega^2 - \omega_{j b}^2)$ cancel on the right, leaving
-
-$$
+\frac{2}{3}\omega_I
 \left(
-\Omega^2 - \omega_{i a}^2
-\right) F_{i a}
+|\langle \Psi_0 | x | \Psi_I \rangle|^2
++
+|\langle \Psi_0 | y | \Psi_I \rangle|^2
++
+|\langle \Psi_0 | z | \Psi_I \rangle|^2
+\right).
+$$
+
+So the excitation spectrum is encoded in the poles of $\alpha(\omega)$.
+
+## 2. The TDDFT plan
+
+The note then turns this into a TDDFT problem. Apply
+
+$$
+v^{\mathrm{appl}}(\mathbf r,t)
 =
-4 \sum_{j b}
-\sqrt{\omega_{i a} \omega_{j b}}\,
-K_{i a, j b}(\Omega)\,
-F_{j b}.
+\epsilon\,r_j \cos \omega t,
 $$
 
-Move everything except $\Omega^2 F_{i a}$ to the left:
+compute the induced density
 
 $$
-\sum_{j b}
+\delta \rho(\mathbf r,t)
+=
+\sum_i
 \left[
-\omega_{i a}^2 \delta_{i j} \delta_{a b}
-+ 4 \sqrt{\omega_{i a} \omega_{j b}}\,
-K_{i a, j b}(\Omega)
-\right]
-F_{j b}
+\psi_i(\mathbf r)\,\delta \psi_i^*(\mathbf r,t)
++
+\delta \psi_i(\mathbf r,t)\,\psi_i^*(\mathbf r)
+\right],
+$$
+
+and recover the dynamic polarizability from the induced dipole. In other words, TDDFT does not change the target quantity. It changes how we compute the poles.
+
+## 3. Expand the response in the unperturbed MO basis
+
+The response density matrix is expanded as
+
+$$
+\delta \gamma_\sigma(\mathbf r,\mathbf r';\omega)
 =
-\Omega^2 F_{i a}.
+\sum_{ij}
+\psi_{i\sigma}(\mathbf r)\,
+\delta P_{ij\sigma}(\omega)\,
+\psi_{j\sigma}^*(\mathbf r').
 $$
 
-This is the Casida equation.
-
-If we collapse the pair index $(i,a)$ into a single label $q$, it becomes
+For a perturbation $\hat b(\omega)$, the note writes
 
 $$
-\sum_{q'}
+\delta P_{ij\sigma}(\omega)
+=
+\frac{n_{j\sigma} - n_{i\sigma}}
+{\omega - (\epsilon_{i\sigma} - \epsilon_{j\sigma})}
+\langle \psi_{i\sigma} | \hat b(\omega) | \psi_{j\sigma} \rangle,
+$$
+
+and the first-order orbital response as
+
+$$
+\delta \psi_{i\sigma}(\mathbf r,\omega)
+=
+\sum_{j \ne i}
+\psi_{j\sigma}(\mathbf r)\,
+\frac{
+\langle \psi_{j\sigma} | \hat b(\omega) | \psi_{i\sigma} \rangle
+}{
+\omega - (\epsilon_{j\sigma} - \epsilon_{i\sigma})
+}.
+$$
+
+At this stage, the unknowns are the matrix elements $\delta P_{ij\sigma}(\omega)$.
+
+## 4. Insert the time-dependent Kohn-Sham potential
+
+The time-dependent Kohn-Sham equation is
+
+$$
 \left[
-\omega_q^2 \delta_{q q'}
-+ 4 \sqrt{\omega_q \omega_{q'}} K_{q q'}(\Omega)
+-\frac{1}{2}\nabla^2
++
+v_{\mathrm{ext}}(\mathbf r,t)
++
+\int \frac{\rho(\mathbf r',t)}{|\mathbf r - \mathbf r'|}\,d\mathbf r'
++
+v_{\mathrm{xc}}(\mathbf r,t)
 \right]
-F_{q'}
+\psi_i(\mathbf r,t)
 =
-\Omega^2 F_q.
+i\frac{\partial}{\partial t}\psi_i(\mathbf r,t),
 $$
 
-## 5. Where the usual practical approximations enter
-
-The derivation above is general within linear-response TDDFT, but most actual calculations make one more step:
+with
 
 $$
-f_{\mathrm{xc}}(\mathbf{r}, \mathbf{r}', \omega)
-\longrightarrow
-f_{\mathrm{xc}}(\mathbf{r}, \mathbf{r}').
+\rho(\mathbf r,t)
+=
+\sum_{i\sigma}
+f_{i\sigma}
+|\psi_{i\sigma}(\mathbf r,t)|^2.
 $$
 
-This is the adiabatic approximation. Once the kernel is frequency independent, $K_{i a, j b}$ is just an ordinary matrix and the Casida equation becomes a standard Hermitian eigenvalue problem for $\Omega^2$.
+The note then adopts the adiabatic approximation,
 
-You may also see the same physics written in the $(A,B)$ formulation,
+$$
+v_{\mathrm{xc}}(\mathbf r,t)
+=
+\frac{\delta E_{\mathrm{xc}}[\rho_t]}{\delta \rho_t(\mathbf r)},
+$$
+
+so the self-consistent field reacts instantly and carries no memory.
+
+After linearization, the effective perturbation becomes
+
+$$
+\delta v_{\mathrm{eff}}^\sigma
+=
+v_{\mathrm{appl}}^\sigma
++
+\sum_\tau
+f^{\sigma,\tau}\,\delta \gamma_\tau,
+$$
+
+with
+
+$$
+f^{\sigma,\tau}
+=
+f_H^{\sigma,\tau}
++
+f_{\mathrm{xc}}^{\sigma,\tau}.
+$$
+
+The corresponding coupling matrix is
+
+$$
+K_{ij\sigma,kl\tau}
+=
+\iiint\!\!\int
+\psi_{i\sigma}^*(\mathbf r_1)\psi_{j\sigma}(\mathbf r_1')
+f^{\sigma,\tau}(\mathbf r_1,\mathbf r_1';\mathbf r_2,\mathbf r_2')
+\psi_{k\tau}(\mathbf r_2)\psi_{l\tau}^*(\mathbf r_2')
+\,
+d\mathbf r_1\,d\mathbf r_1'\,d\mathbf r_2\,d\mathbf r_2'.
+$$
+
+Using this, the note arrives at the coupled-perturbed equation
+
+$$
+\delta P_{ij\sigma}(\omega)
+=
+\frac{n_{j\sigma} - n_{i\sigma}}
+{\omega - (\epsilon_{i\sigma} - \epsilon_{j\sigma})}
+\langle \psi_{i\sigma} | \delta \hat v_{\mathrm{eff}}^\sigma(\omega) | \psi_{j\sigma} \rangle,
+$$
+
+with
+
+$$
+\langle \psi_{i\sigma} | \delta \hat v_{\mathrm{eff}}^\sigma(\omega) | \psi_{j\sigma} \rangle
+=
+v_{ij\sigma}^{\mathrm{appl}}(\omega)
++
+\sum_{kl\tau}
+K_{ij\sigma,kl\tau}\,\delta P_{kl\tau}(\omega).
+$$
+
+This is the TDDFT response equation in the MO basis.
+
+## 5. Separate particle-hole and hole-particle blocks
+
+The note next distinguishes the particle-hole and hole-particle sectors. Using occupied indices $i,j$ and virtual indices $a,b$, and for real orbitals,
+
+$$
+\delta P_{ph,\sigma}(\omega)
+=
+\delta P_{hp,\sigma}^*(\omega).
+$$
+
+This makes it natural to define the two standard blocks
+
+$$
+A_{ia\sigma,jb\tau}
+=
+\delta_{\sigma\tau}\delta_{ij}\delta_{ab}
+(\epsilon_{a\sigma} - \epsilon_{i\sigma})
++
+K_{ia\sigma,jb\tau},
+$$
+
+and
+
+$$
+B_{ia\sigma,jb\tau}
+=
+K_{ia\sigma,bj\tau}.
+$$
+
+Everything from this point on is just linear algebra in the particle-hole space.
+
+## 6. The TDDFT RPA equation and the Casida equation
+
+At an excitation frequency, the density response becomes infinite even when the applied perturbation stays finite. That turns the response problem into the homogeneous eigenvalue equation
 
 $$
 \begin{pmatrix}
@@ -256,39 +285,128 @@ A & B \\
 B & A
 \end{pmatrix}
 \begin{pmatrix}
-X \\
-Y
+X_I \\
+Y_I
 \end{pmatrix}
 =
-\Omega
+\omega_I
 \begin{pmatrix}
-I & 0 \\
-0 & -I
+1 & 0 \\
+0 & -1
 \end{pmatrix}
 \begin{pmatrix}
-X \\
-Y
-\end{pmatrix},
+X_I \\
+Y_I
+\end{pmatrix}.
 $$
 
-which is equivalent to the Casida equation after a similarity transformation. In the Tamm-Dancoff approximation (TDA), one drops the $B$ block and solves a simpler linear eigenvalue problem.
+In the note this is called the TDDFT RPA equation, and it is also the Casida equation in its non-Hermitian form.
 
-## 6. What each object means physically
+The note then rewrites it as
 
-- $\omega_{i a}$ is a bare Kohn-Sham orbital energy difference.
-- $K_{i a, j b}$ couples different single excitations through the Hartree and exchange-correlation kernel.
-- $F_{i a}$ tells you how the true excitation is built from Kohn-Sham particle-hole transitions.
-- $\Omega$ is the interacting excitation energy, so it includes the collective mixing that plain orbital energy differences miss.
+$$
+(A+B)(X_I+Y_I) = \omega_I (X_I-Y_I),
+$$
 
-That is why Casida often gives much better excitation energies than simply reading off $\varepsilon_a - \varepsilon_i$ from the ground-state Kohn-Sham spectrum.
+$$
+(A-B)(X_I-Y_I) = \omega_I (X_I+Y_I).
+$$
 
-## 7. The short version
+From these two relations one gets the Hermitian squared form
 
-The Casida equation is not an extra postulate on top of TDDFT. It is just:
+$$
+\Omega F_I = \omega_I^2 F_I,
+$$
 
-1. Write the TDDFT Dyson equation for $\chi$.
-2. Express $\chi_s$ in the basis of Kohn-Sham particle-hole transitions.
-3. Project the response equation onto that basis.
-4. Rescale the amplitudes so the equation becomes Hermitian in $\Omega^2$.
+with
 
-Once you see those four steps, the Casida matrix is simply the linear-response TDDFT problem written in a practical basis.
+$$
+\Omega
+=
+(A-B)^{1/2}(A+B)(A-B)^{1/2},
+$$
+
+and
+
+$$
+F_I
+=
+(A-B)^{-1/2}(X_I+Y_I).
+$$
+
+That is the form of the Casida equation emphasized in the note.
+
+## 7. Why solving $\Omega$ gives the spectrum
+
+The note makes the connection to spectroscopy explicit by writing the real part of the response as
+
+$$
+(\mathrm{Re}\,\delta P)(\omega)
+=
+(A-B)^{1/2}
+(\omega^2\mathbf 1 - \Omega)^{-1}
+(A-B)^{1/2}
+v^{\mathrm{appl}}(\omega).
+$$
+
+Now the poles are obvious: they occur when $\omega^2$ hits an eigenvalue of $\Omega$. So solving
+
+$$
+\Omega F_I = \omega_I^2 F_I
+$$
+
+directly produces the excitation energies.
+
+The same note then connects the eigenvectors to intensities through the transition moments,
+
+$$
+\omega_I^{1/2}
+\langle \Psi_0 | \hat x | \Psi_I \rangle
+=
+\vec x^{\dagger}(A-B)^{1/2}F_I,
+$$
+
+and therefore to the oscillator strengths
+
+$$
+f_I
+=
+\frac{2}{3}\omega_I
+\left(
+|\langle \Psi_0 | x | \Psi_I \rangle|^2
++
+|\langle \Psi_0 | y | \Psi_I \rangle|^2
++
+|\langle \Psi_0 | z | \Psi_I \rangle|^2
+\right).
+$$
+
+So the eigenvalues give the poles, and the eigenvectors give the residues.
+
+## 8. What the Casida eigenvector means
+
+The note finishes by interpreting the excitation in the Kohn-Sham reference system:
+
+$$
+\Psi_I
+=
+\sum_\sigma
+\sum_i^{\mathrm{occ}}
+\sum_a^{\mathrm{virt}}
+\sqrt{
+\frac{\epsilon_{a\sigma} - \epsilon_{i\sigma}}
+{\omega_I}
+}
+F_{ia\sigma}\,
+\Phi_{i\sigma}^{a\sigma},
+$$
+
+where $\Phi_{i\sigma}^{a\sigma}$ is a singly excited Kohn-Sham determinant.
+
+So the Casida vector does two jobs at once. It gives the pole position through $\omega_I^2$, and it tells you which single excitations dominate that state.
+
+That is the logic of the note from start to finish: linear response turns the spectrum into poles of a response function, TDDFT rewrites that response in the Kohn-Sham particle-hole basis, the kernel builds the $A$ and $B$ matrices, and the final problem is the Hermitian eigenvalue equation
+
+$$
+\Omega F_I = \omega_I^2 F_I.
+$$

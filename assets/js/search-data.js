@@ -41,7 +41,7 @@ ninja.data = [{
         
           title: "How to Get the Casida Equation in TDDFT",
         
-        description: "A compact derivation of the Casida eigenvalue problem from linear-response TDDFT.",
+        description: "A note-faithful walkthrough of how linear-response TDDFT becomes the Casida equation.",
         section: "Posts",
         handler: () => {
           

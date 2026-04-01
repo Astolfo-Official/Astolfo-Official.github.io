@@ -1,10 +1,10 @@
 ---
 layout: book-shelf
-title: book
-permalink: /books/
+title: note
+permalink: /notes/
 nav: true
 nav_order: 4
 collection: books
 ---
 
-## Books and lecture notes
+## Some notes

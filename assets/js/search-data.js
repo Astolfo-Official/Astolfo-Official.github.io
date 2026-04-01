@@ -30,12 +30,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "nav-book",
-          title: "book",
+        },{id: "nav-note",
+          title: "note",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/books/";
+            window.location.href = "/notes/";
           },
         },{id: "post-how-to-get-the-casida-equation-in-tddft",
         

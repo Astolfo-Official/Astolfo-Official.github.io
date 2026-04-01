@@ -30,12 +30,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "nav-repositories",
-          title: "repositories",
+        },{id: "nav-book",
+          title: "book",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/repositories/";
+            window.location.href = "/books/";
           },
         },{id: "post-how-to-get-the-casida-equation-in-tddft",
         
@@ -59,11 +59,21 @@ ninja.data = [{
             window.location.href = "/blog/2026/integal1/";
           
         },
-      },{id: "books-the-godfather",
-          title: 'The Godfather',
+      },{id: "books-baby-math-on-quantum-chemistry",
+          title: 'Baby Math on Quantum Chemistry',
           description: "",
           section: "Books",handler: () => {
-              window.location.href = "/books/the_godfather/";
+              window.location.href = "/books/baby_math_on_quantum_chemistry/";
+            },},{id: "books-note-on-functional-analysis",
+          title: 'Note on Functional Analysis',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/note_on_functional_analysis/";
+            },},{id: "books-note-on-theoretical-chemistry",
+          title: 'Note on Theoretical Chemistry',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/note_on_theoretical_chemistry/";
             },},{id: "news-let-s-go-first-day-in-my-personal-website",
           title: 'Let’s go! First day in my personal website!',
           description: "",

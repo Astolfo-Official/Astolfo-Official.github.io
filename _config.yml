@@ -195,7 +195,6 @@ exclude:
   - readme_preview/
   - vendor
   - _pages/teaching.md
-  - _pages/projects.md
   - _pages/profiles.md
   - _pages/dropdown.md
 keep_files:

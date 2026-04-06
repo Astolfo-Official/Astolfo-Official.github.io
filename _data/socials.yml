@@ -13,6 +13,10 @@ scholar_userid: 8WzTBusAAAAJ&hl # your Google Scholar ID
 #  title: GitHub
 #  url: https://github.com/Astolfo-Official
 github_profile:
-  logo: https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg
+  logo: fa-brands fa-github
   title: GitHub
   url: https://github.com/Astolfo-Official
+research_group:
+  logo: fa-solid fa-people-group
+  title: Tao E. Li Group
+  url: https://www.taoeli.org/

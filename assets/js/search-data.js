@@ -124,6 +124,13 @@ ninja.data = [{
           window.open("https://github.com/Astolfo-Official", "_blank");
         },
       },{
+        id: 'social-research_group',
+        title: 'Research_group',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.taoeli.org/", "_blank");
+        },
+      },{
       id: 'light-theme',
       title: 'Change theme to light',
       description: 'Change the theme of the site to Light',

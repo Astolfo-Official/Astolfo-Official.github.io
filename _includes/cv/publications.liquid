@@ -9,6 +9,18 @@
         {% capture pub_date %}
           {% if entry.releaseDate %}{{ entry.releaseDate }}{% elsif entry.date %}{{ entry.date }}{% endif %}
         {% endcapture %}
+        {% assign authors_text = entry.authors | default: entry.author %}
+        {% assign highlighted_authors = authors_text %}
+        {% if authors_text and cv and cv.name %}
+          {% assign cv_name_parts = cv.name | split: ' ' %}
+          {% assign cv_first_name = cv_name_parts | first %}
+          {% assign cv_last_name = cv_name_parts | last %}
+          {% capture cv_reverse_name %}{{ cv_last_name }}, {{ cv_first_name }}{% endcapture %}
+          {% capture highlighted_cv_name %}<u>{{ cv.name }}</u>{% endcapture %}
+          {% capture highlighted_cv_reverse_name %}<u>{{ cv_reverse_name }}</u>{% endcapture %}
+          {% assign highlighted_authors = highlighted_authors | replace: cv.name, highlighted_cv_name %}
+          {% assign highlighted_authors = highlighted_authors | replace: cv_reverse_name, highlighted_cv_reverse_name %}
+        {% endif %}
 
         {% if pub_date != '' %}
           <div class="col-xs-2 col-sm-2 col-md-2 text-center">
@@ -33,10 +45,16 @@
               <h6 class="title font-weight-bold ml-1 ml-md-4">{{ entry.title }}</h6>
             {% endif %}
 
-            {% if entry.publisher %}
-              <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">
-                <em>{{ entry.publisher }}</em>
+            {% if authors_text %}
+              <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; color: var(--global-text-color-light)">
+                {{ highlighted_authors }}
               </h6>
+            {% endif %}
+
+            {% if entry.citation %}
+              <div class="ml-1 ml-md-4" style="font-size: 0.95rem">
+                {{ entry.citation }}
+              </div>
             {% endif %}
 
             {% if entry.summary %}
@@ -53,10 +71,16 @@
               <h6 class="title font-weight-bold ml-1 ml-md-4">{{ entry.title }}</h6>
             {% endif %}
 
-            {% if entry.publisher %}
-              <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">
-                <em>{{ entry.publisher }}</em>
+            {% if authors_text %}
+              <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; color: var(--global-text-color-light)">
+                {{ highlighted_authors }}
               </h6>
+            {% endif %}
+
+            {% if entry.citation %}
+              <div class="ml-1 ml-md-4" style="font-size: 0.95rem">
+                {{ entry.citation }}
+              </div>
             {% endif %}
 
             {% if entry.summary %}

@@ -55,31 +55,37 @@ cv:
     Publications:
       - title: Evaluating the Transition State Stabilization/Destabilization Effects of the Electric Fields from Scaffold Residues by a QM/MM Approach
         authors: Yan, Shengheng and Ji, Xinwei and Peng, Wei and Wang, Binju
+        citation: J. Phys. Chem. B 2023, 127 (19), 4245-4253.
         releaseDate: 2023
         url: https://doi.org/10.1021/acs.jpcb.3c01054
 
       - title: Selective Excitation of IR-Inactive Modes via Vibrational Polaritons Insights from Atomistic Simulations
         authors: Ji, Xinwei and Li, Tao E.
+        citation: J. Phys. Chem. Lett. 2025, 16 (20), 5034-5042.
         releaseDate: 2025
         url: https://doi.org/10.1021/acs.jpclett.5c00848
 
       - title: On the entanglement of chromophore and solvent orbitals
         authors: Ji, Xinwei and Pei, Zheng and Huynh, Kim Ngan and Yang, Junjie and Pan, Xiaoliang and Wang, Binju and Mao, Yuezhi and Shao, Yihan
+        citation: J. Chem. Phys. 2025, 162 (6), 064107.
         releaseDate: 2025
         url: https://doi.org/10.1063/5.0242844
 
       - title: MaxwellLink A Unified Framework for Self-Consistent Light–Matter Simulations
         authors: Ji, Xinwei and Bocanegra Vargas, Andres Felipe and Meng, Gang and Li, Tao E.
+        citation: J. Chem. Theory Comput. 2026, 22 (6), 2725-2738.
         releaseDate: 2026
         url: https://doi.org/10.1021/acs.jctc.5c02028
 
       - title: Two-Dimensional IR-Raman Spectroscopy of Vibrational Polaritons Role of Dipole Surfaces
         authors: Ji, Xinwei and Begusic, Tomislav and Li, Tao E.
+        citation: arXiv 2026, arXiv:2603.24521.
         releaseDate: 2026
         url: https://arxiv.org/abs/2603.24521
 
       - title: FermiLink A Unified Agent Framework for Multidomain Autonomous Scientific Simulations
         authors: Meng, Gang and Vargas, Andres Felipe Bocanegra and Ji, Xinwei and Garcia-Gaitan, Federico and Reyes-Osorio, Felipe and Varela-Manjarres, Jalil and Ren, Yafei and Dinpajooh, Mohammadhasan and Nikolic, Branislav K. and Li, Tao E.
+        citation: arXiv 2026, arXiv:2604.03460.
         releaseDate: 2026
         url: https://arxiv.org/pdf/2604.03460
 

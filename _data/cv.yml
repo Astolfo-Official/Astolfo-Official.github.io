@@ -91,7 +91,9 @@ cv:
 
     Research Interests:
       - label: Chemical Physics
-        details: Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research
+        details: Light-Matter Interaction and Nuclear Quantum Effects
+      - label: AI-enhanced Scientific Research
+        details: LLM based Autonomous Agents for Scientific Simulations and Code Optimization
 
     Personal Best:
       - label: 400 m

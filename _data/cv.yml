@@ -88,6 +88,13 @@ cv:
         releaseDate: 2026
         url: https://arxiv.org/abs/2603.24521
 
+      - title: FermiLink A Unified Agent Framework for Multidomain Autonomous Scientific Simulations
+        authors:
+          - Meng, Gang and Vargas, Andres Felipe Bocanegra and Ji, Xinwei and Garcia-Gaitan, Federico and Reyes-Osorio, Felipe and Varela-Manjarres, Jalil and Ren, Yafei and Dinpajooh, Mohammadhasan and Nikolic, Branislav K. and Li, Tao E.
+        publisher: TBD
+        releaseDate: 2026
+        url: https://arxiv.org/pdf/2604.03460
+
     Research Interests:
       - label: Chemical Physics
         details: Light-Matter Interaction, Nuclear Quantum Effects and AI-enhanced Scientific Research

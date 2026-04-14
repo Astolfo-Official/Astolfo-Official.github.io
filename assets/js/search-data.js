@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/notes/";
           },
-        },{id: "post-how-to-get-the-casida-equation-in-tddft",
+        },{id: "post-complex-shifts-in-the-gaussian-integral",
+        
+          title: "Complex Shifts in the Gaussian Integral",
+        
+        description: "A contour proof that a complex-shifted Gaussian integral equals the ordinary one, with an application to the free-particle heat kernel.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/gaussian-integral-complex-shift/";
+          
+        },
+      },{id: "post-how-to-get-the-casida-equation-in-tddft",
         
           title: "How to Get the Casida Equation in TDDFT",
         

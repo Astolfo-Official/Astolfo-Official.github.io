@@ -227,5 +227,5 @@ with thermal wavelength
 $$
 \Lambda
 =
-\sqrt{\frac{2\pi\beta\hbar^2}{m}}.
+\sqrt{\frac{2\pi\beta\hbar^2}{m}}=\frac{h}{\sqrt{2\pi k_{\rm B}Tm}}.
 $$

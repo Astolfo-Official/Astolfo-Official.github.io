@@ -44,6 +44,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/notes/";
           },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
         },{id: "post-complex-shifts-in-the-gaussian-integral",
         
           title: "Complex Shifts in the Gaussian Integral",

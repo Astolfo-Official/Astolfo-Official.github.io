@@ -3,9 +3,9 @@ layout: page
 permalink: /repositories/
 title: repositories
 description: 
-nav: false
-nav_order: 5
-published: false
+nav: true
+nav_order: 6
+published: true
 ---
 
 {% if site.data.repositories.github_users %}

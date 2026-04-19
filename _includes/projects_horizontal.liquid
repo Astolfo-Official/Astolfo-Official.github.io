@@ -1,17 +1,19 @@
 <div class="col mb-4">
   <a href="{% if project.redirect %}{{ project.redirect }}{% else %}{{ project.url | relative_url }}{% endif %}">
-    <div class="card h-100 hoverable">
-      <div class="row no-gutters">
+    <div class="card h-100 hoverable project-card project-card-horizontal">
+      <div class="row no-gutters h-100">
         {% if project.img %}
-          <div class="col-md-6">
-            {% include figure.liquid loading="eager" path=project.img sizes="(min-width: 768px) 156px, 50vw" alt="project thumbnail" class="card-img" %}
+          <div class="col-md-6 d-flex">
+            <div class="project-card-media w-100">
+              {% include figure.liquid loading="eager" path=project.img sizes="(min-width: 768px) 156px, 50vw" alt="project thumbnail" class="card-img project-card-image" %}
+            </div>
           </div>
         {% endif %}
-        <div class="{% if project.img %}col-md-6{% else %}col-md-12{% endif %}">
-          <div class="card-body">
-            <h3 class="card-title">{{ project.title }}</h3>
-            <p class="card-text">{{ project.description }}</p>
-            <div class="row ml-1 mr-1 p-0">
+        <div class="{% if project.img %}col-md-6 d-flex{% else %}col-md-12{% endif %}">
+          <div class="card-body project-card-body">
+            <h3 class="card-title project-card-title">{{ project.title }}</h3>
+            <p class="card-text project-card-description">{{ project.description }}</p>
+            <div class="row ml-1 mr-1 p-0 project-card-links">
               {% if project.github %}
                 <div class="github-icon">
                   <div class="icon" data-toggle="tooltip" title="Code Repository">

@@ -47,33 +47,6 @@
         padding-right: 0.45rem;
       }
 
-      .publication-number-column {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-left: 0.15rem;
-        padding-right: 0.15rem;
-      }
-
-      .publication-number {
-        color: var(--global-bg-color);
-        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        font-variant-numeric: tabular-nums;
-        letter-spacing: -0.02em;
-        line-height: 1;
-        text-rendering: optimizeLegibility;
-        width: 2.45rem;
-        height: 2.45rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--global-theme-color);
-        border-radius: 0.55rem;
-        box-shadow: 0 0.18rem 0.5rem color-mix(in srgb, var(--global-theme-color) 22%, transparent);
-      }
-
       .publication-entry-column {
         padding-left: 0.55rem;
       }

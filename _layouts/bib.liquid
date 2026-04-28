@@ -48,19 +48,8 @@
     </div>
   {% endif %}
 
-  {% if is_publications_page %}
-    {% capture earlier_year_count_raw %}{% bibliography_count --query @*[year < {{ entry.year }}] %}{% endcapture %}
-    {% assign earlier_year_count = earlier_year_count_raw | strip | plus: 0 %}
-    {% capture current_year_count_raw %}{% bibliography_count --query @*[year={{ entry.year }}] %}{% endcapture %}
-    {% assign current_year_count = current_year_count_raw | strip | plus: 0 %}
-    {% assign publication_number = earlier_year_count | plus: current_year_count | minus: index | plus: 1 %}
-    <div class="col-sm-1 publication-number-column" aria-hidden="true">
-      <span class="publication-number">{{ publication_number }}</span>
-    </div>
-  {% endif %}
-
   <!-- Entry bib key -->
-  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}{% if is_publications_page %}col-sm-9{% else %}col-sm-8{% endif %}{% else %}{% if is_publications_page %}col-sm-11{% else %}col-sm-10{% endif %}{% endif %} publication-entry-column">
+  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}{% if is_publications_page %}col-sm-10{% else %}col-sm-8{% endif %}{% else %}{% if is_publications_page %}col-sm-12{% else %}col-sm-10{% endif %}{% endif %} publication-entry-column">
     {% assign title_link = '' %}
     {% if entry.url %}
       {% assign title_link = entry.url %}

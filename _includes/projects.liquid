@@ -16,8 +16,8 @@
       <div class="card-body project-card-body">
         <h2 class="card-title project-card-title">{{ project.title }}</h2>
         <p class="card-text project-card-description">{{ project.description }}</p>
-        <div class="row ml-1 mr-1 p-0 project-card-links">
-          {% if project.github %}
+        {% if project.github %}
+          <div class="row ml-1 mr-1 p-0 project-card-links">
             <div class="github-icon">
               <div class="icon" data-toggle="tooltip" title="Code Repository">
                 <a href="{{ project.github }}"><i class="fa-brands fa-github gh-icon"></i></a>
@@ -29,8 +29,8 @@
                 </span>
               {% endif %}
             </div>
-          {% endif %}
-        </div>
+          </div>
+        {% endif %}
       </div>
     </div>
   </a>

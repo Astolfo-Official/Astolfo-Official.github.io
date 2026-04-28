@@ -2,7 +2,7 @@
 layout: page
 title: research
 permalink: /research/
-description: My research is centered around understanding light-matter interactions through the development of innovative theoretical and computational tools.
+description: My research is centered on understanding light-matter interactions through the development of innovative theoretical and computational tools.
 nav: true
 nav_order: 2
 display_categories: 

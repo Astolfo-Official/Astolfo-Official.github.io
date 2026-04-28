@@ -18,7 +18,7 @@ ninja.data = [{
           },
         },{id: "nav-research",
           title: "research",
-          description: "My research is centered around understanding light-matter interactions through the development of innovative theoretical and computational tools.",
+          description: "My research is centered on understanding light-matter interactions through the development of innovative theoretical and computational tools.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/research/";

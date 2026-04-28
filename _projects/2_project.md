@@ -3,6 +3,7 @@ layout: page
 title: AI-enhanced Research
 description: LLM-based autonomous agents for scientific simulations, workflow orchestration, and code optimization across research domains.
 img: assets/img/research_figures/fermilink.png
+img_scale: 1.22
 importance: 2
 category: work
 related_publications: true
@@ -19,7 +20,7 @@ A representative direction in this effort is `FermiLink`, a unified agent framew
 
 <div class="row">
   <div class="col-sm-8 mx-auto mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/publication_preview/mengFermiLinkUnifiedAgent2026.png" title="FermiLink for autonomous scientific simulations" class="img-fluid rounded z-depth-1 d-block mx-auto" max-width="600px" %}
+    {% include figure.liquid loading="eager" path="assets/img/publication_preview/mengFermiLinkUnifiedAgent2026.png" title="FermiLink for autonomous scientific simulations" class="img-fluid rounded z-depth-1 d-block mx-auto" max-width="300px" %}
   </div>
 </div>
 <div class="caption">

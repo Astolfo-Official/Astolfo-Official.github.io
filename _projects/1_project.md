@@ -3,7 +3,7 @@ layout: page
 title: Computational Polaritonics
 description: Atomistic cavity molecular dynamics for vibrational polaritons and self-consistent light-matter simulations.
 img: assets/img/research_figures/cavmd.png
-img_scale: 1.12
+img_scale: 1.52
 importance: 1
 category: work
 related_publications: true

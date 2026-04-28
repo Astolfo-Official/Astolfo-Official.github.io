@@ -24,11 +24,11 @@
   }
 
   h2.bibliography {
-    color: var(--global-divider-color);
+    color: color-mix(in srgb, var(--global-theme-color) 68%, var(--global-text-color));
     border-top: 1px solid var(--global-divider-color);
     padding-top: 1rem;
     margin-top: 2rem;
-    text-align: right;
+    text-align: left;
   }
 
   ol.bibliography {
@@ -39,8 +39,43 @@
     li {
       margin-bottom: 1rem;
 
-      .preview {
-        display: inline-block;
+      .row {
+        align-items: center;
+      }
+
+      .publication-preview-column {
+        padding-right: 0.45rem;
+      }
+
+      .publication-number-column {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 0.15rem;
+        padding-right: 0.15rem;
+      }
+
+      .publication-number {
+        color: var(--global-bg-color);
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        text-rendering: optimizeLegibility;
+        width: 2.45rem;
+        height: 2.45rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--global-theme-color);
+        border-radius: 0.55rem;
+        box-shadow: 0 0.18rem 0.5rem color-mix(in srgb, var(--global-theme-color) 22%, transparent);
+      }
+
+      .publication-entry-column {
+        padding-left: 0.55rem;
       }
 
       .abbr {
@@ -65,19 +100,65 @@
           color: var(--global-theme-color) !important;
           border: 1px solid var(--global-theme-color);
         }
+
+        .preview-container {
+          width: 100%;
+          max-width: 180px;
+          aspect-ratio: 4 / 3;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-radius: 0.25rem;
+
+          figure,
+          picture {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+          }
+
+          .preview {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
       }
 
       .title {
         font-weight: bolder;
+
+        a {
+          color: inherit;
+          text-decoration: underline;
+          text-underline-offset: 0.12em;
+
+          &:hover {
+            color: var(--global-theme-color);
+          }
+        }
       }
 
       .author {
+        font-size: 0.93rem;
+        line-height: 1.45;
+
         a {
           border-bottom: 1px dashed var(--global-theme-color);
 
           &:hover {
             border-bottom-style: solid;
             text-decoration: none;
+          }
+        }
+
+        a.self-author {
+          border-bottom-style: solid;
+
+          > em {
+            font-style: normal;
           }
         }
 
@@ -94,6 +175,34 @@
           &:hover {
             color: var(--global-text-color);
             border-bottom: 1px dashed var(--global-text-color);
+          }
+        }
+      }
+
+      .periodical {
+        font-size: 0.93rem;
+        line-height: 1.4;
+      }
+
+      .resource-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.55rem;
+        margin-bottom: 0.75rem;
+
+        .resource-link {
+          color: var(--global-text-color);
+          border: 1px solid var(--global-text-color);
+          border-radius: 0.35rem;
+          padding: 0.18rem 0.7rem;
+          font-size: 0.86rem;
+          line-height: 1.2;
+
+          &:hover {
+            color: var(--global-theme-color);
+            border-color: var(--global-theme-color);
+            text-decoration: none;
           }
         }
       }

@@ -6,6 +6,11 @@ img: assets/img/research_figures/cavmd.png
 importance: 1
 category: work
 related_publications: true
+_styles: |
+  .post-description {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
 ---
 
 `CavMD` expands the scope of conventional molecular dynamics and can efficiently simulate collective vibrational strong coupling formed by a large collection of realistic molecules. Beyond the single-mode limit, the recently developed mesoscale CavMD approach propagates coupled light-matter dynamics for condensed-phase molecules confined in a wide range of cavity geometries, including the planar Fabry-Perot cavities commonly employed in experiments.

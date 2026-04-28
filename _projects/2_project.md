@@ -6,6 +6,11 @@ img: assets/img/research_figures/fermilink.png
 importance: 2
 category: work
 related_publications: true
+_styles: |
+  .post-description {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
 ---
 
 `AI-enhanced Research` explores how large language models and autonomous agents can assist scientific discovery by planning simulations, coordinating domain tools, and improving research code. The focus is on building reliable agentic workflows that remain grounded in physics, chemistry, and numerical constraints rather than treating scientific computing as a generic text-generation problem.

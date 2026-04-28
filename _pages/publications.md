@@ -5,6 +5,11 @@ title: publications
 description: ""
 nav: true
 nav_order: 3
+scholar:
+  sort_by: urldate,key
+  order: descending,descending
+  group_by: year
+  group_order: descending
 ---
 
 <!-- _pages/publications.md -->
@@ -14,7 +19,5 @@ nav_order: 3
 {% include bib_search.liquid %}
 
 <div class="publications">
-
 {% bibliography %}
-
 </div>

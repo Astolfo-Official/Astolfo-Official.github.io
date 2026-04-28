@@ -3,13 +3,13 @@
     <div class="card h-100 hoverable project-card project-card-horizontal">
       <div class="row no-gutters h-100">
         {% if project.img %}
-          <div class="col-md-6 d-flex">
-            <div class="project-card-media w-100">
+          <div class="col-md-6 d-flex project-card-media-column">
+            <div class="project-card-media w-100"{% if project.img_scale %} style="--project-image-scale: {{ project.img_scale }};"{% endif %}>
               {% include figure.liquid loading="eager" path=project.img sizes="(min-width: 768px) 156px, 50vw" alt="project thumbnail" class="card-img project-card-image" %}
             </div>
           </div>
         {% endif %}
-        <div class="{% if project.img %}col-md-6 d-flex{% else %}col-md-12{% endif %}">
+        <div class="{% if project.img %}col-md-6 d-flex project-card-content-column{% else %}col-md-12{% endif %}">
           <div class="card-body project-card-body">
             <h3 class="card-title project-card-title">{{ project.title }}</h3>
             <p class="card-text project-card-description">{{ project.description }}</p>

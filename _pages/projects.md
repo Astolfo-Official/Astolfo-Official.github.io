@@ -2,15 +2,20 @@
 layout: page
 title: research
 permalink: /research/
-description:
+description: My research is centered around understanding light-matter interactions through the development of innovative theoretical and computational tools.
 nav: true
 nav_order: 2
 display_categories: 
-horizontal: false
+horizontal: true
+_styles: |
+  .post-description {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
 ---
 
 <!-- pages/projects.md -->
-<div class="projects">
+<div class="projects research-projects">
 {% if site.enable_project_categories and page.display_categories %}
   <!-- Display categorized projects -->
   {% for category in page.display_categories %}
@@ -22,7 +27,7 @@ horizontal: false
   <!-- Generate cards for each project -->
   {% if page.horizontal %}
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1">
     {% for project in sorted_projects %}
       {% include projects_horizontal.liquid %}
     {% endfor %}
@@ -48,7 +53,7 @@ horizontal: false
 {% if page.horizontal %}
 
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1">
     {% for project in sorted_projects %}
       {% include projects_horizontal.liquid %}
     {% endfor %}

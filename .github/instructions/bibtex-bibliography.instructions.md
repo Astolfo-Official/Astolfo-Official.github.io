@@ -45,6 +45,7 @@ Beyond standard BibTeX fields, al-folio supports custom keywords for rich public
 
 - **abstract:** Full abstract text (multi-line text in curly braces)
 - **award:** Award or distinction (`award: Best Paper Award`)
+- **data:** URL to dataset or supplementary data page (`data: https://example.com/dataset`)
 - **code:** URL to source code repository (`code: https://github.com/user/repo`)
 - **dimensions:** Dimensions badge ID for citation metrics
 - **doi:** Digital Object Identifier (`doi: 10.1234/example`)
@@ -53,6 +54,7 @@ Beyond standard BibTeX fields, al-folio supports custom keywords for rich public
 - **poster:** URL to conference poster (`poster: /assets/posters/poster.pdf`)
 - **preview:** URL to preview image (`preview: /assets/img/papers/paper-preview.jpg`)
 - **selected:** Boolean to feature on publications page (`selected: true`)
+- **site:** URL to project/paper landing page (`site: https://example.com/paper`)
 - **slides:** URL to presentation slides (`slides: /assets/slides/2023.pdf`)
 
 ### Example Entry with Custom Keywords

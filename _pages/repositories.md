@@ -5,7 +5,7 @@ title: repositories
 description: 
 nav: true
 nav_order: 6
-published: true
+published: false
 ---
 
 {% if site.data.repositories.github_users %}

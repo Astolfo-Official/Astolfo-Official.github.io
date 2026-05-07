@@ -187,7 +187,14 @@ layout: default
                     </ul>
                   {% elsif entry.label %}
                     <div class="card-text font-weight-light">
-                      <strong>{{ entry.label }}:</strong> {{ entry.details }}
+                      <strong>
+                        {% if entry.url %}
+                          <a href="{{ entry.url }}" target="_blank">{{ entry.label }}</a>:
+                        {% else %}
+                          {{ entry.label }}:
+                        {% endif %}
+                      </strong>
+                      {{ entry.details }}
                     </div>
                   {% endif %}
                 {% endfor %}

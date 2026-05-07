@@ -89,6 +89,17 @@ cv:
         releaseDate: 2026
         url: https://arxiv.org/pdf/2604.03460
 
+    Software:
+      - label: MaxwellLink
+        details: A Unified Framework for Self-Consistent Light–Matter Simulations
+        url: https://github.com/TaoELi/MaxwellLink
+      - label: FermiLink
+        details: A Unified Agent Framework for Autonomous Scientific Simulations
+        url: https://github.com/TaoELi/FermiLink
+      - label: I-Pi
+        details: A Python interface for multidomain molecular dynamics simulations
+        url: https://github.com/i-pi/i-pi
+
     Research Interests:
       - label: Chemical Physics
         details: Light-Matter Interaction and Nuclear Quantum Effects

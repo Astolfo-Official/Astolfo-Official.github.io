@@ -5,16 +5,18 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% for entry in entries %}
     <li class="list-group-item">
+      {% assign project_title = entry.name | default: entry.label %}
       {% if entry.url %}
         <h6 class="title font-weight-bold">
-          <a href="{{ entry.url }}" target="_blank">{{ entry.name }}</a>
+          <a href="{{ entry.url }}" target="_blank">{{ project_title }}</a>
         </h6>
       {% else %}
-        <h6 class="title font-weight-bold">{{ entry.name }}</h6>
+        <h6 class="title font-weight-bold">{{ project_title }}</h6>
       {% endif %}
 
-      {% if entry.summary %}
-        <p>{{ entry.summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
+      {% assign project_summary = entry.summary | default: entry.description | default: entry.details %}
+      {% if project_summary %}
+        <p>{{ project_summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
       {% endif %}
 
       {% if entry.highlights %}

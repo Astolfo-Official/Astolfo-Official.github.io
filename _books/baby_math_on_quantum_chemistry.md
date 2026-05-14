@@ -13,7 +13,7 @@ tags:
 date: 2022-02-28
 started: 2021-09-30
 finished: 2022-02-28
-released: 2026
+released: 2022
 status: Finished
 buy_link: https://github.com/Astolfo-Official/Baby-Math-on-Quantum-Chemistry
 ---

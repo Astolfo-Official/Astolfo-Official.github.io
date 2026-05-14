@@ -1,0 +1,93 @@
+---
+layout: page
+---
+{% assign collection = site[page.collection] %}
+{% assign finished_notes = collection | where: 'status', 'Finished' %}
+{% assign active_notes = collection | where: 'status', 'Reading' %}
+
+<div class="notes-shelf">
+  <section class="notes-hero" aria-label="Notes overview">
+    <div class="notes-hero-copy">
+      {{ content }}
+    </div>
+    <dl class="notes-stats">
+      <div>
+        <dt>{{ collection | size }}</dt>
+        <dd>manuscripts</dd>
+      </div>
+      <div>
+        <dt>{{ finished_notes | size }}</dt>
+        <dd>finished</dd>
+      </div>
+      <div>
+        <dt>{{ active_notes | size }}</dt>
+        <dd>active</dd>
+      </div>
+    </dl>
+  </section>
+
+  {% if collection and collection.size > 0 %}
+    <section class="notes-section" aria-labelledby="core-notes">
+      <div class="notes-section-heading">
+        <p class="notes-kicker">Library</p>
+        <h2 id="core-notes">Core Notes</h2>
+      </div>
+
+      <div class="notes-list">
+        {% for item in collection reversed %}
+          {% assign intro = item.content | split: 'Introduction:' | last | markdownify | strip_html | strip_newlines | replace: '  ', ' ' | replace: '  ', ' ' | strip %}
+          <article class="note-card">
+            <a class="note-card-media" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
+              {% if item.cover %}
+                <img alt="{{ item.title }} cover" src="{{ item.cover | relative_url }}">
+              {% elsif item.olid %}
+                <img alt="{{ item.title }} cover" src="https://covers.openlibrary.org/b/olid/{{ item.olid }}-L.jpg?default=false">
+              {% elsif item.isbn %}
+                <img alt="{{ item.title }} cover" src="https://covers.openlibrary.org/b/isbn/{{ item.isbn }}-L.jpg?default=false">
+              {% else %}
+                <span class="note-card-fallback">
+                  <i class="fa-solid fa-book-open"></i>
+                </span>
+              {% endif %}
+            </a>
+
+            <div class="note-card-body">
+              <div class="note-card-meta">
+                {% if item.status %}
+                  <span class="note-status note-status-{{ item.status | downcase }}">{{ item.status }}</span>
+                {% endif %}
+                {% if item.released %}
+                  <span>{{ item.released }}</span>
+                {% endif %}
+                {% if item.categories %}
+                  {% for category in item.categories %}
+                    {% unless category == 'notes' %}
+                      <span>{{ category }}</span>
+                    {% endunless %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+              <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+
+              {% if intro != '' %}
+                <p>{{ intro }}</p>
+              {% endif %}
+
+              <div class="note-card-actions">
+                <a class="note-read-link" href="{{ item.url | relative_url }}">
+                  Read note <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </a>
+                {% if item.buy_link %}
+                  <a class="note-repo-link" href="{{ item.buy_link }}" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-github" aria-hidden="true"></i> Repository
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+</div>

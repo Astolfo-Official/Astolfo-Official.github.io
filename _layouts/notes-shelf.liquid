@@ -32,7 +32,7 @@ layout: page
     <section class="notes-section" aria-label="Core notes">
       <div class="notes-list">
         {% for item in collection reversed %}
-          {% assign intro = item.content | split: 'Introduction:' | last | markdownify | strip_html | strip_newlines | replace: '  ', ' ' | replace: '  ', ' ' | strip %}
+          {% assign intro = item.content | split: 'Introduction:' | last | replace: '</li>', '' | replace: '</ul>', '' | markdownify | strip_html | strip_newlines | replace: '  ', ' ' | replace: '  ', ' ' | strip %}
           <article class="note-card">
             <a class="note-card-media" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
               {% if item.cover %}

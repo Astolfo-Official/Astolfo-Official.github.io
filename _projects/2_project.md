@@ -1,11 +1,18 @@
 ---
 layout: page
 title: AI-enhanced Research
-description: LLM-based autonomous agents for scientific simulations, workflow orchestration, and code optimization across research domains.
+description: >
+  LLM-based autonomous agents for scientific simulations, workflow
+  orchestration, and research code optimization. This project builds reliable
+  agentic systems such as FermiLink that can plan computational tasks, connect
+  domain tools, refine code iteratively, and organize reproducible multi-step
+  experiments.
 img: assets/img/research_figures/fermilink.png
 img_scale: 1.22
 importance: 2
 category: work
+research_area: ai-agents
+research_filter: AI Agents
 related_publications: true
 _styles: |
   .post-description {

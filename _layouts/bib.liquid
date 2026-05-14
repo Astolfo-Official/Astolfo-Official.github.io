@@ -4,6 +4,9 @@
   {% assign is_publications_page = page.url == '/publications/' %}
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr publication-preview-column">
+      {% if is_publications_page %}
+        <span class="publication-number" aria-label="Publication number"></span>
+      {% endif %}
       {%- if entry.abbr -%}
         {%- if site.data.venues[entry.abbr] -%}
           {% assign venue_style = null %}
@@ -49,7 +52,26 @@
   {% endif %}
 
   <!-- Entry bib key -->
-  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}{% if is_publications_page %}col-sm-10{% else %}col-sm-8{% endif %}{% else %}{% if is_publications_page %}col-sm-12{% else %}col-sm-10{% endif %}{% endif %} publication-entry-column">
+  {% assign publication_research_area = entry.research_area | default: entry.researcharea %}
+  {% assign publication_entry_column_class = '' %}
+  {% if site.enable_publication_thumbnails %}
+    {% if is_publications_page %}
+      {% assign publication_entry_column_class = 'col-sm-9' %}
+    {% else %}
+      {% assign publication_entry_column_class = 'col-sm-8' %}
+    {% endif %}
+  {% else %}
+    {% if is_publications_page %}
+      {% assign publication_entry_column_class = 'col-sm-12' %}
+    {% else %}
+      {% assign publication_entry_column_class = 'col-sm-10' %}
+    {% endif %}
+  {% endif %}
+  <div
+    id="{{ entry.key }}"
+    class="{{ publication_entry_column_class }} publication-entry-column"
+    data-research-area="{{ publication_research_area | downcase | escape }}"
+  >
     {% assign title_link = '' %}
     {% if entry.url %}
       {% assign title_link = entry.url %}
@@ -76,13 +98,20 @@
     {% endif %}
 
     <!-- Title -->
-    <div class="title">
-      {% if title_link != blank %}
-        <a href="{{ title_link }}">{{ entry.title }}</a>
-      {% else %}
-        {{ entry.title }}
-      {% endif %}
+    <div class="publication-title-line">
+      <div class="title">
+        {% if title_link != blank %}
+          <a href="{{ title_link }}">{{ entry.title }}</a>
+        {% else %}
+          {{ entry.title }}
+        {% endif %}
+      </div>
     </div>
+    {% if entry.keywords %}
+      <span class="publication-search-metadata" aria-hidden="true">
+        {{ entry.keywords }}
+      </span>
+    {% endif %}
     <!-- Author -->
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}

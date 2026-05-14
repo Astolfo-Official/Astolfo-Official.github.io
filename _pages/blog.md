@@ -21,7 +21,6 @@ pagination:
   {% assign blog_description = site.blog_description | default: 'Notes, derivations, and technical fragments from my research notebook.' %}
 
   <header class="blog-index-hero">
-    <p class="blog-index-eyebrow">Research Notebook</p>
     <h1>{{ blog_name }}</h1>
     {% if blog_description == 'Also see the structured notes in my bookshelf' %}
       <p>Also see the structured notes in my <a href="{{ '/notes/' | relative_url }}">bookshelf</a>.</p>

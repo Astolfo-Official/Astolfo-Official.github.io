@@ -44,7 +44,14 @@
       }
 
       .publication-preview-column {
+        position: relative;
         padding-right: 0.45rem;
+      }
+
+      .publications-page & .publication-preview-column {
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding-left: 2.35rem;
       }
 
       .publication-entry-column {
@@ -112,6 +119,30 @@
             color: var(--global-theme-color);
           }
         }
+      }
+
+      .publication-title-line {
+        display: block;
+      }
+
+      .publication-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.72rem;
+        height: 1.72rem;
+        position: absolute;
+        top: 50%;
+        left: 0.25rem;
+        transform: translateY(-50%);
+        border: 1px solid color-mix(in srgb, var(--global-theme-color) 28%, var(--global-divider-color));
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--global-theme-color) 9%, var(--global-card-bg-color));
+        color: var(--global-theme-color);
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.72rem;
+        font-weight: 800;
+        line-height: 1;
       }
 
       .author {
@@ -260,6 +291,105 @@
     }
     div.award.hidden.open {
       border-color: var(--global-highlight-color);
+    }
+  }
+}
+
+.publication-search-metadata {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.related-publications {
+  margin-top: 2.6rem;
+
+  .related-publications__heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.1rem;
+    color: var(--global-text-color);
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.55rem);
+
+    &::after {
+      flex: 1 1 auto;
+      height: 1px;
+      background: linear-gradient(90deg, var(--global-divider-color), transparent);
+      content: "";
+    }
+  }
+
+  .publications {
+    margin-top: 0;
+  }
+}
+
+.publications-page .publications {
+  ol.bibliography {
+    display: grid;
+    gap: 1rem;
+  }
+
+  ol.bibliography > li {
+    margin-bottom: 0;
+    padding: clamp(1rem, 2.4vw, 1.25rem);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(252, 126, 175, 0.1), transparent 44%),
+      var(--global-card-bg-color);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--global-theme-color) 38%, var(--global-divider-color));
+      box-shadow: 0 20px 42px rgba(15, 23, 42, 0.09);
+      transform: translateY(-2px);
+    }
+  }
+
+  ol.bibliography li {
+    .title {
+      margin-bottom: 0.35rem;
+      font-size: 1.08rem;
+      line-height: 1.4;
+    }
+
+    .author,
+    .periodical {
+      color: var(--global-text-color-light);
+    }
+
+    .abbr abbr {
+      border-radius: 6px;
+    }
+
+    .abbr .preview-container {
+      border: 1px solid var(--global-divider-color);
+      border-radius: 8px;
+      background: var(--global-bg-color);
+    }
+
+    .resource-links .resource-link,
+    .links a.btn {
+      border-color: var(--global-divider-color);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--global-text-color);
+      font-weight: 600;
+
+      &:hover {
+        border-color: var(--global-theme-color);
+        background: var(--global-theme-color);
+        color: var(--global-hover-text-color);
+      }
     }
   }
 }

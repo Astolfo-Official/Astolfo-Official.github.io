@@ -1,11 +1,18 @@
 ---
 layout: page
 title: Computational Polaritonics
-description: Atomistic cavity molecular dynamics for vibrational polaritons and self-consistent light-matter simulations.
+description: >
+  Atomistic and mesoscale cavity molecular dynamics for realistic vibrational
+  polaritons. This project studies how optical cavities reshape molecular
+  vibrations, relaxation, energy transfer, and nonlinear spectroscopic
+  responses, while developing self-consistent light-matter simulation tools
+  such as CavMD and MaxwellLink.
 img: assets/img/research_figures/cavmd.png
 img_scale: 1.8
 importance: 1
 category: work
+research_area: polaritonics
+research_filter: Polaritonics
 related_publications: true
 _styles: |
   .post-description {

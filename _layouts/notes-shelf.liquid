@@ -6,34 +6,30 @@ layout: page
 {% assign active_notes = collection | where: 'status', 'Reading' %}
 
 <div class="notes-shelf">
-  <header class="page-hero">
-    <p class="page-hero-eyebrow">Bookshelf</p>
-    <h1>{{ page.title }}</h1>
-    {{ content }}
+  <header class="page-hero notes-hero">
+    <div class="notes-hero__copy">
+      <h1>{{ page.title }}</h1>
+      {{ content }}
+    </div>
+
+    <dl class="notes-stats" aria-label="Notes overview">
+      <div>
+        <dt>{{ collection | size }}</dt>
+        <dd>manuscripts</dd>
+      </div>
+      <div>
+        <dt>{{ finished_notes | size }}</dt>
+        <dd>finished</dd>
+      </div>
+      <div>
+        <dt>{{ active_notes | size }}</dt>
+        <dd>active</dd>
+      </div>
+    </dl>
   </header>
 
-  <dl class="notes-stats" aria-label="Notes overview">
-    <div>
-      <dt>{{ collection | size }}</dt>
-      <dd>manuscripts</dd>
-    </div>
-    <div>
-      <dt>{{ finished_notes | size }}</dt>
-      <dd>finished</dd>
-    </div>
-    <div>
-      <dt>{{ active_notes | size }}</dt>
-      <dd>active</dd>
-    </div>
-  </dl>
-
   {% if collection and collection.size > 0 %}
-    <section class="notes-section" aria-labelledby="core-notes">
-      <div class="notes-section-heading">
-        <p class="notes-kicker">Library</p>
-        <h2 id="core-notes">Core Notes</h2>
-      </div>
-
+    <section class="notes-section" aria-label="Core notes">
       <div class="notes-list">
         {% for item in collection reversed %}
           {% assign intro = item.content | split: 'Introduction:' | last | markdownify | strip_html | strip_newlines | replace: '  ', ' ' | replace: '  ', ' ' | strip %}

@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: Publications
-description: Papers, preprints, code, and datasets from my research.
+description:
 nav: true
 nav_order: 3
 scholar:
@@ -20,6 +20,10 @@ _styles: |
   }
 
   .publication-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
     margin: 1.15rem 0 2rem;
   }
 
@@ -40,6 +44,44 @@ _styles: |
     box-shadow: 0 0 0 0.18rem rgba(252, 126, 175, 0.14);
   }
 
+  .publication-filter-list {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .publication-filter {
+    min-height: 2.35rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--global-text-color);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .publication-filter:hover,
+  .publication-filter.is-active {
+    border-color: var(--global-theme-color);
+    background: var(--global-theme-color);
+    color: var(--global-hover-text-color);
+  }
+
+  .research-area-filtered {
+    display: none !important;
+  }
+
   .publications-page .publications {
     margin-top: 0;
   }
@@ -53,6 +95,9 @@ _styles: |
     border-top: 0;
     color: var(--global-text-color);
     font-size: clamp(1.2rem, 1rem + 1vw, 1.55rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0;
   }
 
   .publications-page .publications h2.bibliography::after {
@@ -132,6 +177,8 @@ _styles: |
 
     .publication-tools {
       width: 100%;
+      align-items: stretch;
+      flex-direction: column;
     }
 
     .publications-page .publications ol.bibliography > li {
@@ -144,16 +191,89 @@ _styles: |
 
 <div class="publications-page">
   <header class="page-hero">
-    <p class="page-hero-eyebrow">Research Output</p>
     <h1>{{ page.title }}</h1>
     <p>{{ page.description }}</p>
   </header>
 
   <div class="publication-tools">
     {% include bib_search.liquid %}
+    <ul class="publication-filter-list" aria-label="Research direction filters">
+      <li><button class="publication-filter is-active" type="button" data-area="all">All</button></li>
+      <li><button class="publication-filter" type="button" data-area="photonics">Polaritonics</button></li>
+      <li><button class="publication-filter" type="button" data-area="ai-agents">AI Agents</button></li>
+      <li><button class="publication-filter" type="button" data-area="electronic structure">Electronic Structure</button></li>
+    </ul>
   </div>
 
   <div class="publications">
     {% bibliography %}
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const filters = Array.from(document.querySelectorAll(".publication-filter"));
+    const entries = Array.from(document.querySelectorAll(".bibliography > li"));
+    if (filters.length === 0 || entries.length === 0) return;
+
+    let activeArea = "all";
+
+    const assignPublicationNumbers = () => {
+      const publicationNumbers = entries.map((entry) => entry.querySelector(".publication-number")).filter(Boolean);
+      const publicationCount = publicationNumbers.length;
+
+      publicationNumbers.forEach((numberElement, index) => {
+        numberElement.textContent = publicationCount - index;
+      });
+    };
+
+    const updateBibliographyGroups = () => {
+      document.querySelectorAll("h2.bibliography").forEach((heading) => {
+        let iterator = heading.nextElementSibling;
+        let hasVisibleEntry = false;
+
+        while (iterator && iterator.tagName !== "H2") {
+          if (iterator.tagName === "OL") {
+            const listItems = Array.from(iterator.querySelectorAll(":scope > li"));
+            const listHasVisibleEntry = listItems.some(
+              (item) => !item.classList.contains("unloaded") && !item.classList.contains("research-area-filtered")
+            );
+
+            iterator.classList.toggle("research-area-filtered", !listHasVisibleEntry);
+            if (iterator.previousElementSibling && iterator.previousElementSibling.tagName !== "OL") {
+              iterator.previousElementSibling.classList.toggle("research-area-filtered", !listHasVisibleEntry);
+            }
+            hasVisibleEntry = hasVisibleEntry || listHasVisibleEntry;
+          }
+          iterator = iterator.nextElementSibling;
+        }
+
+        heading.classList.toggle("research-area-filtered", !hasVisibleEntry);
+      });
+    };
+
+    const applyResearchAreaFilter = () => {
+      entries.forEach((entry) => {
+        const entryArea = entry.querySelector(".publication-entry-column")?.dataset.researchArea || "";
+        const matchesArea = activeArea === "all" || entryArea === activeArea;
+        entry.classList.toggle("research-area-filtered", !matchesArea);
+      });
+      updateBibliographyGroups();
+    };
+
+    filters.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeArea = button.dataset.area;
+        filters.forEach((filterButton) => filterButton.classList.toggle("is-active", filterButton === button));
+        applyResearchAreaFilter();
+      });
+    });
+
+    document.getElementById("bibsearch")?.addEventListener("input", () => {
+      window.setTimeout(updateBibliographyGroups, 0);
+    });
+
+    assignPublicationNumbers();
+    applyResearchAreaFilter();
+  });
+</script>

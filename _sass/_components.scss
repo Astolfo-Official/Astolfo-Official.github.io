@@ -128,17 +128,17 @@ ul.task-list input[type="checkbox"] {
   position: relative;
   margin: 0 0 1.35rem;
   padding: 0 0 1.45rem;
-  border-bottom: 1px solid var(--global-divider-color);
 
   > * {
     position: relative;
   }
 
   h1 {
-    margin: 0.25rem 0 0.8rem;
+    margin: 0 0 0.8rem;
     color: var(--global-text-color);
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    line-height: 1.08;
+    font-size: clamp(1.65rem, 3.4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.14;
     letter-spacing: 0;
   }
 
@@ -185,6 +185,56 @@ ul.task-list input[type="checkbox"] {
   .page-hero {
     width: 100%;
     max-width: 100%;
+  }
+}
+
+.post--related-publications {
+  .research-detail-content {
+    color: var(--global-text-color);
+    font-size: 1rem;
+    line-height: 1.75;
+
+    p {
+      margin-bottom: 1.15rem;
+    }
+
+    code {
+      color: var(--global-theme-color);
+    }
+
+    .row {
+      margin-top: 1.6rem;
+      margin-bottom: 0.55rem;
+    }
+
+    figure,
+    picture {
+      margin: 0;
+    }
+
+    img {
+      border: 1px solid var(--global-divider-color);
+      border-radius: 8px !important;
+      background: var(--global-bg-color);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+    }
+
+    .caption {
+      margin-bottom: 1.4rem;
+      color: var(--global-text-color-light);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.page-standard-header {
+  .post-title {
+    margin: 0 0 0.8rem;
+    color: var(--global-text-color);
+    font-size: clamp(1.65rem, 3.4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0;
   }
 }
 
@@ -419,6 +469,21 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+.notes-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 34rem);
+  gap: 1.5rem;
+  align-items: end;
+
+  .notes-stats {
+    margin: 0 0 0.2rem;
+  }
+}
+
+.notes-hero__copy {
+  min-width: 0;
+}
+
 .notes-section {
   padding-top: 2rem;
 }
@@ -590,6 +655,15 @@ html[data-theme="dark"] {
 }
 
 @media (max-width: 768px) {
+  .notes-hero {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+
+    .notes-stats {
+      margin: 0;
+    }
+  }
+
   .notes-stats {
     width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -692,7 +766,10 @@ html[data-theme="dark"] {
 
 .note-detail-title {
   margin: 0.75rem 0 0.85rem;
-  line-height: 1.12;
+  font-size: clamp(1.65rem, 3.4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: 0;
 }
 
 .note-detail-description {

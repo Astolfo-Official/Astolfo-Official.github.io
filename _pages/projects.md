@@ -2,7 +2,7 @@
 layout: page
 title: Research
 permalink: /research/
-description: My research is centered on understanding light-matter interactions through the development of innovative theoretical and computational tools.
+description:
 nav: true
 nav_order: 2
 _styles: |
@@ -14,46 +14,35 @@ _styles: |
     margin-top: 0;
   }
 
-  .research-section-heading {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .research-section-heading::before {
-    content: "";
-    width: 3.5rem;
-    height: 1px;
-    background: var(--global-theme-color);
-    opacity: 0.55;
-  }
-
-  .research-section-heading h2 {
-    margin: 0;
-    font-size: clamp(1.2rem, 1rem + 1vw, 1.55rem);
-    letter-spacing: 0.02em;
-  }
-
   .research-stream {
     display: grid;
-    gap: 3rem;
+    gap: 1rem;
   }
 
   .research-entry {
-    padding-bottom: 3rem;
-    border-bottom: 1px solid var(--global-divider-color);
+    padding: clamp(1rem, 2.5vw, 1.25rem);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(252, 126, 175, 0.1), transparent 44%),
+      var(--global-card-bg-color);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .research-entry:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
+  .research-entry:hover {
+    border-color: color-mix(in srgb, var(--global-theme-color) 38%, var(--global-divider-color));
+    box-shadow: 0 20px 42px rgba(15, 23, 42, 0.09);
+    transform: translateY(-2px);
   }
 
   .research-entry__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: 2rem;
+    grid-template-columns: minmax(12rem, 0.38fr) minmax(0, 1fr);
+    gap: 1.25rem;
     align-items: center;
   }
 
@@ -66,16 +55,8 @@ _styles: |
     display: block;
     overflow: hidden;
     border: 1px solid var(--global-divider-color);
-    border-radius: 1.4rem;
-    background:
-      linear-gradient(145deg, rgba(252, 126, 175, 0.14), rgba(252, 126, 175, 0) 60%),
-      var(--global-card-bg-color);
-    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.08);
-  }
-
-  .research-entry__media:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 28px 54px rgba(15, 23, 42, 0.12);
+    border-radius: 8px;
+    background: var(--global-bg-color);
   }
 
   .research-entry__media,
@@ -100,8 +81,8 @@ _styles: |
     display: block;
     width: 100%;
     height: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    aspect-ratio: 16 / 10;
+    object-fit: contain;
   }
 
   .research-entry__eyebrow {
@@ -111,7 +92,7 @@ _styles: |
     margin-bottom: 0.9rem;
     font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--global-theme-color);
   }
@@ -126,8 +107,11 @@ _styles: |
 
   .research-entry__title {
     margin-bottom: 0.85rem;
-    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
-    line-height: 1.15;
+    color: var(--global-text-color);
+    font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0;
   }
 
   .research-entry__title a {
@@ -141,14 +125,8 @@ _styles: |
 
   .research-entry__description {
     margin-bottom: 1rem;
-    font-size: 1.04rem;
+    font-size: 1rem;
     line-height: 1.75;
-  }
-
-  .research-entry__summary {
-    margin-bottom: 1.35rem;
-    color: var(--global-text-color-light);
-    line-height: 1.8;
   }
 
   .research-entry__link {
@@ -180,11 +158,7 @@ _styles: |
     }
 
     .research-entry {
-      padding-bottom: 2.4rem;
-    }
-
-    .research-section-heading {
-      margin-bottom: 1.5rem;
+      padding: 1rem;
     }
   }
 ---
@@ -193,14 +167,9 @@ _styles: |
 
 <div class="research-page">
   <header class="page-hero">
-    <p class="page-hero-eyebrow">Research Directions</p>
     <h1>{{ page.title }}</h1>
     <p>{{ page.description }}</p>
   </header>
-
-  <div class="research-section-heading">
-    <h2>Main Research Interests</h2>
-  </div>
 
   {% if sorted_projects.size > 0 %}
     <div class="research-stream">
@@ -210,8 +179,8 @@ _styles: |
         {% else %}
           {% assign project_url = project.url | relative_url %}
         {% endif %}
-        {% assign project_summary = project.content | replace: '</p>', ' ' | replace: '<br>', ' ' | replace: '<br/>', ' ' | replace: '<br />', ' ' | strip_html | strip_newlines | replace: '  ', ' ' | replace: '  ', ' ' | truncatewords: 52 %}
-        <section class="research-entry">
+        {% assign project_anchor = project.title | slugify %}
+        <section id="{{ project_anchor }}" class="research-entry">
           <div class="research-entry__inner{% unless project.img %} research-entry__inner--text-only{% endunless %}">
             {% if project.img %}
               <a class="research-entry__media" href="{{ project_url }}">
@@ -226,12 +195,10 @@ _styles: |
               </a>
             {% endif %}
             <div class="research-entry__copy">
-              <p class="research-entry__eyebrow">Research Direction {{ forloop.index }}</p>
               <h3 class="research-entry__title">
                 <a href="{{ project_url }}">{{ project.title }}</a>
               </h3>
               <p class="research-entry__description">{{ project.description }}</p>
-              <p class="research-entry__summary">{{ project_summary }}</p>
               <a class="research-entry__link" href="{{ project_url }}">Read more</a>
             </div>
           </div>

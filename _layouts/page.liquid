@@ -8,20 +8,28 @@ layout: default
   </style>
 {% endif %}
 
-<div class="post">
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-description">{{ page.description }}</p>
-  </header>
+<div class="post{% if page.related_publications %} post--related-publications{% endif %}">
+  {% if page.related_publications %}
+    <header class="page-hero research-detail-hero">
+      <h1>{{ page.title }}</h1>
+      <p>{{ page.description }}</p>
+    </header>
+  {% else %}
+    <header class="post-header page-standard-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-description">{{ page.description }}</p>
+    </header>
+  {% endif %}
 
-  <article>
+  <article{% if page.related_publications %} class="research-detail-content"{% endif %}>
     {{ content }}
   </article>
 
   {% if page.related_publications %}
-    <h2>References</h2>
-    <div class="publications">
-      {% bibliography --cited_in_order %}
+    <div class="related-publications publications-page">
+      <div class="publications">
+        {% bibliography --cited_in_order %}
+      </div>
     </div>
   {% endif %}
 

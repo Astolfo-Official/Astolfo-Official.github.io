@@ -37,9 +37,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "nav-note",
-          title: "note",
-          description: "",
+        },{id: "nav-notes",
+          title: "notes",
+          description: "Mathematical and theoretical chemistry notes, written and maintained as living manuscripts.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/notes/";

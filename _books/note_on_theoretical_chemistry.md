@@ -17,5 +17,4 @@ status: Reading
 buy_link: https://github.com/Astolfo-Official/Note-on-Theoretical-Chemistry
 ---
 
-- Repo: [Astolfo-Official/Note-on-Theoretical-Chemistry](https://github.com/Astolfo-Official/Note-on-Theoretical-Chemistry)
 - Introduction: An evolving theoretical chemistry notebook whose current manuscript covers introductory and advanced quantum chemistry, Fourier transform, and a miscellaneous section, while the repository structure also keeps draft material for additional topics such as DMET and other extensions.

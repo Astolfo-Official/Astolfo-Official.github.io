@@ -18,5 +18,4 @@ status: Finished
 buy_link: https://github.com/Astolfo-Official/Baby-Math-on-Quantum-Chemistry
 ---
 
-- Repo: [Astolfo-Official/Baby-Math-on-Quantum-Chemistry](https://github.com/Astolfo-Official/Baby-Math-on-Quantum-Chemistry)
 - Introduction: A carefully transcribed and lightly annotated edition of Mathematics in Quantum Chemistry, covering an introduction, orthogonal functions, linear algebra, classical mechanics, and a concluding summary for readers approaching quantum chemistry from the mathematical side.

@@ -18,5 +18,4 @@ status: Finished
 buy_link: https://github.com/Astolfo-Official/Note-on-Functional-Analysis
 ---
 
-- Repo: [Astolfo-Official/Note-on-Functional-Analysis](https://github.com/Astolfo-Official/Note-on-Functional-Analysis)
 - Introduction: A self-written set of functional analysis notes organized around metric and topological spaces, normed linear spaces, bounded linear operators, Hilbert spaces, operator spectra, and exercises, intended as a mathematical foundation companion to the broader quantum chemistry note series.

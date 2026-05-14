@@ -14,31 +14,8 @@ layout: default
 {% endcomment %}
 
 <div class="post">
-  <header class="post-header">
-    <h1 class="post-title">
-      {{ page.title }}
-      {% if page.cv_pdf %}
-        <a
-          {% if page.cv_pdf contains '://' %}
-            href="{{ page.cv_pdf }}"
-          {% else %}
-            href="{{ page.cv_pdf | relative_url }}"
-          {% endif %}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="float-right"
-        >
-          <i class="fa-solid fa-file-pdf"></i>
-        </a>
-      {% endif %}
-    </h1>
-    {% if page.description %}
-      <p class="post-description">{{ page.description }}</p>
-    {% endif %}
-  </header>
-
   <article>
-    <div class="cv">
+    <div class="cv cv--research-profile">
       {% comment %} Determine which CV format to render {% endcomment %}
       {% assign render_rendercv = false %}
       {% assign render_jsonresume = false %}
@@ -60,64 +37,95 @@ layout: default
         {% comment %} RenderCV format {% endcomment %}
         {% assign cv = site.data.cv.cv %}
 
-        <!-- Header/Contact Information -->
-        {% if cv.name or cv.label or cv.location or cv.email or cv.phone or cv.website %}
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">Contact Information</h3>
-            <table class="table table-cv table-sm table-borderless">
-              {% if cv.name %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Name</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.name }}</td>
-                </tr>
+        <!-- Profile Overview -->
+        {% if cv.name or cv.label or cv.summary or cv.email %}
+          <section class="cv-overview-grid">
+            <article class="cv-profile-card">
+              {% if cv.image %}
+                <div class="cv-profile-photo">
+                  <img src="{{ cv.image | prepend: '/assets/img/' | relative_url }}" alt="{{ cv.name }}" loading="lazy" decoding="async">
+                </div>
               {% endif %}
-              {% if cv.label %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Professional Title</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.label }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.email %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.phone %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Phone</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.phone }}</td>
-                </tr>
-              {% endif %}
-              {% if cv.address %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Location</b></td>
-                  <td class="p-1 pl-2 font-weight-light">
-                    {% if cv.address.street %}{{ cv.address.street }}, {% endif %}
-                    {% if cv.address.city %}{{ cv.address.city }}, {% endif %}
-                    {% if cv.address.region %}{{ cv.address.region }} {% endif %}
-                    {% if cv.address.postalCode %}{{ cv.address.postalCode }}{% endif %}
-                  </td>
-                </tr>
-              {% endif %}
-              {% if cv.website %}
-                <tr>
-                  <td class="p-1 pr-2 font-weight-bold"><b>Website</b></td>
-                  <td class="p-1 pl-2 font-weight-light">
-                    <a href="{{ cv.website }}" target="_blank">{{ cv.website }}</a>
-                  </td>
-                </tr>
-              {% endif %}
-            </table>
-          </div>
-        {% endif %}
-
-        <!-- Summary -->
-        {% if cv.summary %}
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">Professional Summary</h3>
-            <p>{{ cv.summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
-          </div>
+              <div class="cv-profile-body">
+                {% if cv.label %}
+                  <p class="cv-kicker">{{ cv.label }}</p>
+                {% endif %}
+                {% if cv.name %}
+                  <h2>{{ cv.name }}</h2>
+                {% endif %}
+                {% if cv.address or cv.location %}
+                  <address class="cv-contact">
+                    {% if cv.address.lines %}
+                      {% for line in cv.address.lines %}
+                        {{ line }}{% unless forloop.last %}<br>{% endunless %}
+                      {% endfor %}
+                    {% elsif cv.address.street %}
+                      {{ cv.address.street }}<br>
+                      {% if cv.address.city or cv.address.region or cv.address.postalCode %}
+                        {% if cv.address.city %}{{ cv.address.city }}{% endif %}{% if cv.address.region %}, {{ cv.address.region }}{% endif %}
+                        {% if cv.address.postalCode %}{{ cv.address.postalCode }}{% endif %}<br>
+                      {% endif %}
+                      {% if cv.address.countryCode %}{{ cv.address.countryCode }}{% endif %}
+                    {% elsif cv.location %}
+                      {{ cv.location }}
+                    {% endif %}
+                  </address>
+                {% endif %}
+                {% if cv.email %}
+                  <p class="cv-email">{{ cv.email }}</p>
+                {% endif %}
+                <div class="cv-link-row">
+                  {% if site.data.socials.scholar_userid %}
+                    <a
+                      href="https://scholar.google.com/citations?user={{ site.data.socials.scholar_userid }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cv-button cv-button-secondary"
+                    >
+                      <i class="ai ai-google-scholar" aria-hidden="true"></i>
+                      <span class="cv-button-label">Google Scholar</span>
+                    </a>
+                  {% endif %}
+                  {% if page.cv_pdf %}
+                    <a
+                      {% if page.cv_pdf contains '://' %}
+                        href="{{ page.cv_pdf }}"
+                      {% else %}
+                        href="{{ page.cv_pdf | relative_url }}"
+                      {% endif %}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cv-button"
+                    >
+                      <i class="fa-solid fa-file-pdf"></i>
+                      <span class="cv-button-label">CV in PDF</span>
+                    </a>
+                  {% endif %}
+                  {% if cv.website %}
+                    <a href="{{ cv.website }}" target="_blank" rel="noopener noreferrer" class="cv-button cv-button-secondary">
+                      <i class="fa-solid fa-globe"></i>
+                      <span>Website</span>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </article>
+            {% if cv.summary or cv.research_tags %}
+              <article class="cv-bio-card">
+                <h2>Mini-Biography</h2>
+                {% if cv.summary %}
+                  {{ cv.summary | markdownify }}
+                {% endif %}
+                {% if cv.research_tags %}
+                  <div class="cv-signal-strip" aria-label="Research signals">
+                    {% for tag in cv.research_tags %}
+                      <span>{{ tag }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </article>
+            {% endif %}
+          </section>
         {% endif %}
 
         <!-- RenderCV Sections - Merge Experience and Volunteer -->
@@ -128,13 +136,13 @@ layout: default
         {% assign combined_experience = exp | concat: vol %}
         {% if combined_experience.size > 0 %}
           <a class="anchor" id="experience"></a>
-          <div class="card mt-3 p-3">
+          <section class="card mt-3 p-3 cv-section-card">
             <h3 class="card-title font-weight-medium">Experience</h3>
             <div>
               {% assign entries = combined_experience %}
               {% include cv/experience.liquid %}
             </div>
-          </div>
+          </section>
         {% endif %}
 
         {% comment %} Now render all other sections except Experience and Volunteer {% endcomment %}
@@ -148,7 +156,7 @@ layout: default
           {% endif %}
 
           <a class="anchor" id="{{ section_title | slugify }}"></a>
-          <div class="card mt-3 p-3">
+          <section class="card mt-3 p-3 cv-section-card{% if section_title == 'Personal Best' %} cv-section-card--two-column{% endif %}">
             <h3 class="card-title font-weight-medium">{{ section_title }}</h3>
             <div>
               {% if section_title == 'Education' %}
@@ -187,20 +195,23 @@ layout: default
                     </ul>
                   {% elsif entry.label %}
                     <div class="card-text font-weight-light">
-                      <strong>
+                      <strong class="cv-generic-label">
                         {% if entry.url %}
-                          <a href="{{ entry.url }}" target="_blank">{{ entry.label }}</a>:
+                          <a href="{{ entry.url }}" target="_blank">{{ entry.label }}</a>
                         {% else %}
-                          {{ entry.label }}:
+                          {{ entry.label }}
                         {% endif %}
                       </strong>
-                      {{ entry.details }}
+                      {% if entry.details %}
+                        <span class="cv-generic-separator">:</span>
+                        <span class="cv-generic-details">{{ entry.details }}</span>
+                      {% endif %}
                     </div>
                   {% endif %}
                 {% endfor %}
               {% endif %}
             </div>
-          </div>
+          </section>
         {% endfor %}
 
       {% elsif render_jsonresume and site.data.resume %}

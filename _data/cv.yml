@@ -4,29 +4,52 @@ cv:
   email: astolfo@udel.edu
   location: Newark, DE
   image: "prof_pic.jpg"
+  summary: >
+    Xinwei Ji (纪鑫炜) is a second-year Ph.D. student in the Department of
+    Physics and Astronomy at the University of Delaware, specializing in
+    chemical physics. He is currently working on his doctoral research under
+    the supervision of [Tao E. Li](https://www.taoeli.org/taos-cv).
+
+    His research interests lie at the intersection of light-matter interaction,
+    nuclear quantum effects, molecular simulation, and AI-enhanced scientific
+    research. He develops and applies open-source simulation tools for
+    vibrational polaritons, self-consistent light-matter dynamics, and
+    autonomous scientific workflows.
+
+    Before starting his Ph.D., Xinwei received his B.S. in Chemistry from
+    Xiamen University, where he built a background in quantum chemistry. He is
+    happy to discuss research ideas and potential collaboration opportunities;
+    prospective group members can also visit the
+    [TEL Research Group website](https://www.taoeli.org).
+  research_tags:
+    - light_matter.py
+    - polaritonics.md
+    - molecular_simulation.yml
+    - scientific_agents.ai
 
   address:
-    street: 104 The Green
-    city: Newark
-    region: Delaware
-    postalCode: DE 19716
-    countryCode: US
+    lines:
+      - Department of Physics and Astronomy
+      - University of Delaware
+      - Newark, DE 19716
 
   sections:
     Education:
       - institution: University of Delaware
         location: Newark, DE, US
+        logo: /assets/img/institution_logos/ud_struttin_youdee.jpg
         url: https://www.udel.edu/
         area: Physics
-        studyType: PhD
+        studyType: Ph.D. in Physics
         start_date: Sep. 2024
         end_date:
 
       - institution: Xiamen University
         location: Xiamen, Fujian, China
+        logo: /assets/img/institution_logos/xmu_logo.svg
         url: https://en.xmu.edu.cn/
         area: Chemistry
-        studyType: Bachelor of Science in Chemistry
+        studyType: B.S. in Chemistry
         start_date: Sep. 2020
         end_date: Jun. 2024
 
@@ -34,18 +57,21 @@ cv:
       - company: University of Delaware
         position: Research Assistant
         location: Newark, DE, US
+        logo: /assets/img/institution_logos/ud_struttin_youdee.jpg
         start_date: Sep. 2024
         end_date: 
 
       - company: University of Oklahoma
         position: Research Assistant
         location: Norman, OK, US
+        logo: /assets/img/institution_logos/ou_seal.jpg
         start_date: Aug. 2023
         end_date: Jan. 2024
 
       - company: Xiamen University
         position: Teaching Assistant
         location: Xiamen, Fujian, China
+        logo: /assets/img/institution_logos/xmu_logo.svg
         start_date: Sep. 2021
         end_date: Jun. 2024
         highlights:
@@ -116,14 +142,16 @@ cv:
         details: "3:27 (Date: 2023-05-25)"
       - label: 1500 m
         details: "5:37 (Date: 2024-05-12)"
+      - label: 1 mile
+        details: TBD
       - label: 3000 m
         details: "12:17 (Date: 2024-05-19)"
       - label: 5000 m
         details: "22:40 (Date: 2024-03-13)"
-      - label: 10000 m
-        details: TBD
       - label: 5 k road
         details: "21:22 (Date: 2025-04-27)"
+      - label: 10000 m
+        details: TBD
       - label: 10 k road
         details: "44:38 (Date: 2026-03-24)"
       - label: Half Marathon

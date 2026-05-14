@@ -3,48 +3,58 @@
 {% endcomment %}
 
 <ul class="card-text font-weight-light list-group list-group-flush">
-  {% for entry in entries %}
-    <li class="list-group-item">
-      <div class="row">
-        {% assign authors_text = entry.authors | default: entry.author %}
-        {% assign highlighted_authors = authors_text %}
-        {% if authors_text and cv and cv.name %}
-          {% assign cv_name_parts = cv.name | split: ' ' %}
-          {% assign cv_first_name = cv_name_parts | first %}
-          {% assign cv_last_name = cv_name_parts | last %}
-          {% capture cv_reverse_name %}{{ cv_last_name }}, {{ cv_first_name }}{% endcapture %}
-          {% capture highlighted_cv_name %}<u>{{ cv.name }}</u>{% endcapture %}
-          {% capture highlighted_cv_reverse_name %}<u>{{ cv_reverse_name }}</u>{% endcapture %}
-          {% assign highlighted_authors = highlighted_authors | replace: cv.name, highlighted_cv_name %}
-          {% assign highlighted_authors = highlighted_authors | replace: cv_reverse_name, highlighted_cv_reverse_name %}
-        {% endif %}
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-          {% if entry.url %}
-            <h6 class="title font-weight-bold ml-1 ml-md-4">
-              <a href="{{ entry.url }}">{{ entry.title | default: entry.name }}</a>
-            </h6>
-          {% elsif entry.title %}
-            <h6 class="title font-weight-bold ml-1 ml-md-4">{{ entry.title }}</h6>
+  {% assign years = entries | map: 'releaseDate' | uniq | sort | reverse %}
+  {% assign publication_count = entries | size %}
+  {% assign publication_index = publication_count | plus: 1 %}
+  {% for year in years %}
+    {% assign year_entries = entries | where: 'releaseDate', year %}
+    {% for entry in year_entries %}
+      {% assign publication_index = publication_index | minus: 1 %}
+      <li class="list-group-item">
+        <div class="cv-publication-row">
+          {% assign authors_text = entry.authors | default: entry.author %}
+          {% assign highlighted_authors = authors_text %}
+          {% if authors_text and cv and cv.name %}
+            {% assign cv_name_parts = cv.name | split: ' ' %}
+            {% assign cv_first_name = cv_name_parts | first %}
+            {% assign cv_last_name = cv_name_parts | last %}
+            {% capture cv_reverse_name %}{{ cv_last_name }}, {{ cv_first_name }}{% endcapture %}
+            {% capture highlighted_cv_name %}<u>{{ cv.name }}</u>{% endcapture %}
+            {% capture highlighted_cv_reverse_name %}<u>{{ cv_reverse_name }}</u>{% endcapture %}
+            {% assign highlighted_authors = highlighted_authors | replace: cv.name, highlighted_cv_name %}
+            {% assign highlighted_authors = highlighted_authors | replace: cv_reverse_name, highlighted_cv_reverse_name %}
           {% endif %}
 
-          {% if authors_text %}
-            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; color: var(--global-text-color-light)">
-              {{ highlighted_authors }}
-            </h6>
-          {% endif %}
+          <div class="cv-publication-number-column">
+            <span class="cv-publication-number">{{ publication_index }}</span>
+          </div>
+          <div class="cv-publication-copy">
+            {% if entry.url %}
+              <h6 class="title font-weight-bold ml-1 ml-md-4">
+                <a href="{{ entry.url }}">{{ entry.title | default: entry.name }}</a>
+              </h6>
+            {% elsif entry.title %}
+              <h6 class="title font-weight-bold ml-1 ml-md-4">{{ entry.title }}</h6>
+            {% endif %}
 
-          {% if entry.citation %}
-            <div class="ml-1 ml-md-4" style="font-size: 0.95rem">
-              {{ entry.citation }}
-            </div>
-          {% endif %}
+            {% if authors_text %}
+              <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; color: var(--global-text-color-light)">
+                {{ highlighted_authors }}
+              </h6>
+            {% endif %}
 
-          {% if entry.summary %}
-            <p class="ml-1 ml-md-4">{{ entry.summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
-          {% endif %}
+            {% if entry.citation %}
+              <div class="ml-1 ml-md-4" style="font-size: 0.95rem">
+                {{ entry.citation }}
+              </div>
+            {% endif %}
+
+            {% if entry.summary %}
+              <p class="ml-1 ml-md-4">{{ entry.summary | markdownify | remove: '<p>' | remove: '</p>' }}</p>
+            {% endif %}
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
+    {% endfor %}
   {% endfor %}
 </ul>

@@ -18,14 +18,14 @@ ninja.data = [{
           },
         },{id: "nav-research",
           title: "Research",
-          description: "My research is centered on understanding light-matter interactions through the development of innovative theoretical and computational tools.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/research/";
           },
         },{id: "nav-publications",
           title: "Publications",
-          description: "Papers, preprints, code, and datasets from my research.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/publications/";
@@ -100,12 +100,12 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "projects-computational-polaritonics",
           title: 'Computational Polaritonics',
-          description: "Atomistic cavity molecular dynamics for vibrational polaritons and self-consistent light-matter simulations.",
+          description: "Atomistic and mesoscale cavity molecular dynamics for realistic vibrational polaritons. This project studies how optical cavities reshape molecular vibrations, relaxation, energy transfer, and nonlinear spectroscopic responses, while developing self-consistent light-matter simulation tools such as CavMD and MaxwellLink.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
             },},{id: "projects-ai-enhanced-research",
           title: 'AI-enhanced Research',
-          description: "LLM-based autonomous agents for scientific simulations, workflow orchestration, and code optimization across research domains.",
+          description: "LLM-based autonomous agents for scientific simulations, workflow orchestration, and research code optimization. This project builds reliable agentic systems such as FermiLink that can plan computational tasks, connect domain tools, refine code iteratively, and organize reproducible multi-step experiments.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/2_project/";
             },},{id: "teachings-data-science-fundamentals",

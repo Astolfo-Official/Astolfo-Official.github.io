@@ -391,10 +391,6 @@ _styles: |
           <span>Atomistic simulations and theory for vibrational polaritons and cavity-modified molecular dynamics.</span>
         </div>
         <div class="home-topic">
-          <strong>Nuclear quantum effects</strong>
-          <span>Methods and models for understanding quantum nuclear motion in molecular systems.</span>
-        </div>
-        <div class="home-topic">
           <strong>AI-enhanced scientific research</strong>
           <span>Autonomous agents and open-source workflows for scientific simulation and code development.</span>
         </div>

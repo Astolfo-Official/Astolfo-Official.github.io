@@ -179,25 +179,8 @@
 .blog-post-hero {
   position: relative;
   margin: 0 0 1.35rem;
-  padding: clamp(1.4rem, 3vw, 2.1rem);
-  overflow: hidden;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, var(--blog-accent-soft, rgba(252, 126, 175, 0.12)), transparent 46%),
-    var(--global-card-bg-color);
-  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.08);
-
-  &::before {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: min(38%, 18rem);
-    background:
-      linear-gradient(90deg, rgba(252, 126, 175, 0.13), transparent),
-      repeating-linear-gradient(135deg, rgba(47, 111, 115, 0.09) 0 1px, transparent 1px 10px);
-    content: "";
-    pointer-events: none;
-  }
+  padding: 0 0 1.45rem;
+  border-bottom: 1px solid var(--global-divider-color);
 
   > * {
     position: relative;
@@ -217,6 +200,16 @@
     color: var(--global-text-color-light);
     font-size: 1.04rem;
     line-height: 1.72;
+  }
+
+  a {
+    color: var(--global-text-color);
+    text-decoration-color: rgba(252, 126, 175, 0.45);
+    text-underline-offset: 0.16em;
+
+    &:hover {
+      color: var(--global-theme-color);
+    }
   }
 }
 
@@ -584,8 +577,8 @@
   .blog-post-hero,
   .blog-card,
   .blog-post-content #markdown-content {
-    width: min(100%, calc(100vw - 1.5rem));
-    max-width: calc(100vw - 1.5rem);
+    width: 100%;
+    max-width: 100%;
   }
 
   .blog-post-facts {

@@ -6,25 +6,26 @@ layout: page
 {% assign active_notes = collection | where: 'status', 'Reading' %}
 
 <div class="notes-shelf">
-  <section class="notes-hero" aria-label="Notes overview">
-    <div class="notes-hero-copy">
-      {{ content }}
+  <header class="page-hero">
+    <p class="page-hero-eyebrow">Bookshelf</p>
+    <h1>{{ page.title }}</h1>
+    {{ content }}
+  </header>
+
+  <dl class="notes-stats" aria-label="Notes overview">
+    <div>
+      <dt>{{ collection | size }}</dt>
+      <dd>manuscripts</dd>
     </div>
-    <dl class="notes-stats">
-      <div>
-        <dt>{{ collection | size }}</dt>
-        <dd>manuscripts</dd>
-      </div>
-      <div>
-        <dt>{{ finished_notes | size }}</dt>
-        <dd>finished</dd>
-      </div>
-      <div>
-        <dt>{{ active_notes | size }}</dt>
-        <dd>active</dd>
-      </div>
-    </dl>
-  </section>
+    <div>
+      <dt>{{ finished_notes | size }}</dt>
+      <dd>finished</dd>
+    </div>
+    <div>
+      <dt>{{ active_notes | size }}</dt>
+      <dd>active</dd>
+    </div>
+  </dl>
 
   {% if collection and collection.size > 0 %}
     <section class="notes-section" aria-labelledby="core-notes">

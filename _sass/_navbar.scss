@@ -5,23 +5,34 @@
 @use "variables" as v;
 
 .navbar {
-  box-shadow: none;
   border-bottom: 1px solid var(--global-divider-color);
-  background-color: var(--global-bg-color);
-  opacity: 0.95;
+  background:
+    linear-gradient(135deg, rgba(252, 126, 175, 0.06), transparent 42%),
+    color-mix(in srgb, var(--global-bg-color) 92%, transparent);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  opacity: 0.98;
+  backdrop-filter: blur(14px);
+
+  .container {
+    min-height: 3.25rem;
+  }
 }
 
 .navbar .dropdown-menu,
 .btn-group.dropdown .dropdown-menu {
-  background-color: var(--global-bg-color);
   border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(252, 126, 175, 0.08), transparent 46%),
+    var(--global-card-bg-color);
+  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.1);
 
   a:not(.active) {
     color: var(--global-text-color);
   }
 
   a:hover {
-    color: var(--global-hover-color);
+    color: var(--global-theme-color);
   }
 
   .dropdown-divider {
@@ -30,17 +41,18 @@
 }
 
 .dropdown-item {
+  border-radius: 6px;
   color: var(--global-text-color);
 
   &:hover {
-    color: var(--global-hover-color);
-    background-color: var(--global-bg-color);
+    background-color: rgba(252, 126, 175, 0.08);
+    color: var(--global-theme-color);
   }
 }
 
 .dropdown-item.active,
 .dropdown-item:active {
-  background-color: var(--global-hover-color);
+  background-color: var(--global-theme-color);
   color: var(--global-hover-text-color) !important;
 
   &:hover {
@@ -56,24 +68,57 @@
   }
 
   .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.35rem;
+    padding-right: 0.72rem;
+    padding-left: 0.72rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
     color: var(--global-text-color);
+    font-weight: 650;
+
+    &:hover {
+      border-color: var(--global-divider-color);
+      background: var(--global-card-bg-color);
+      color: var(--global-theme-color);
+    }
   }
 
   .navbar-nav .nav-item .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.2rem;
+    margin: 0 0.08rem;
+    padding: 0.38rem 0.68rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
     color: var(--global-text-color);
+    font-size: 0.9rem;
+    font-weight: 650;
+    line-height: 1.15;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
 
     &:hover {
-      color: var(--global-hover-color);
+      border-color: var(--global-divider-color);
+      background: var(--global-card-bg-color);
+      color: var(--global-theme-color);
+      transform: translateY(-1px);
     }
   }
 
   .navbar-nav .nav-item.active > .nav-link {
-    background-color: inherit;
-    font-weight: bolder;
+    border-color: color-mix(in srgb, var(--global-theme-color), transparent 45%);
+    background: rgba(252, 126, 175, 0.1);
     color: var(--global-theme-color);
+    font-weight: 700;
 
     &:hover {
-      color: var(--global-hover-color);
+      color: var(--global-theme-color);
     }
   }
 
@@ -157,8 +202,9 @@
 
 #light-toggle {
   padding: 0;
-  border: 0;
-  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-color: transparent;
   color: var(--global-text-color);
   /* Fix footprint to prevent navbar shifting when icon changes */
   width: 2rem;
@@ -168,7 +214,9 @@
   justify-content: center;
 
   &:hover {
-    color: var(--global-hover-color);
+    border-color: var(--global-divider-color);
+    background: var(--global-card-bg-color);
+    color: var(--global-theme-color);
   }
 }
 
@@ -181,10 +229,22 @@
 #search-toggle {
   padding: 0;
   border: 0;
-  background-color: inherit;
+  background-color: transparent;
   color: var(--global-text-color);
 
   &:hover {
-    color: var(--global-hover-color);
+    color: var(--global-theme-color);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar.navbar-light .navbar-nav {
+    gap: 0.18rem;
+    align-items: flex-end;
+    padding-top: 0.75rem;
+  }
+
+  .navbar.navbar-light .navbar-nav .nav-item .nav-link {
+    justify-content: flex-end;
   }
 }

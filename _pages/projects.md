@@ -7,17 +7,11 @@ nav: true
 nav_order: 2
 _styles: |
   .post-header {
-    margin-bottom: 2.5rem;
-  }
-
-  .post-description {
-    max-width: 50rem;
-    font-size: 1.04rem;
-    line-height: 1.7;
+    display: none;
   }
 
   .research-page {
-    margin-top: 1.25rem;
+    margin-top: 0;
   }
 
   .research-section-heading {
@@ -198,6 +192,12 @@ _styles: |
 {% assign sorted_projects = site.projects | sort: "importance" %}
 
 <div class="research-page">
+  <header class="page-hero">
+    <p class="page-hero-eyebrow">Research Directions</p>
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.description }}</p>
+  </header>
+
   <div class="research-section-heading">
     <h2>Main Research Interests</h2>
   </div>

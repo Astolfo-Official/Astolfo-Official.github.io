@@ -124,6 +124,70 @@ ul.task-list input[type="checkbox"] {
 
 // Projects
 
+.page-hero {
+  position: relative;
+  margin: 0 0 1.35rem;
+  padding: 0 0 1.45rem;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  > * {
+    position: relative;
+  }
+
+  h1 {
+    margin: 0.25rem 0 0.8rem;
+    color: var(--global-text-color);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  p:last-child {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--global-text-color-light);
+    font-size: 1.04rem;
+    line-height: 1.72;
+  }
+
+  a {
+    color: var(--global-text-color);
+    text-decoration-color: rgba(252, 126, 175, 0.45);
+    text-underline-offset: 0.16em;
+
+    &:hover {
+      color: var(--global-theme-color);
+    }
+  }
+}
+
+.page-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  color: var(--global-theme-color);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  &::before {
+    width: 2.2rem;
+    height: 1px;
+    background: currentColor;
+    content: "";
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-hero {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .projects {
   a {
     text-decoration: none;
@@ -326,31 +390,11 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
-.notes-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2rem;
-  align-items: end;
-  padding: 1.5rem 0 2rem;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-
-.notes-hero-copy {
-  max-width: 42rem;
-
-  p {
-    margin-bottom: 0;
-    color: var(--global-text-color-light);
-    font-size: 1.05rem;
-    line-height: 1.75;
-  }
-}
-
 .notes-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(5.5rem, 1fr));
   gap: 0.75rem;
-  margin: 0;
+  margin: 1.15rem 0 0;
 
   div {
     padding: 0.85rem 1rem;
@@ -376,7 +420,7 @@ ul.task-list input[type="checkbox"] {
 }
 
 .notes-section {
-  padding-top: 2.1rem;
+  padding-top: 2rem;
 }
 
 .notes-section-heading {
@@ -546,12 +590,6 @@ html[data-theme="dark"] {
 }
 
 @media (max-width: 768px) {
-  .notes-hero {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    align-items: start;
-  }
-
   .notes-stats {
     width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));

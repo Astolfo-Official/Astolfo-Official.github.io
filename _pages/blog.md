@@ -23,7 +23,11 @@ pagination:
   <header class="blog-index-hero">
     <p class="blog-index-eyebrow">Research Notebook</p>
     <h1>{{ blog_name }}</h1>
-    <p>{{ blog_description }}</p>
+    {% if blog_description == 'Also see the structured notes in my bookshelf' %}
+      <p>Also see the structured notes in my <a href="{{ '/notes/' | relative_url }}">bookshelf</a>.</p>
+    {% else %}
+      <p>{{ blog_description }}</p>
+    {% endif %}
   </header>
 
   {% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}

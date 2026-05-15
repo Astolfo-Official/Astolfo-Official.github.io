@@ -228,6 +228,15 @@ _styles: |
     color: var(--global-text-color);
   }
 
+  .home-topic strong a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .home-topic strong a:hover {
+    color: var(--global-theme-color);
+  }
+
   .home-topic span {
     color: var(--global-text-color-light);
     line-height: 1.6;
@@ -387,11 +396,11 @@ _styles: |
       </p>
       <div class="home-topic-list">
         <div class="home-topic">
-          <strong>Light-matter interaction</strong>
+          <strong><a href="{{ '/projects/1_project/' | relative_url }}">Light-matter interaction</a></strong>
           <span>Atomistic simulations and theory for vibrational polaritons and cavity-modified molecular dynamics.</span>
         </div>
         <div class="home-topic">
-          <strong>AI-enhanced scientific research</strong>
+          <strong><a href="{{ '/projects/2_project/' | relative_url }}">AI-enhanced scientific research</a></strong>
           <span>Autonomous agents and open-source workflows for scientific simulation and code development.</span>
         </div>
       </div>

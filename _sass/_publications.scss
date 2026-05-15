@@ -143,6 +143,10 @@
         font-size: 0.72rem;
         font-weight: 800;
         line-height: 1;
+
+        &:empty {
+          display: none;
+        }
       }
 
       .author {

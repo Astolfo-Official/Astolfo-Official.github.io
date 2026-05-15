@@ -31,6 +31,52 @@ layout: default
         {% bibliography --cited_in_order %}
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const relatedEntries = Array.from(document.querySelectorAll(".related-publications .bibliography > li"));
+        if (relatedEntries.length === 0) return;
+
+        const assignFallbackNumbers = () => {
+          const relatedCount = relatedEntries.length;
+          relatedEntries.forEach((entry, index) => {
+            const numberElement = entry.querySelector(".publication-number");
+            if (numberElement) numberElement.textContent = relatedCount - index;
+          });
+        };
+
+        fetch("{{ '/publications/' | relative_url }}")
+          .then((response) => {
+            if (!response.ok) throw new Error("Could not load publications page");
+            return response.text();
+          })
+          .then((html) => {
+            const documentParser = new DOMParser();
+            const publicationsDocument = documentParser.parseFromString(html, "text/html");
+            const publicationEntries = Array.from(publicationsDocument.querySelectorAll(".bibliography > li"));
+            if (publicationEntries.length === 0) throw new Error("No publication entries found");
+            const publicationCount = publicationEntries.length;
+            const publicationNumbersByKey = new Map();
+
+            publicationEntries.forEach((entry, index) => {
+              const publicationKey = entry.querySelector(".publication-entry-column")?.id;
+              if (publicationKey) publicationNumbersByKey.set(publicationKey, publicationCount - index);
+            });
+
+            let assignedCount = 0;
+            relatedEntries.forEach((entry) => {
+              const publicationKey = entry.querySelector(".publication-entry-column")?.id;
+              const numberElement = entry.querySelector(".publication-number");
+              if (publicationKey && numberElement && publicationNumbersByKey.has(publicationKey)) {
+                numberElement.textContent = publicationNumbersByKey.get(publicationKey);
+                assignedCount += 1;
+              }
+            });
+
+            if (assignedCount === 0) assignFallbackNumbers();
+          })
+          .catch(assignFallbackNumbers);
+      });
+    </script>
   {% endif %}
 
   {% if site.giscus and page.giscus_comments %}

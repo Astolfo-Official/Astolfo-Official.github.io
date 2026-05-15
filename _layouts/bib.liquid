@@ -2,9 +2,13 @@
 ---
 <div class="row">
   {% assign is_publications_page = page.url == '/publications/' %}
+  {% assign show_publication_number = is_publications_page %}
+  {% if page.related_publications %}
+    {% assign show_publication_number = true %}
+  {% endif %}
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr publication-preview-column">
-      {% if is_publications_page %}
+      {% if show_publication_number %}
         <span class="publication-number" aria-label="Publication number"></span>
       {% endif %}
       {%- if entry.abbr -%}

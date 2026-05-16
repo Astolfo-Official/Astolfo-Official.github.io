@@ -41,8 +41,12 @@ layout: default
         {% if page.released %}
           <span>{{ page.released }}</span>
         {% endif %}
-        {% if page.author %}
-          <span>{{ page.author }}</span>
+        {% if page.categories %}
+          {% for category in page.categories %}
+            {% unless category == 'notes' %}
+              <span>{{ category }}</span>
+            {% endunless %}
+          {% endfor %}
         {% endif %}
       </div>
 

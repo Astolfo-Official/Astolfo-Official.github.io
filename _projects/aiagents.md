@@ -14,6 +14,11 @@ category: work
 research_area: ai-agents
 research_filter: AI Agents
 related_publications: true
+scholar:
+  sort_by: urldate,key
+  order: descending,descending
+  group_by: year
+  group_order: descending
 _styles: |
   .post-description {
     font-size: 1.02rem;

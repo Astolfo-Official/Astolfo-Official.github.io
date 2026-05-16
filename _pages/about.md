@@ -380,10 +380,10 @@ _styles: |
         <a href="mailto:astolfo@udel.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</a>
       </div>
       <div class="home-signal-strip" aria-label="Research signals">
+        <span>light_matter.py</span>
         <span>polaritonics.md</span>
-        <span>nuclear_quantum.yml</span>
+        <span>molecular_simulation.yml</span>
         <span>scientific_agents.ai</span>
-        <span>open_tools.sh</span>
       </div>
     </div>
   </section>
@@ -396,11 +396,11 @@ _styles: |
       </p>
       <div class="home-topic-list">
         <div class="home-topic">
-          <strong><a href="{{ '/projects/1_project/' | relative_url }}">Light-matter interaction</a></strong>
+          <strong><a href="{{ '/projects/polaritonics/' | relative_url }}">Light-matter interaction</a></strong>
           <span>Atomistic simulations and theory for vibrational polaritons and cavity-modified molecular dynamics.</span>
         </div>
         <div class="home-topic">
-          <strong><a href="{{ '/projects/2_project/' | relative_url }}">AI-enhanced scientific research</a></strong>
+          <strong><a href="{{ '/projects/aiagents/' | relative_url }}">AI-enhanced scientific research</a></strong>
           <span>Autonomous agents and open-source workflows for scientific simulation and code development.</span>
         </div>
       </div>

@@ -28,7 +28,7 @@ layout: default
   {% if page.related_publications %}
     <div class="related-publications publications-page">
       <div class="publications">
-        {% bibliography --cited_in_order %}
+        {% bibliography --query @*[research_area={{page.research_area}}] %}
       </div>
     </div>
     <script>

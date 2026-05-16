@@ -12,9 +12,8 @@ cv:
 
     His research interests lie at the intersection of light-matter interaction,
     nuclear quantum effects, molecular simulation, and AI-enhanced scientific
-    research. He develops and applies open-source simulation tools for
-    vibrational polaritons, self-consistent light-matter dynamics, and
-    autonomous scientific workflows.
+    research. He develops and applies open-source simulation tools for 
+    self-consistent light-matter dynamics.
 
     Before starting his Ph.D., Xinwei received his B.S. in Chemistry from
     Xiamen University, where he built a background in quantum chemistry. He is
@@ -38,16 +37,14 @@ cv:
       - institution: University of Delaware
         location: Newark, DE, US
         logo: /assets/img/institution_logos/ud_struttin_youdee.jpg
-        url: https://www.udel.edu/
         area: Physics
-        studyType: Ph.D. in Physics
+        studyType: Graduate Student in Physics
         start_date: Sep. 2024
         end_date:
 
       - institution: Xiamen University
         location: Xiamen, Fujian, China
         logo: /assets/img/institution_logos/xmu_logo.svg
-        url: https://en.xmu.edu.cn/
         area: Chemistry
         studyType: B.S. in Chemistry
         start_date: Sep. 2020
@@ -128,12 +125,12 @@ cv:
         url: https://github.com/i-pi/i-pi
 
     Research Interests:
-      - label: Chemical Physics
-        details: Light-Matter Interaction and Nuclear Quantum Effects
-        url: /research/#computational-polaritonics
-      - label: AI-enhanced Scientific Research
-        details: AI Agents for Scientific Simulations and Code Optimization
-        url: /research/#ai-enhanced-research
+      - label: Computational Polaritonics
+        details: Cavity molecular dynamics and light-matter simulations
+        url: /projects/polaritonics/
+      - label: AI-enhanced Research
+        details: Autonomous agents for scientific simulation workflows
+        url: /projects/aiagents/
 
     Personal Best:
       - label: 400 m

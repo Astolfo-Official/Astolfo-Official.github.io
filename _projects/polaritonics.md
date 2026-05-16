@@ -11,9 +11,14 @@ img: assets/img/research_figures/cavmd.png
 img_scale: 1.8
 importance: 1
 category: work
-research_area: polaritonics
+research_area: photonics
 research_filter: Polaritonics
 related_publications: true
+scholar:
+  sort_by: urldate,key
+  order: descending,descending
+  group_by: year
+  group_order: descending
 _styles: |
   .post-description {
     font-size: 1.02rem;

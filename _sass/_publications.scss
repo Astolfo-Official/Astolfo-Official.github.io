@@ -333,6 +333,27 @@
 }
 
 .publications-page .publications {
+  h2.bibliography {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.6rem 0 1.1rem;
+    padding-top: 0;
+    border-top: 0;
+    color: var(--global-text-color);
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.55rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0;
+
+    &::after {
+      content: "";
+      flex: 1 1 auto;
+      height: 1px;
+      background: linear-gradient(90deg, var(--global-divider-color), transparent);
+    }
+  }
+
   ol.bibliography {
     display: grid;
     gap: 1rem;

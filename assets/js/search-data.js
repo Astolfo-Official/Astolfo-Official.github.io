@@ -98,16 +98,16 @@ ninja.data = [{
           section: "News",},{id: "news-new-10k-road-pb-44-38-today",
           title: 'New 10k road PB 44:38 today!',
           description: "",
-          section: "News",},{id: "projects-computational-polaritonics",
-          title: 'Computational Polaritonics',
-          description: "Atomistic and mesoscale cavity molecular dynamics for realistic vibrational polaritons. This project studies how optical cavities reshape molecular vibrations, relaxation, energy transfer, and nonlinear spectroscopic responses, while developing self-consistent light-matter simulation tools such as CavMD and MaxwellLink.",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-ai-enhanced-research",
+          section: "News",},{id: "projects-ai-enhanced-research",
           title: 'AI-enhanced Research',
           description: "LLM-based autonomous agents for scientific simulations, workflow orchestration, and research code optimization. This project builds reliable agentic systems such as FermiLink that can plan computational tasks, connect domain tools, refine code iteratively, and organize reproducible multi-step experiments.",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
+              window.location.href = "/projects/aiagents/";
+            },},{id: "projects-computational-polaritonics",
+          title: 'Computational Polaritonics',
+          description: "Atomistic and mesoscale cavity molecular dynamics for realistic vibrational polaritons. This project studies how optical cavities reshape molecular vibrations, relaxation, energy transfer, and nonlinear spectroscopic responses, while developing self-consistent light-matter simulation tools such as CavMD and MaxwellLink.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/polaritonics/";
             },},{id: "teachings-data-science-fundamentals",
           title: 'Data Science Fundamentals',
           description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",

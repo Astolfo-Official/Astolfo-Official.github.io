@@ -22,7 +22,7 @@ cv:
     [TEL Research Group website](https://www.taoeli.org).
   research_tags:
     - polaritonics.md
-    - molecular_simulation.yml
+    - MD_simulation.yml
     - scientific_agents.ai
 
   address:

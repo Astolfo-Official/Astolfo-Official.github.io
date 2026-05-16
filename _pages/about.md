@@ -381,7 +381,7 @@ _styles: |
       </div>
       <div class="home-signal-strip" aria-label="Research signals">
         <span>polaritonics.md</span>
-        <span>MD_simulation.yml</span>
+        <span>MD_simulations.yml</span>
         <span>scientific_agents.ai</span>
       </div>
     </div>

@@ -4,14 +4,14 @@ cv:
   email: astolfo@udel.edu
   location: Newark, DE
   image: "prof_pic.jpg"
-  summary: >
+  summary: |
     Xinwei Ji (纪鑫炜) is a second-year Ph.D. student in the Department of
     Physics and Astronomy at the University of Delaware, specializing in
     chemical physics. He is currently working on his doctoral research under
     the supervision of [Tao E. Li](https://www.taoeli.org/taos-cv).
 
     His research interests lie at the intersection of light-matter interaction,
-    nuclear quantum effects, molecular simulation, and AI-enhanced scientific
+    electronic structure theory, molecular simulation, and AI-enhanced scientific
     research. He develops and applies open-source simulation tools for 
     self-consistent light-matter dynamics.
 
@@ -22,7 +22,7 @@ cv:
     [TEL Research Group website](https://www.taoeli.org).
   research_tags:
     - polaritonics.md
-    - MD_simulation.yml
+    - MD_simulations.yml
     - scientific_agents.ai
 
   address:

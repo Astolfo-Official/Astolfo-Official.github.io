@@ -380,7 +380,6 @@ _styles: |
         <a href="mailto:astolfo@udel.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</a>
       </div>
       <div class="home-signal-strip" aria-label="Research signals">
-        <span>light_matter.py</span>
         <span>polaritonics.md</span>
         <span>molecular_simulation.yml</span>
         <span>scientific_agents.ai</span>

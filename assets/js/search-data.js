@@ -4,19 +4,12 @@ const ninja = document.querySelector('ninja-keys');
 // add the home and posts menu items
 ninja.data = [{
     id: "nav-home",
-    title: "home",
+    title: "Home",
     section: "Navigation",
     handler: () => {
       window.location.href = "/";
     },
-  },{id: "nav-cv",
-          title: "CV",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/cv/";
-          },
-        },{id: "nav-research",
+  },{id: "nav-research",
           title: "Research",
           description: "",
           section: "Navigation",
@@ -30,23 +23,37 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/publications/";
           },
-        },{id: "nav-blog",
-          title: "blog",
+        },{id: "nav-cv",
+          title: "CV",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/blog/";
+            window.location.href = "/cv/";
           },
         },{id: "nav-notes",
-          title: "notes",
+          title: "Notes",
           description: "Mathematical and theoretical chemistry notes, written and maintained as living manuscripts.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/notes/";
           },
-        },{id: "post-complex-shifts-in-the-gaussian-integral",
+        },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-news",
+          title: "News",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/news/";
+          },
+        },{id: "post-complex-gaussian-integral",
         
-          title: "Complex Shifts in the Gaussian Integral",
+          title: "Complex Gaussian Integral",
         
         description: "A contour proof that a complex-shifted Gaussian integral equals the ordinary one, with an application to the free-particle heat kernel.",
         section: "Posts",
@@ -55,9 +62,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/gaussian-integral-complex-shift/";
           
         },
-      },{id: "post-how-to-get-the-casida-equation-in-tddft",
+      },{id: "post-how-to-get-the-casida-equation",
         
-          title: "How to Get the Casida Equation in TDDFT",
+          title: "How to Get the Casida Equation",
         
         description: "A note-faithful walkthrough of how linear-response TDDFT becomes the Casida equation.",
         section: "Posts",
@@ -92,13 +99,18 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/note_on_theoretical_chemistry/";
-            },},{id: "news-let-s-go-first-day-in-my-personal-website",
-          title: 'Let’s go! First day in my personal website!',
+            },},{id: "news-first-day-in-my-personal-website",
+          title: 'First day in my personal website!',
           description: "",
           section: "News",},{id: "news-new-10k-road-pb-44-38-today",
           title: 'New 10k road PB 44:38 today!',
           description: "",
-          section: "News",},{id: "projects-ai-enhanced-research",
+          section: "News",},{id: "news-first-contribution-to-i-pi",
+          title: 'First contribution to i-PI!',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_3/";
+            },},{id: "projects-ai-enhanced-research",
           title: 'AI-enhanced Research',
           description: "LLM-based autonomous agents for scientific simulations, workflow orchestration, and research code optimization. This project builds reliable agentic systems such as FermiLink that can plan computational tasks, connect domain tools, refine code iteratively, and organize reproducible multi-step experiments.",
           section: "Projects",handler: () => {

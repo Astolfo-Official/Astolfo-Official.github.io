@@ -1,9 +1,9 @@
 ---
 layout: notes-shelf
-title: notes
+title: Notes
 permalink: /notes/
 nav: true
-nav_order: 5
+nav_order: 4
 collection: books
 description: Mathematical and theoretical chemistry notes, written and maintained as living manuscripts.
 _styles: |

@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Let's go! First day in my personal website!
+First day in my personal website!

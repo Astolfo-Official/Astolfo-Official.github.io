@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-05-13'
+  last_updated: '2026-05-20'
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
     citations: 11
@@ -10,7 +10,7 @@ papers:
     title: 'FermiLink: A Unified Agent Framework for Multidomain Autonomous Scientific Simulations'
     year: '2026'
   8WzTBusAAAAJ:YsMSGLbcyi4C:
-    citations: 0
+    citations: 1
     title: "MaxwellLink: A Unified Framework for Self-Consistent Light\u2013Matter Simulations"
     year: '2026'
   8WzTBusAAAAJ:eQOLeE2rZwMC:

@@ -539,7 +539,7 @@ _styles: |
     <section class="home-panel">
       <h2>Research Focus</h2>
       <p>
-        I study chemical physics problems where molecular motion, quantum effects, optical fields, and computation meet.
+        I focus on following areas in chemical physics.
       </p>
       <div class="home-topic-list">
         <div class="home-topic">

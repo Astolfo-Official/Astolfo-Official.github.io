@@ -340,6 +340,17 @@
     font-weight: 650;
     line-height: 1;
   }
+
+  .blog-card-number {
+    min-width: 2rem;
+    min-height: 2rem;
+    justify-content: center;
+    padding: 0;
+    border-color: color-mix(in srgb, var(--global-theme-color) 36%, var(--global-divider-color));
+    color: var(--global-theme-color);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
 }
 
 .blog-card-title {

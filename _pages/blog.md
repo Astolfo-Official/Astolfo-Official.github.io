@@ -42,12 +42,17 @@ pagination:
 
   {% if page.pagination.enabled %}
     {% assign postlist = paginator.posts %}
+    {% assign blog_page_offset = paginator.page | minus: 1 | times: paginator.per_page %}
   {% else %}
     {% assign postlist = site.posts %}
+    {% assign blog_page_offset = 0 %}
   {% endif %}
+  {% assign blog_posts_size = site.posts | size %}
 
   <div class="blog-stream">
     {% for post in postlist %}
+      {% assign post_number_offset = blog_page_offset | plus: forloop.index0 %}
+      {% assign post_number = blog_posts_size | minus: post_number_offset %}
       {% if post.external_source == blank %}
         {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
       {% else %}
@@ -71,6 +76,7 @@ pagination:
       <article class="blog-card{% if post.thumbnail %} blog-card--with-image{% endif %}">
         <div class="blog-card-copy">
           <div class="blog-card-meta">
+            <span class="blog-card-number">#{{ post_number }}</span>
             <span>{{ post.date | date: '%b %-d, %Y' }}</span>
             <span>{{ read_time }} min read</span>
             {% if post.external_source %}

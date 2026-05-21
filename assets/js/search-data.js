@@ -51,7 +51,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "post-complex-gaussian-integral",
+        },{id: "post-computing-fsf",
+        
+          title: "Computing \(FSF^+\)",
+        
+        description: "A numerical linear algebra note on generalized inverses, SVD, scipy.linalg.solve, Cholesky decomposition, and LU decomposition for \(FSF^+\).",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/computing-fsf-inverse/";
+          
+        },
+      },{id: "post-complex-gaussian-integral",
         
           title: "Complex Gaussian Integral",
         

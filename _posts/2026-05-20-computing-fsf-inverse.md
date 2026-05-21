@@ -564,3 +564,194 @@ Local benchmark on M3 Pro chip, with 50 repetitions for every method and every m
 </div>
 
 The normal-equation methods are faster here, but this speed comes with the usual numerical tradeoff: they assume full column rank in the tall case or full row rank in the wide case, and they square the condition number through $F^\dagger F$ or $FF^\dagger$. For a benchmark focused on robustness rather than speed, `pinv` or the direct SVD route is the more meaningful comparison.
+
+## 7. Using the tensor-product structure of $F$ and $S$
+
+The discussion above treats $F$ as a general dense matrix. In the actual problem, however, $F$ has much more structure. This can reduce the computation dramatically.
+
+Let the grid points be uniformly distributed in a rectangular box
+
+$$
+x\in[0,L_x],\qquad y\in[0,L_y],\qquad z\in[0,L_z],
+$$
+
+with $n_x,n_y,n_z$ grid points. Hence
+
+$$
+n_{\mathrm{grid}}=n_xn_yn_z.
+$$
+
+For the mode indices,
+
+$$
+k_x=\frac{l_x\pi}{L_x},\qquad
+k_y=\frac{l_y\pi}{L_y},\qquad
+k_z=\frac{l_z\pi}{L_z}.
+$$
+
+If there are $n_{l_x},n_{l_y},n_{l_z}$ allowed mode indices in the three directions, then
+
+$$
+n_{\mathrm{mode}}=n_{l_x}n_{l_y}n_{l_z}.
+$$
+
+The third dimension of the stored array for $F$ records which coordinate carries the cosine. To keep the notation concrete, consider only the first case, where the cosine is in the $x$ direction:
+
+$$
+F_{(l_x,l_y,l_z),(i,j,k)}
+=
+\cos(k_xx_i)\sin(k_yy_j)\sin(k_zz_k).
+$$
+
+Define the one-dimensional matrices
+
+$$
+(C_x)_{l_x,i}=\cos(k_xx_i),\qquad
+(S_y)_{l_y,j}=\sin(k_yy_j),\qquad
+(S_z)_{l_z,k}=\sin(k_zz_k).
+$$
+
+Then, up to the chosen flattening order of the multi-indices,
+
+$$
+F = C_x\otimes S_y\otimes S_z.
+$$
+
+This is the key point: the full matrix has shape
+
+$$
+n_{\mathrm{mode}}\times n_{\mathrm{grid}},
+$$
+
+but it is not a generic matrix of that size. It is a Kronecker product of three much smaller one-dimensional matrices.
+
+Now suppose the smooth grid function also separates:
+
+$$
+s(x_i,y_j,z_k)=s_x(x_i)s_y(y_j)s_z(z_k).
+$$
+
+As a diagonal matrix on the three-dimensional grid, this means
+
+$$
+S = D_x\otimes D_y\otimes D_z,
+$$
+
+where
+
+$$
+D_x=\operatorname{diag}(s_x),\qquad
+D_y=\operatorname{diag}(s_y),\qquad
+D_z=\operatorname{diag}(s_z).
+$$
+
+Using the identities
+
+$$
+(A\otimes B\otimes C)(D\otimes E\otimes H)
+=
+(AD)\otimes(BE)\otimes(CH),
+$$
+
+and
+
+$$
+(A\otimes B\otimes C)^+
+=
+A^+\otimes B^+\otimes C^+,
+$$
+
+we get the separated formula
+
+$$
+FSF^+
+=
+(C_xD_xC_x^+)
+\otimes
+(S_yD_yS_y^+)
+\otimes
+(S_zD_zS_z^+).
+$$
+
+So instead of computing one large $n_{\mathrm{mode}}\times n_{\mathrm{grid}}$ pseudoinverse problem, we compute three one-dimensional problems. If the one-dimensional matrices have shapes
+
+$$
+C_x\in\mathbb R^{n_{l_x}\times n_x},\qquad
+S_y\in\mathbb R^{n_{l_y}\times n_y},\qquad
+S_z\in\mathbb R^{n_{l_z}\times n_z},
+$$
+
+then the cost is controlled by the three small pairs $(n_{l_x},n_x)$, $(n_{l_y},n_y)$, and $(n_{l_z},n_z)$, rather than by the full pair $(n_{\mathrm{mode}},n_{\mathrm{grid}})$. This is often the difference between an impossible dense computation and a cheap one.
+
+In code, the dense Kronecker product should usually not be formed unless the final matrix is genuinely needed as a dense array. The one-dimensional factors can be computed as follows:
+
+```python
+import numpy as np
+from scipy.linalg import pinv
+
+
+def one_dim_factor(Phi, weight):
+    """Compute Phi diag(weight) Phi^+ without forming diag(weight)."""
+    return (Phi * weight[None, :]) @ pinv(Phi, check_finite=False)
+
+
+# x_grid, y_grid, z_grid are one-dimensional grid arrays.
+# lx_values, ly_values, lz_values are the selected mode indices.
+kx = lx_values[:, None] * np.pi / Lx
+ky = ly_values[:, None] * np.pi / Ly
+kz = lz_values[:, None] * np.pi / Lz
+
+Cx = np.cos(kx * x_grid[None, :])
+Sy = np.sin(ky * y_grid[None, :])
+Sz = np.sin(kz * z_grid[None, :])
+
+Ax = one_dim_factor(Cx, sx)
+Ay = one_dim_factor(Sy, sy)
+Az = one_dim_factor(Sz, sz)
+
+# Only do this if the dense nmode by nmode result is actually needed.
+A = np.kron(np.kron(Ax, Ay), Az)
+```
+
+If the final operation is applying $FSF^+$ to a vector rather than explicitly storing the whole matrix, it is better to keep the three factors $A_x,A_y,A_z$ and apply them by reshaping the vector into a three-dimensional tensor. For a vector ordered consistently with the Kronecker product above,
+
+```python
+def apply_kron_3d(Ax, Ay, Az, v):
+    V = v.reshape(Ax.shape[1], Ay.shape[1], Az.shape[1])
+    V = np.einsum("ai,ijk->ajk", Ax, V, optimize=True)
+    V = np.einsum("bj,ajk->abk", Ay, V, optimize=True)
+    V = np.einsum("ck,abk->abc", Az, V, optimize=True)
+    return V.reshape(-1)
+```
+
+This avoids materializing the full $n_{\mathrm{mode}}\times n_{\mathrm{mode}}$ matrix. The storage drops from order $O(n_{\mathrm{mode}}^2)$ to roughly $
+O(n_{l_x}^2+n_{l_y}^2+n_{l_z}^2)$, if only the separated factors are stored.
+
+The other two cosine placements are analogous:
+
+$$
+\sin(k_xx)\cos(k_yy)\sin(k_zz),
+\qquad
+\sin(k_xx)\sin(k_yy)\cos(k_zz).
+$$
+
+One simply replaces the corresponding one-dimensional sine matrix by the cosine matrix in that coordinate. If $S$ is not exactly separable but can be well approximated by a short sum of separable terms,
+
+$$
+S\approx\sum_{r=1}^R D_x^{(r)}\otimes D_y^{(r)}\otimes D_z^{(r)},
+$$
+
+then the same idea gives
+
+$$
+FSF^+
+\approx
+\sum_{r=1}^R
+(C_xD_x^{(r)}C_x^+)
+\otimes
+(S_yD_y^{(r)}S_y^+)
+\otimes
+(S_zD_z^{(r)}S_z^+).
+$$
+
+Thus the exact tensor-product case is not only faster by itself; it is also the natural starting point for low-rank separable approximations of a more general smooth three-dimensional $S$.

@@ -371,201 +371,7 @@ for S in many_S_matrices:
 
 However, if $G$ is Hermitian positive definite, Cholesky is usually the better structured factorization. If $F$ is rank-deficient or ill-conditioned, SVD or `pinv` is usually safer than either Cholesky or LU on the normal equations.
 
-## 6. Benchmark
-
-The small examples above are meant to show correctness, not performance. For timing, it is better to use larger random matrices and average over repeated runs. The following benchmark generates random real matrices $F\in\mathbb R^{m\times n}$ and diagonal $S\in\mathbb R^{n\times n}$, then measures the end-to-end time needed to compute $A=FSF^+$ for each method. The random generation itself is outside the timed region.
-
-The benchmark includes both tall matrices and their wide counterparts. For `solve`, Cholesky, and LU, the implementation uses the smaller normal matrix: $F^\dagger F$ when $m\ge n$, and $FF^\dagger$ when $m<n$.
-
-```python
-import numpy as np
-from time import perf_counter
-from scipy.linalg import (
-    cho_factor,
-    cho_solve,
-    lstsq,
-    lu_factor,
-    lu_solve,
-    pinv,
-    solve,
-    svd,
-)
-
-rng = np.random.default_rng(20260520)
-dims = [(100, 50), (50, 100), (500, 250), (250, 500), (1000, 500), (500, 1000)]
-repeats = 50
-
-
-def svd_method(F, S, s):
-    U, sigma, Vh = svd(F, full_matrices=False, check_finite=False)
-    tol = np.finfo(float).eps * max(F.shape) * sigma[0]
-    sigma_plus = np.where(sigma > tol, 1.0 / sigma, 0.0)
-    F_plus = (Vh.T * sigma_plus) @ U.T
-    return F @ S @ F_plus
-
-
-def pinv_method(F, S, s):
-    return F @ S @ pinv(F, check_finite=False)
-
-
-def solve_method(F, S, s):
-    m, n = F.shape
-
-    if m >= n:
-        G = F.T @ F
-        F_plus = solve(G, F.T, assume_a="pos", check_finite=False)
-        return F @ S @ F_plus
-
-    G = F @ F.T
-    B = (F * s[None, :]) @ F.T
-    return solve(G.T, B.T, assume_a="pos", check_finite=False).T
-
-
-def lstsq_method(F, S, s):
-    F_plus, *_ = lstsq(F, np.eye(F.shape[0]), check_finite=False)
-    return F @ S @ F_plus
-
-
-def cholesky_method(F, S, s):
-    m, n = F.shape
-
-    if m >= n:
-        G = F.T @ F
-        c, lower = cho_factor(G, check_finite=False)
-        F_plus = cho_solve((c, lower), F.T, check_finite=False)
-        return F @ S @ F_plus
-
-    G = F @ F.T
-    B = (F * s[None, :]) @ F.T
-    c, lower = cho_factor(G, check_finite=False)
-    return cho_solve((c, lower), B.T, check_finite=False).T
-
-
-def lu_method(F, S, s):
-    m, n = F.shape
-
-    if m >= n:
-        G = F.T @ F
-        lu, piv = lu_factor(G, check_finite=False)
-        F_plus = lu_solve((lu, piv), F.T, check_finite=False)
-        return F @ S @ F_plus
-
-    G = F @ F.T
-    B = (F * s[None, :]) @ F.T
-    lu, piv = lu_factor(G, check_finite=False)
-    return lu_solve((lu, piv), B.T, check_finite=False).T
-
-
-methods = [
-    ("SVD", svd_method),
-    ("pinv", pinv_method),
-    ("solve", solve_method),
-    ("lstsq", lstsq_method),
-    ("Cholesky", cholesky_method),
-    ("LU", lu_method),
-]
-
-print(f"repeats = {repeats}")
-print("| F shape | SVD | pinv | solve | lstsq | Cholesky | LU |")
-print("|---:|---:|---:|---:|---:|---:|---:|")
-
-for m, n in dims:
-    F = rng.standard_normal((m, n))
-    s = rng.standard_normal(n)
-    S = np.diag(s)
-    row = []
-
-    for name, method in methods:
-        method(F, S, s)  # warm-up
-        times = []
-
-        for _ in range(repeats):
-            start = perf_counter()
-            method(F, S, s)
-            times.append(perf_counter() - start)
-
-        row.append(np.mean(times))
-
-    print(f"| {m} x {n} | " + " | ".join(f"{t:.6f}" for t in row) + " |")
-```
-
-Local benchmark on M3 Pro chip, with 50 repetitions for every method and every matrix size, the average times in seconds were:
-
-<div style="overflow-x: auto;">
-  <table style="margin: 1rem auto; border-collapse: collapse; border: 1px solid var(--global-divider-color);">
-    <thead>
-      <tr>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">F shape</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">SVD</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">pinv</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">solve</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">lstsq</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">Cholesky</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">LU</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">100 x 50</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000620</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000597</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000162</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.001049</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000154</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000119</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">50 x 100</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000740</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000727</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000128</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000817</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000113</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.000119</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">500 x 250</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.047543</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.071102</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.007706</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.096004</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.010087</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.005028</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">250 x 500</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.042368</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.042022</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.007834</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.045064</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.004704</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.003286</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">1000 x 500</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.219666</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.223452</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.031117</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.392856</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.024497</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.021359</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">500 x 1000</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.208340</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.188151</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.019979</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.262974</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.014480</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem;">0.014524</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-The normal-equation methods are faster here, but this speed comes with the usual numerical tradeoff: they assume full column rank in the tall case or full row rank in the wide case, and they square the condition number through $F^\dagger F$ or $FF^\dagger$. For a benchmark focused on robustness rather than speed, `pinv` or the direct SVD route is the more meaningful comparison.
-
-## 7. Using the tensor-product structure of $F$ and $S$
+## 6. Using the tensor-product structure of $F$ and $S$
 
 The discussion above treats $F$ as a general dense matrix. In the actual problem, however, $F$ has much more structure. This can reduce the computation dramatically.
 
@@ -755,3 +561,251 @@ FSF^+
 $$
 
 Thus the exact tensor-product case is not only faster by itself; it is also the natural starting point for low-rank separable approximations of a more general smooth three-dimensional $S$.
+
+## 7. Benchmark
+
+The small examples above are meant to show correctness, not performance. For timing, it is better to use larger matrices and average over repeated runs. To compare the dense methods with the direct-product decomposition on the same problem, the benchmark below generates two-dimensional tensor-product matrices
+
+$$
+F=C_x\otimes S_y,\qquad S=D_x\otimes D_y,
+$$
+
+and measures the end-to-end time needed to compute $A=FSF^+$. The first six methods treat $F$ as a dense matrix. The last method uses the factorization
+
+$$
+(C_xD_xC_x^+)\otimes(S_yD_yS_y^+).
+$$
+
+The random generation itself is outside the timed region. For `solve`, Cholesky, and LU, the benchmark uses the smaller normal matrix: $F^\dagger F$ when $m\ge n$, and $FF^\dagger$ when $m<n$.
+
+```python
+import numpy as np
+from time import perf_counter
+from scipy.linalg import (
+    cho_factor,
+    cho_solve,
+    lstsq,
+    lu_factor,
+    lu_solve,
+    pinv,
+    solve,
+    svd,
+)
+
+rng = np.random.default_rng(20260520)
+xy_dims = [
+    # nx, ny, nlx, nly
+    (24, 24, 12, 12),
+    (36, 36, 18, 18),
+    (48, 48, 24, 24),
+]
+repeats = 20
+
+
+def svd_method(case):
+    F = case["F"]
+    S = case["S"]
+
+    U, sigma, Vh = svd(F, full_matrices=False, check_finite=False)
+    tol = np.finfo(float).eps * max(F.shape) * sigma[0]
+    sigma_plus = np.where(sigma > tol, 1.0 / sigma, 0.0)
+    F_plus = (Vh.T * sigma_plus) @ U.T
+    return F @ S @ F_plus
+
+
+def pinv_method(case):
+    F = case["F"]
+    S = case["S"]
+
+    return F @ S @ pinv(F, check_finite=False)
+
+
+def solve_method(case):
+    F = case["F"]
+    S = case["S"]
+    s = case["s"]
+    m, n = F.shape
+
+    if m >= n:
+        G = F.T @ F
+        F_plus = solve(G, F.T, assume_a="pos", check_finite=False)
+        return F @ S @ F_plus
+
+    G = F @ F.T
+    B = (F * s[None, :]) @ F.T
+    return solve(G.T, B.T, assume_a="pos", check_finite=False).T
+
+
+def lstsq_method(case):
+    F = case["F"]
+    S = case["S"]
+
+    F_plus, *_ = lstsq(F, np.eye(F.shape[0]), check_finite=False)
+    return F @ S @ F_plus
+
+
+def cholesky_method(case):
+    F = case["F"]
+    S = case["S"]
+    s = case["s"]
+    m, n = F.shape
+
+    if m >= n:
+        G = F.T @ F
+        c, lower = cho_factor(G, check_finite=False)
+        F_plus = cho_solve((c, lower), F.T, check_finite=False)
+        return F @ S @ F_plus
+
+    G = F @ F.T
+    B = (F * s[None, :]) @ F.T
+    c, lower = cho_factor(G, check_finite=False)
+    return cho_solve((c, lower), B.T, check_finite=False).T
+
+
+def lu_method(case):
+    F = case["F"]
+    S = case["S"]
+    s = case["s"]
+    m, n = F.shape
+
+    if m >= n:
+        G = F.T @ F
+        lu, piv = lu_factor(G, check_finite=False)
+        F_plus = lu_solve((lu, piv), F.T, check_finite=False)
+        return F @ S @ F_plus
+
+    G = F @ F.T
+    B = (F * s[None, :]) @ F.T
+    lu, piv = lu_factor(G, check_finite=False)
+    return lu_solve((lu, piv), B.T, check_finite=False).T
+
+
+def one_dim_factor(Phi, weight):
+    return (Phi * weight[None, :]) @ pinv(Phi, check_finite=False)
+
+
+def direct_product_method(case):
+    Ax = one_dim_factor(case["Cx"], case["sx"])
+    Ay = one_dim_factor(case["Sy"], case["sy"])
+    return np.kron(Ax, Ay)
+
+
+def make_case(nx, ny, nlx, nly):
+    x = np.linspace(0.0, 1.0, nx)
+    y = np.linspace(0.0, 1.0, ny)
+    lx = np.arange(1, nlx + 1)
+    ly = np.arange(1, nly + 1)
+
+    Cx = np.cos(lx[:, None] * np.pi * x[None, :])
+    Sy = np.sin(ly[:, None] * np.pi * y[None, :])
+    sx = 1.0 + 0.25 * rng.standard_normal(nx)
+    sy = 1.0 + 0.25 * rng.standard_normal(ny)
+    F = np.kron(Cx, Sy)
+    s = np.kron(sx, sy)
+
+    return {
+        "F": F,
+        "S": np.diag(s),
+        "s": s,
+        "Cx": Cx,
+        "Sy": Sy,
+        "sx": sx,
+        "sy": sy,
+    }
+
+
+def mean_time(fn, case):
+    fn(case)  # warm-up
+    times = []
+
+    for _ in range(repeats):
+        start = perf_counter()
+        fn(case)
+        times.append(perf_counter() - start)
+
+    return np.mean(times)
+
+
+methods = [
+    ("SVD", svd_method),
+    ("pinv", pinv_method),
+    ("solve", solve_method),
+    ("lstsq", lstsq_method),
+    ("Cholesky", cholesky_method),
+    ("LU", lu_method),
+    ("direct product", direct_product_method),
+]
+
+print(f"repeats = {repeats}")
+print("| grid | modes | F shape | SVD | pinv | solve | lstsq | Cholesky | LU | direct product |")
+print("|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+
+for nx, ny, nlx, nly in xy_dims:
+    case = make_case(nx, ny, nlx, nly)
+    row = [mean_time(method, case) for _, method in methods]
+
+    print(f"| {nx} x {ny} | {nlx} x {nly} | {case['F'].shape[0]} x {case['F'].shape[1]} | " + " | ".join(f"{t:.6f}" for t in row) + " |")
+```
+
+Local benchmark from one run of the script above (DP is direct-product):
+
+<div style="overflow-x: auto;">
+  <table style="margin: 1rem auto; border-collapse: collapse; border: 1px solid var(--global-divider-color); font-size: 0.92rem; white-space: nowrap;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">grid</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">modes</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">F shape</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">SVD</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">pinv</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">solve</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">lstsq</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">Cholesky</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">LU</th>
+        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">PD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">24 x 24</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">12 x 12</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">144 x 576</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.015257</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.015187</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001692</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.013115</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001950</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001279</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000089</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">36 x 36</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">18 x 18</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">324 x 1296</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.072952</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.077010</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.006327</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.085367</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.011742</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.007305</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000183</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">48 x 48</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">24 x 24</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">576 x 2304</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.274851</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.291603</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.024633</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.263048</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.024746</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.036027</td>
+        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000554</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The normal-equation methods are faster than SVD-based methods in the dense benchmark, but this speed comes with the usual numerical tradeoff: they assume full column rank in the tall case or full row rank in the wide case, and they square the condition number through $F^\dagger F$ or $FF^\dagger$. The direct-product method is faster for this separable case because it avoids the full dense pseudoinverse problem.
+
+The relative errors of the direct-product result against the dense `pinv` result were all in the order of magnatude $10^{-15}$.

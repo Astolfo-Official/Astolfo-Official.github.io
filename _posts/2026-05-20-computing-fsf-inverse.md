@@ -7,7 +7,9 @@ tags: numerical-linear-algebra scipy matrix-computation
 categories: math
 ---
 
-Consider the matrix expression $A = F S F^+$, where $F$ is a general matrix, not necessarily square, $S$ is a given diagonal matrix, and $F^+$ denotes the Moore-Penrose generalized inverse. If $F\in\mathbb C^{m\times n}$, then $F^+\in\mathbb C^{n\times m}$. Therefore $S$ should be an $n\times n$ diagonal matrix, and $FSF^+$ is an $m\times m$ matrix.
+Consider the matrix expression $A = F S F^+$, where $F$ is a general matrix, not necessarily square, $S$ is a given diagonal matrix, and $F^+$ denotes the Moore-Penrose generalized inverse which satisfies 
+
+$$FF^+F=F$$
 
 ## 1. SVD method
 
@@ -17,9 +19,7 @@ $$
 F = U\Sigma V^{\dagger},
 $$
 
-where $U$ and $V$ are unitary matrices, $V^{\dagger}$ is the conjugate transpose of $V$, and $\Sigma$ is rectangular diagonal with singular values $\sigma_i\ge 0$.
-
-The Moore-Penrose inverse is
+where $U$ and $V$ are unitary matrices, $V^{\dagger}$ is the conjugate transpose of $V$, and $\Sigma$ is rectangular diagonal with singular values $\sigma_i\ge 0$. The Moore-Penrose inverse of general matrix $F$ is defined as
 
 $$
 F^+ = (U\Sigma V^{\dagger})^{\dagger} = V\Sigma^+U^{\dagger},
@@ -83,45 +83,17 @@ This is the safest default when $F$ may be rectangular, rank-deficient, or ill-c
 
 ## 2. Using `scipy.linalg.solve`
 
-The function `scipy.linalg.solve` solves a square linear system
+The function `scipy.linalg.solve` solves a square linear system $AX=B$. It becomes useful after we reduce the generalized inverse to a square system under rank assumptions. Assume $F\in\mathbb C^{m\times n}$ has full column rank
 
 $$
-AX=B.
+FF^+F=F \quad \Leftrightarrow \quad F^{\dagger}FF^+F=F^{\dagger}F \quad \Leftrightarrow \quad F^+ = (F^\dagger F)^{-1}F^\dagger.
 $$
 
-So it does not directly invert a rectangular matrix. Instead, it becomes useful after we reduce the generalized inverse to a square system under rank assumptions.
-
-For example, if $F\in\mathbb C^{m\times n}$ has full column rank, then $m\ge n$ and
+Let $G = F^\dagger F$, which is an $n\times n$ Hermitian positive definite matrix, and $F^+ = G^{-1}F^\dagger$. Instead of forming $G^{-1}$ explicitly, in `scipy` we solve
 
 $$
-F^+ = (F^\dagger F)^{-1}F^\dagger.
+G X = F^\dagger \quad \Rightarrow \quad X=F^+ \quad \Rightarrow \quad FSF^+=FSX.
 $$
-
-Let
-
-$$
-G = F^\dagger F.
-$$
-
-Then $G$ is an $n\times n$ Hermitian positive definite matrix, and
-
-$$
-F^+ = G^{-1}F^\dagger.
-$$
-
-Instead of forming $G^{-1}$ explicitly, solve
-
-$$
-G X = F^\dagger.
-$$
-
-Then $X=F^+$, so
-
-$$
-FSF^+=FSX.
-$$
-
-In Scipy:
 
 ```python
 import numpy as np
@@ -154,7 +126,7 @@ The limitations are important:
 - If $F$ is very ill-conditioned, prefer `pinv` or an SVD-based method.
 - For large sparse matrices, use `scipy.sparse.linalg` rather than dense `scipy.linalg`.
 
-There is also a useful full-row-rank variant. If $F\in\mathbb R^{m\times n}$ has full row rank, then
+If $F\in\mathbb R^{m\times n}$ has full row rank, then
 
 $$
 F^+ = F^\dagger(FF^\dagger)^{-1}.
@@ -166,19 +138,11 @@ $$
 FSF^+ = FSF^\dagger(FF^\dagger)^{-1}.
 $$
 
-If we define
+If we define $G = FF^\dagger,\ B = FSF^\dagger$, then the target matrix can be computed as
 
 $$
-G = FF^\dagger,\qquad B = FSF^\dagger,
+FSF^+ = BG^{-1} \quad \Leftrightarrow \quad FSF^+G = B \quad \Leftrightarrow \quad G^{\dagger}(FSF^+)^{\dagger} = B^{\dagger}.
 $$
-
-then the target matrix can be computed as
-
-$$
-FSF^+ = BG^{-1}.
-$$
-
-In the real-valued code below, `.T` is the ordinary transpose. For complex matrices, replace it by `.conj().T`. The diagonal matrix $S$ does not need to be formed explicitly. Multiplying each column of $F$ by the corresponding diagonal entry of $S$ is enough:
 
 ```python
 F_x = self.ftilde_k[:, :, 0]
@@ -196,13 +160,7 @@ abc_x = solve(
 ).T
 ```
 
-The final `.T` is just a convenient way to solve a right-side linear system. Since `scipy.linalg.solve` solves
-
-$$
-AX = C,
-$$
-
-the code above solves
+The code above solves
 
 $$
 (G_x^\dagger+\varepsilon I)Y = B_x^\dagger
@@ -222,76 +180,9 @@ $$
 
 scales the perturbation with the size of $G_x$, while keeping it nonzero even when $G_x$ is tiny. Numerically, this replaces the possibly singular or nearly singular inverse $G_x^{-1}$ by the damped inverse $(G_x+\varepsilon I)^{-1}$. This is a Tikhonov-style stabilization: it is usually faster than SVD, but it no longer computes the exact Moore-Penrose inverse when $G_x$ is singular. The result should be interpreted as a regularized approximation to $FSF^+$.
 
-One can inspect the conditioning with:
+## 3. Cholesky decomposition
 
-```python
-cond_F = np.linalg.cond(F)
-cond_G = np.linalg.cond(G)
-
-print(cond_F)
-print(cond_G)
-```
-
-Example output:
-
-```text
-1.7320508075688772
-2.999999999999999
-```
-
-Typically, $\kappa(F^\dagger F)=\kappa(F)^2$, which is why SVD is often the safer numerical choice.
-
-## 3. Least-squares viewpoint
-
-The generalized inverse is tightly connected to least squares. For a full column rank matrix, $F^+b$ is the least-squares solution of
-
-$$
-\min_x \|Fx-b\|_2.
-$$
-
-For the matrix expression $F S F^+$, we can think of computing $F^+$ column by column. Scipy exposes this directly through `scipy.linalg.lstsq`:
-
-```python
-import numpy as np
-from scipy.linalg import lstsq
-
-np.set_printoptions(precision=6, suppress=True)
-
-F = np.array([[1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
-S = np.diag([0.5, 2.0])
-
-F_plus, residuals, rank, singular_values = lstsq(F, np.eye(F.shape[0]))
-A = F @ S @ F_plus
-
-print(A)
-print(f"rank: {rank}")
-print(f"singular values: {singular_values}")
-```
-```text
-[[ 0.333333  0.166667 -0.166667]
- [-0.333333  0.833333  1.166667]
- [-0.666667  0.666667  1.333333]]
-rank: 2
-singular values: [1.732051 1.      ]
-```
-
-Here `lstsq(F, I_m)` solves
-
-$$
-FX\approx I_m
-$$
-
-in the least-squares sense, and returns $X=F^+$ when the standard Moore-Penrose conditions are met. For rank-deficient or highly ill-conditioned matrices, `pinv` is usually clearer because it makes the singular-value thresholding explicit.
-
-## 4. Cholesky decomposition
-
-If $F$ has full column rank, then
-
-$$
-G = F^\dagger F
-$$
-
-is Hermitian positive definite. Hence we can compute the generalized inverse through a Cholesky factorization of $G$:
+If $F$ has full column rank, then $G = F^\dagger F$ is Hermitian positive definite. Hence we can compute the generalized inverse through a Cholesky factorization of $G$:
 
 $$
 G = LL^\dagger.
@@ -330,7 +221,7 @@ print(A)
 
 This is efficient, but it is only appropriate when $F^\dagger F$ is safely positive definite. If $F$ is close to rank-deficient, the Cholesky route can be numerically fragile.
 
-## 5. LU decomposition
+## 4. LU decomposition
 
 LU decomposition is useful when the square system to be solved is not being treated as positive definite. For example, one can explicitly factor the normal matrix $G=F^\dagger F$ and reuse the factorization:
 
@@ -357,35 +248,49 @@ print(A)
  [-0.666667  0.666667  1.333333]]
 ```
 
-This can be useful when the same $F$ is reused many times with different $S$ matrices:
+## 5. Least-squares viewpoint
+
+The generalized inverse $FF^+=I$ can be optimized via least-squares method as
+
+$$
+F^+=\min_X \|FX-I\|_2.
+$$
+
+Scipy exposes this directly through `scipy.linalg.lstsq`:
 
 ```python
-G = F.conj().T @ F
-lu, piv = lu_factor(G)
-F_plus = lu_solve((lu, piv), F.conj().T)
+import numpy as np
+from scipy.linalg import lstsq
 
-for S in many_S_matrices:
-    A = F @ S @ F_plus
-    print(A)
+np.set_printoptions(precision=6, suppress=True)
+
+F = np.array([[1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
+S = np.diag([0.5, 2.0])
+
+F_plus, residuals, rank, singular_values = lstsq(F, np.eye(F.shape[0]))
+A = F @ S @ F_plus
+
+print(A)
+print(f"rank: {rank}")
+print(f"singular values: {singular_values}")
 ```
-
-However, if $G$ is Hermitian positive definite, Cholesky is usually the better structured factorization. If $F$ is rank-deficient or ill-conditioned, SVD or `pinv` is usually safer than either Cholesky or LU on the normal equations.
+```text
+[[ 0.333333  0.166667 -0.166667]
+ [-0.333333  0.833333  1.166667]
+ [-0.666667  0.666667  1.333333]]
+rank: 2
+singular values: [1.732051 1.      ]
+```
 
 ## 6. Using the tensor-product structure of $F$ and $S$
 
-The discussion above treats $F$ as a general dense matrix. In the actual problem, however, $F$ has much more structure. This can reduce the computation dramatically.
-
-Let the grid points be uniformly distributed in a rectangular box
+The discussion above treats $F$ as a general dense matrix. If $F$ has tensor-product structure, this can reduce the computation dramatically. Let the grid points be uniformly distributed in a rectangular box
 
 $$
 x\in[0,L_x],\qquad y\in[0,L_y],\qquad z\in[0,L_z],
 $$
 
-with $n_x,n_y,n_z$ grid points. Hence
-
-$$
-n_{\mathrm{grid}}=n_xn_yn_z.
-$$
+with $n_x,n_y,n_z$ grid points, satisifying $n_{\mathrm{grid}}=n_xn_yn_z$.
 
 For the mode indices,
 
@@ -395,21 +300,19 @@ k_y=\frac{l_y\pi}{L_y},\qquad
 k_z=\frac{l_z\pi}{L_z}.
 $$
 
-If there are $n_{l_x},n_{l_y},n_{l_z}$ allowed mode indices in the three directions, then
+If there are $n_{l_x},n_{l_y},n_{l_z}$ allowed mode indices in the three directions, satisifying $n_{\mathrm{mode}}=n_{l_x}n_{l_y}n_{l_z}$.
+
+The mode functions along $x,y,z$-axis are defined as
 
 $$
-n_{\mathrm{mode}}=n_{l_x}n_{l_y}n_{l_z}.
+\begin{aligned}
+F_{(l_x,l_y,l_z),(i,j,k)}^x&=\cos(k_xx_i)\sin(k_yy_j)\sin(k_zz_k),\\
+F_{(l_x,l_y,l_z),(i,j,k)}^y&=\sin(k_xx_i)\cos(k_yy_j)\sin(k_zz_k),\\
+F_{(l_x,l_y,l_z),(i,j,k)}^z&=\sin(k_xx_i)\sin(k_yy_j)\cos(k_zz_k).
+\end{aligned}
 $$
 
-The third dimension of the stored array for $F$ records which coordinate carries the cosine. To keep the notation concrete, consider only the first case, where the cosine is in the $x$ direction:
-
-$$
-F_{(l_x,l_y,l_z),(i,j,k)}
-=
-\cos(k_xx_i)\sin(k_yy_j)\sin(k_zz_k).
-$$
-
-Define the one-dimensional matrices
+Take $F_{(l_x,l_y,l_z),(i,j,k)}^x$ for example, define the one-dimensional matrices
 
 $$
 (C_x)_{l_x,i}=\cos(k_xx_i),\qquad
@@ -417,38 +320,12 @@ $$
 (S_z)_{l_z,k}=\sin(k_zz_k).
 $$
 
-Then, up to the chosen flattening order of the multi-indices,
+Then, up to the chosen flattening order of the multi-indices $F = C_x\otimes S_y\otimes S_z$ with shape $n_{\mathrm{mode}}\times n_{\mathrm{grid}}$. It is a Kronecker product of three much smaller one-dimensional matrices.
+
+Now suppose the smooth grid function also separates $s(x_i,y_j,z_k)=s_x(x_i)s_y(y_j)s_z(z_k)$. As a diagonal matrix on the three-dimensional grid, this means
 
 $$
-F = C_x\otimes S_y\otimes S_z.
-$$
-
-This is the key point: the full matrix has shape
-
-$$
-n_{\mathrm{mode}}\times n_{\mathrm{grid}},
-$$
-
-but it is not a generic matrix of that size. It is a Kronecker product of three much smaller one-dimensional matrices.
-
-Now suppose the smooth grid function also separates:
-
-$$
-s(x_i,y_j,z_k)=s_x(x_i)s_y(y_j)s_z(z_k).
-$$
-
-As a diagonal matrix on the three-dimensional grid, this means
-
-$$
-S = D_x\otimes D_y\otimes D_z,
-$$
-
-where
-
-$$
-D_x=\operatorname{diag}(s_x),\qquad
-D_y=\operatorname{diag}(s_y),\qquad
-D_z=\operatorname{diag}(s_z).
+S = \operatorname{diag}(s_x)\otimes \operatorname{diag}(s_y)\otimes \operatorname{diag}(s_z) = D_x\otimes D_y\otimes D_z.
 $$
 
 Using the identities
@@ -533,14 +410,6 @@ def apply_kron_3d(Ax, Ay, Az, v):
 This avoids materializing the full $n_{\mathrm{mode}}\times n_{\mathrm{mode}}$ matrix. The storage drops from order $O(n_{\mathrm{mode}}^2)$ to roughly $
 O(n_{l_x}^2+n_{l_y}^2+n_{l_z}^2)$, if only the separated factors are stored.
 
-The other two cosine placements are analogous:
-
-$$
-\sin(k_xx)\cos(k_yy)\sin(k_zz),
-\qquad
-\sin(k_xx)\sin(k_yy)\cos(k_zz).
-$$
-
 One simply replaces the corresponding one-dimensional sine matrix by the cosine matrix in that coordinate. If $S$ is not exactly separable but can be well approximated by a short sum of separable terms,
 
 $$
@@ -564,7 +433,7 @@ Thus the exact tensor-product case is not only faster by itself; it is also the 
 
 ## 7. Benchmark
 
-The small examples above are meant to show correctness, not performance. For timing, it is better to use larger matrices and average over repeated runs. To compare the dense methods with the direct-product decomposition on the same problem, the benchmark below generates two-dimensional tensor-product matrices
+The small examples above are meant to show correctness, not performance. To compare the dense methods with the direct-product decomposition on the same problem, the benchmark below generates two-dimensional tensor-product matrices
 
 $$
 F=C_x\otimes S_y,\qquad S=D_x\otimes D_y,
@@ -576,7 +445,7 @@ $$
 (C_xD_xC_x^+)\otimes(S_yD_yS_y^+).
 $$
 
-The random generation itself is outside the timed region. For `solve`, Cholesky, and LU, the benchmark uses the smaller normal matrix: $F^\dagger F$ when $m\ge n$, and $FF^\dagger$ when $m<n$.
+The diagonal entries of $D_x$ and $D_y$ are generated by a fixed smooth cutoff function, so each size gives a deterministic pair $(F,S)$. Each method is timed once per size. For `solve`, Cholesky, and LU, the benchmark uses the smaller normal matrix: $F^\dagger F$ when $m\ge n$, and $FF^\dagger$ when $m<n$.
 
 ```python
 import numpy as np
@@ -592,92 +461,117 @@ from scipy.linalg import (
     svd,
 )
 
-rng = np.random.default_rng(20260520)
 xy_dims = [
     # nx, ny, nlx, nly
+    (16, 16, 8, 8),
     (24, 24, 12, 12),
-    (36, 36, 18, 18),
+    (32, 32, 16, 16),
+    (40, 40, 20, 20),
     (48, 48, 24, 24),
+    (56, 56, 28, 28),
 ]
-repeats = 20
+
+
+def abc(grid_1d, r01=0.05, r10=0.95):
+    if len(grid_1d) < 3:
+        return np.ones_like(grid_1d)
+
+    grid_1d = np.array(grid_1d)
+    r00, r11 = grid_1d[0], grid_1d[-1]
+
+    S = np.zeros_like(grid_1d)
+    middle = np.where((grid_1d < r10) & (grid_1d > r01))[0]
+    S[middle] = 1
+
+    l_side = np.where((grid_1d < r01) & (grid_1d > r00))[0]
+    r_side = np.where((grid_1d < r11) & (grid_1d > r10))[0]
+
+    def smooth(x, l, r, p):
+        frac = (l - r) / (l - x) + (r - l) / (x - r)
+        if p:
+            return 1 / (1 + np.exp(-frac))
+        return 1 / (1 + np.exp(frac))
+
+    l_value = np.array(
+        [smooth(i, l=r00, r=r01, p=False) for i in grid_1d[l_side]]
+    )
+    r_value = np.array(
+        [smooth(i, l=r10, r=r11, p=True) for i in grid_1d[r_side]]
+    )
+    S[l_side] = l_value
+    S[r_side] = r_value
+
+    return S
+
+
+def weighted_F(case):
+    return case["F"] * case["s"][None, :]
 
 
 def svd_method(case):
     F = case["F"]
-    S = case["S"]
 
     U, sigma, Vh = svd(F, full_matrices=False, check_finite=False)
     tol = np.finfo(float).eps * max(F.shape) * sigma[0]
     sigma_plus = np.where(sigma > tol, 1.0 / sigma, 0.0)
     F_plus = (Vh.T * sigma_plus) @ U.T
-    return F @ S @ F_plus
+    return weighted_F(case) @ F_plus
 
 
 def pinv_method(case):
-    F = case["F"]
-    S = case["S"]
-
-    return F @ S @ pinv(F, check_finite=False)
+    return weighted_F(case) @ pinv(case["F"], check_finite=False)
 
 
 def solve_method(case):
     F = case["F"]
-    S = case["S"]
-    s = case["s"]
     m, n = F.shape
 
     if m >= n:
         G = F.T @ F
         F_plus = solve(G, F.T, assume_a="pos", check_finite=False)
-        return F @ S @ F_plus
+        return weighted_F(case) @ F_plus
 
     G = F @ F.T
-    B = (F * s[None, :]) @ F.T
+    B = weighted_F(case) @ F.T
     return solve(G.T, B.T, assume_a="pos", check_finite=False).T
-
-
-def lstsq_method(case):
-    F = case["F"]
-    S = case["S"]
-
-    F_plus, *_ = lstsq(F, np.eye(F.shape[0]), check_finite=False)
-    return F @ S @ F_plus
 
 
 def cholesky_method(case):
     F = case["F"]
-    S = case["S"]
-    s = case["s"]
     m, n = F.shape
 
     if m >= n:
         G = F.T @ F
         c, lower = cho_factor(G, check_finite=False)
         F_plus = cho_solve((c, lower), F.T, check_finite=False)
-        return F @ S @ F_plus
+        return weighted_F(case) @ F_plus
 
     G = F @ F.T
-    B = (F * s[None, :]) @ F.T
+    B = weighted_F(case) @ F.T
     c, lower = cho_factor(G, check_finite=False)
     return cho_solve((c, lower), B.T, check_finite=False).T
 
 
 def lu_method(case):
     F = case["F"]
-    S = case["S"]
-    s = case["s"]
     m, n = F.shape
 
     if m >= n:
         G = F.T @ F
         lu, piv = lu_factor(G, check_finite=False)
         F_plus = lu_solve((lu, piv), F.T, check_finite=False)
-        return F @ S @ F_plus
+        return weighted_F(case) @ F_plus
 
     G = F @ F.T
-    B = (F * s[None, :]) @ F.T
+    B = weighted_F(case) @ F.T
     lu, piv = lu_factor(G, check_finite=False)
     return lu_solve((lu, piv), B.T, check_finite=False).T
+
+
+def lstsq_method(case):
+    F = case["F"]
+    F_plus, *_ = lstsq(F, np.eye(F.shape[0]), check_finite=False)
+    return weighted_F(case) @ F_plus
 
 
 def one_dim_factor(Phi, weight):
@@ -698,14 +592,13 @@ def make_case(nx, ny, nlx, nly):
 
     Cx = np.cos(lx[:, None] * np.pi * x[None, :])
     Sy = np.sin(ly[:, None] * np.pi * y[None, :])
-    sx = 1.0 + 0.25 * rng.standard_normal(nx)
-    sy = 1.0 + 0.25 * rng.standard_normal(ny)
+    sx = abc(x)
+    sy = abc(y)
     F = np.kron(Cx, Sy)
     s = np.kron(sx, sy)
 
     return {
         "F": F,
-        "S": np.diag(s),
         "s": s,
         "Cx": Cx,
         "Sy": Sy,
@@ -714,98 +607,59 @@ def make_case(nx, ny, nlx, nly):
     }
 
 
-def mean_time(fn, case):
-    fn(case)  # warm-up
-    times = []
-
-    for _ in range(repeats):
-        start = perf_counter()
-        fn(case)
-        times.append(perf_counter() - start)
-
-    return np.mean(times)
+def time_once(fn, case):
+    start = perf_counter()
+    fn(case)
+    return perf_counter() - start
 
 
 methods = [
     ("SVD", svd_method),
     ("pinv", pinv_method),
     ("solve", solve_method),
-    ("lstsq", lstsq_method),
     ("Cholesky", cholesky_method),
     ("LU", lu_method),
+    ("lstsq", lstsq_method),
     ("direct product", direct_product_method),
 ]
 
-print(f"repeats = {repeats}")
-print("| grid | modes | F shape | SVD | pinv | solve | lstsq | Cholesky | LU | direct product |")
-print("|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+print(
+    "| F shape | SVD | pinv | solve | "
+    "Cholesky | LU | lstsq | direct product |"
+)
+print("|---:|---:|---:|---:|---:|---:|---:|---:|")
 
-for nx, ny, nlx, nly in xy_dims:
+for nx, ny, nlx, nly in sorted(
+    xy_dims,
+    key=lambda dims: (dims[2] * dims[3], dims[0] * dims[1]),
+):
     case = make_case(nx, ny, nlx, nly)
-    row = [mean_time(method, case) for _, method in methods]
+    row = [time_once(method, case) for _, method in methods]
 
-    print(f"| {nx} x {ny} | {nlx} x {nly} | {case['F'].shape[0]} x {case['F'].shape[1]} | " + " | ".join(f"{t:.6f}" for t in row) + " |")
+    prefix = f"| {nlx}^2 x {nx}^2 | "
+
+    print(
+        prefix
+        + " | ".join(f"{elapsed:.1e}" for elapsed in row)
+        + " |"
+    )
 ```
 
-Local benchmark from one run of the script above (DP is direct-product):
+Local benchmark from he script above (DP is direct-product):
 
-<div style="overflow-x: auto;">
-  <table style="margin: 1rem auto; border-collapse: collapse; border: 1px solid var(--global-divider-color); font-size: 0.92rem; white-space: nowrap;">
-    <thead>
-      <tr>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">grid</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">modes</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">F shape</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">SVD</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">pinv</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">solve</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">lstsq</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">Cholesky</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">LU</th>
-        <th style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">PD</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">24 x 24</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">12 x 12</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">144 x 576</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.015257</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.015187</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001692</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.013115</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001950</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.001279</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000089</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">36 x 36</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">18 x 18</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">324 x 1296</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.072952</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.077010</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.006327</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.085367</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.011742</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.007305</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000183</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">48 x 48</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">24 x 24</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">576 x 2304</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.274851</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.291603</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.024633</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.263048</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.024746</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.036027</td>
-        <td style="border: 1px solid var(--global-divider-color); padding: 0.35rem 0.6rem; text-align: center;">0.000554</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+$$
+\begin{array}{c c c c c c c c}
+\hline
+F\text{ shape} & \text{SVD} & \text{pinv} & \text{solve} & \text{Cholesky} & \text{LU} & \text{lstsq} & \text{DP}\\
+\hline
+8^2\times16^2 & 1.7\times10^{-3} & 2.4\times10^{-3} & 1.7\times10^{-3} & 2.0\times10^{-3} & 1.4\times10^{-3} & 2.8\times10^{-3} & 1.1\times10^{-4}\\
+12^2\times24^2 & 1.5\times10^{-2} & 3.2\times10^{-2} & 2.0\times10^{-2} & 2.0\times10^{-2} & 1.9\times10^{-2} & 3.5\times10^{-2} & 1.6\times10^{-4}\\
+16^2\times32^2 & 8.5\times10^{-2} & 1.9\times10^{-1} & 1.2\times10^{-1} & 1.2\times10^{-1} & 1.1\times10^{-1} & 2.2\times10^{-1} & 3.9\times10^{-4}\\
+20^2\times40^2 & 3.2\times10^{-1} & 7.5\times10^{-1} & 4.7\times10^{-1} & 4.7\times10^{-1} & 4.4\times10^{-1} & 8.0\times10^{-1} & 4.4\times10^{-4}\\
+24^2\times48^2 & 9.2\times10^{-1} & 2.3\times10^{0} & 1.4\times10^{0} & 1.4\times10^{0} & 1.3\times10^{0} & 2.4\times10^{0} & 7.2\times10^{-4}\\
+28^2\times56^2 & 2.3\times10^{0} & 5.9\times10^{0} & 3.6\times10^{0} & 3.6\times10^{0} & 3.4\times10^{0} & 6.2\times10^{0} & 1.0\times10^{-3}\\
+\hline
+\end{array}
+$$
 
-The normal-equation methods are faster than SVD-based methods in the dense benchmark, but this speed comes with the usual numerical tradeoff: they assume full column rank in the tall case or full row rank in the wide case, and they square the condition number through $F^\dagger F$ or $FF^\dagger$. The direct-product method is faster for this separable case because it avoids the full dense pseudoinverse problem.
-
-The relative errors of the direct-product result against the dense `pinv` result were all in the order of magnatude $10^{-15}$.
+Here $F\text{ shape}=n_l^2\times n_x^2$ means the dense tensor-product matrix has $n_l \times n_l$ two-dimensional modes and $n_x \times n_x$ two-dimensional grid points.

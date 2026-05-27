@@ -645,7 +645,7 @@ for nx, ny, nlx, nly in sorted(
     )
 ```
 
-Local benchmark from he script above (DP is direct-product):
+Local benchmark from the script above (DP is direct-product):
 
 $$
 \begin{array}{c c c c c c c c}

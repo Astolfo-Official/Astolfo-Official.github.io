@@ -186,7 +186,7 @@ _styles: |
     gap: 0.6rem;
     margin: 0 0 0.75rem;
     color: var(--global-text-color);
-    font-size: clamp(1.2rem, 1rem + 0.75vw, 1.55rem);
+    font-size: clamp(1.08rem, 0.9rem + 0.675vw, 1.395rem);
     font-weight: 750;
     line-height: 1.2;
   }

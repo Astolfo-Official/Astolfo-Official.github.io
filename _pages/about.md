@@ -96,7 +96,7 @@ _styles: |
   }
 
   .home-subtitle {
-    max-width: 42rem;
+    max-width: 33rem;
     margin: 1.15rem 0 0;
     color: rgba(255, 255, 255, 0.88);
     font-size: clamp(1rem, 1.6vw, 1.18rem);
@@ -165,12 +165,11 @@ _styles: |
 
   .home-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     margin: 1.25rem 0 2.2rem;
   }
 
-  .home-panel,
   .home-join {
     border: 1px solid var(--global-divider-color);
     border-radius: 8px;
@@ -180,80 +179,62 @@ _styles: |
     box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
   }
 
-  .home-panel {
-    padding: clamp(1rem, 2.4vw, 1.35rem);
-  }
-
-  .home-panel h2,
-  .home-join h2 {
+  .home-join h2,
+  .home-stream-card h2 {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    margin: 0 0 0.9rem;
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.7rem);
+    gap: 0.6rem;
+    margin: 0 0 0.75rem;
+    color: var(--global-text-color);
+    font-size: clamp(1.2rem, 1rem + 0.75vw, 1.55rem);
+    font-weight: 750;
+    line-height: 1.2;
   }
 
-  .home-panel h2::after,
-  .home-join h2::after {
+  .home-join h2::before,
+  .home-stream-card h2::before {
     content: "";
-    flex: 1 1 auto;
-    height: 1px;
-    background: linear-gradient(90deg, var(--global-divider-color), transparent);
+    width: 0.58rem;
+    height: 0.58rem;
+    border-radius: 999px;
+    background: var(--global-theme-color);
+    box-shadow: 0 0 0 0.22rem var(--home-accent-soft);
   }
 
-  .home-panel p,
+  .home-join h2::after,
+  .home-stream-card h2::after {
+    content: "";
+    width: 2.8rem;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--global-theme-color), transparent);
+  }
+
   .home-join p {
     margin: 0;
     color: var(--global-text-color-light);
-    line-height: 1.75;
-  }
-
-  .home-topic-list {
-    display: grid;
-    gap: 0.72rem;
-    margin-top: 1rem;
-  }
-
-  .home-topic {
-    padding: 0.9rem 1rem;
-    border: 1px solid rgba(47, 111, 115, 0.16);
-    border-left: 3px solid var(--home-accent);
-    border-radius: 8px;
-    background: var(--global-card-bg-color);
-  }
-
-  .home-topic strong {
-    display: block;
-    margin-bottom: 0.24rem;
-    color: var(--global-text-color);
-  }
-
-  .home-topic strong a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .home-topic strong a:hover {
-    color: var(--global-theme-color);
-  }
-
-  .home-topic span {
-    color: var(--global-text-color-light);
-    line-height: 1.6;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.55;
+    white-space: nowrap;
   }
 
   .home-join {
-    display: flex;
-    min-height: 100%;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, max-content);
+    gap: 1rem 1.5rem;
+    align-items: center;
     padding: clamp(1rem, 2.4vw, 1.35rem);
   }
 
+  .home-join-copy {
+    min-width: 0;
+  }
+
   .home-join-actions {
-    display: grid;
-    gap: 0.65rem;
-    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    justify-self: end;
   }
 
   .home-join-actions a {
@@ -261,18 +242,27 @@ _styles: |
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 2.55rem;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid var(--global-divider-color);
+    min-width: 11.5rem;
+    min-height: 2.8rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--global-theme-color) 48%, var(--global-divider-color));
     border-radius: 8px;
-    color: var(--global-text-color);
+    background: color-mix(in srgb, var(--global-theme-color) 8%, var(--global-card-bg-color));
+    color: var(--global-theme-color) !important;
     font-weight: 700;
     text-decoration: none;
+    white-space: nowrap;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
   }
 
   .home-join-actions a:hover {
     border-color: var(--global-theme-color);
-    color: var(--global-theme-color);
+    background: color-mix(in srgb, var(--global-theme-color) 14%, var(--global-card-bg-color));
+    color: var(--global-theme-color) !important;
+    transform: translateY(-1px);
   }
 
   .home-feed-grid {
@@ -292,7 +282,6 @@ _styles: |
 
   .home-feed-card h2 {
     margin-top: 0;
-    font-size: 1.35rem;
   }
 
   .home-stream-card {
@@ -302,27 +291,13 @@ _styles: |
     box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
   }
 
-  .home-stream-card h2 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 0 0 0.95rem;
-  }
-
   .home-stream-card h2 a {
-    color: var(--global-text-color) !important;
+    color: inherit !important;
     text-decoration: none;
   }
 
   .home-stream-card h2 a:hover {
     color: var(--global-theme-color) !important;
-  }
-
-  .home-stream-card h2::after {
-    flex: 1 1 auto;
-    height: 1px;
-    background: linear-gradient(90deg, var(--global-divider-color), transparent);
-    content: "";
   }
 
   .home-stream-card .news .table-responsive {
@@ -481,6 +456,23 @@ _styles: |
       grid-template-columns: 1fr;
     }
 
+    .home-join {
+      grid-template-columns: 1fr;
+    }
+
+    .home-join-actions {
+      justify-self: start;
+      width: 100%;
+    }
+
+    .home-join-actions a {
+      width: min(100%, 16rem);
+    }
+
+    .home-join p {
+      white-space: normal;
+    }
+
     .home-stream-card .news tr {
       grid-template-columns: 1fr;
       gap: 0.35rem;
@@ -490,7 +482,6 @@ _styles: |
 
   @media (max-width: 560px) {
     .home-hero,
-    .home-panel,
     .home-join,
     .home-feed-card {
       width: min(100%, calc(100vw - 1.5rem));
@@ -504,6 +495,10 @@ _styles: |
         linear-gradient(180deg, rgba(17, 25, 29, 0.92), rgba(17, 25, 29, 0.64)),
         url("/assets/img/prof_pic.jpg") center bottom / auto 72% no-repeat,
         var(--global-card-bg-color);
+    }
+
+    .home-subtitle {
+      max-width: 100%;
     }
 
     .home-actions {
@@ -524,8 +519,8 @@ _styles: |
       </p>
       <div class="home-actions">
         <a href="{{ '/research/' | relative_url }}"><i class="fa-solid fa-wave-square" aria-hidden="true"></i> Research</a>
+        <a href="{{ '/publications/' | relative_url }}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Publications</a>
         <a href="{{ '/cv/' | relative_url }}"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> CV</a>
-        <a href="mailto:astolfo@udel.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</a>
       </div>
       <div class="home-signal-strip" aria-label="Research signals">
         <span>polaritonics.md</span>
@@ -536,31 +531,15 @@ _styles: |
   </section>
 
   <div class="home-grid">
-    <section class="home-panel">
-      <h2>Research Focus</h2>
-      <p>
-        I focus on following areas in chemical physics.
-      </p>
-      <div class="home-topic-list">
-        <div class="home-topic">
-          <strong><a href="{{ '/projects/polaritonics/' | relative_url }}">Light-matter interaction</a></strong>
-          <span>Atomistic simulations and theory for vibrational polaritons and cavity-modified molecular dynamics.</span>
-        </div>
-        <div class="home-topic">
-          <strong><a href="{{ '/projects/aiagents/' | relative_url }}">AI-enhanced scientific research</a></strong>
-          <span>Autonomous agents and open-source workflows for scientific simulation and code development.</span>
-        </div>
-      </div>
-    </section>
-
     <aside class="home-join">
-      <h2>Join TEL Group</h2>
-      <p>
-        If you are interested in this research direction, potential collaborations, or joining the group, I would be happy to talk. Prospective group members should also visit the TEL Research Group website.
-      </p>
+      <div class="home-join-copy">
+        <h2>Join TEL Research Group</h2>
+        <p>
+          For collaborations and opportunities to join the TEL Group, please visit our Group website.
+        </p>
+      </div>
       <div class="home-join-actions">
-        <a href="https://www.taoeli.org" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-people-group" aria-hidden="true"></i> TEL Research Group</a>
-        <a href="mailto:astolfo@udel.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact Me</a>
+        <a href="https://www.taoeli.org" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit Group Website</a>
       </div>
     </aside>
   </div>

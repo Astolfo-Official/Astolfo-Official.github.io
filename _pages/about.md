@@ -535,7 +535,7 @@ _styles: |
       <div class="home-join-copy">
         <h2>Join TEL Research Group</h2>
         <p>
-          For collaborations and opportunities to join the TEL Group, please visit our Group website.
+          For collaborations and opportunities to join the TEL Group, please visit our group website.
         </p>
       </div>
       <div class="home-join-actions">

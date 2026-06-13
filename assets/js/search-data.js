@@ -51,7 +51,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "post-computing-fsf",
+        },{id: "post-molecular-and-photonic-k-parallel-pulses-in-maxwelllink",
+        
+          title: "Molecular and Photonic $k_\parallel$ Pulses in MaxwellLink",
+        
+        description: "A technical note on how MaxwellLink&#39;s k_parallel_pulse builds real-space molecular drives and mode-space photonic drives in the multimode Fabry-Perot cavity solver.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/k-parallel-pulses-in-maxwelllink/";
+          
+        },
+      },{id: "post-computing-fsf",
         
           title: "Computing \(FSF^+\)",
         

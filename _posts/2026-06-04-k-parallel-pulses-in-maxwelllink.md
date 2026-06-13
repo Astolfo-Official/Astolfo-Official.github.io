@@ -112,7 +112,7 @@ As a concrete example, imagine stitching together three different plane waves ov
 
 <img src="/assets/img/blog_figures/20260604_fourier_time_frequency_tradeoff.png" alt="Two-column Fourier comparison showing stitched plane waves and summed plane waves in the time domain beside their frequency spectra" style="width: 82%; height: auto; display: block; margin: 1.2rem auto;">
 
-## A interesting pulse in MaxwellLink
+## Wavelet pulse in MaxwellLink
 
 The `k_parallel_pulse` in `MaxwellLink` has the schematic real-space form
 

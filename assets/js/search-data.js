@@ -51,9 +51,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "post-molecular-and-photonic-k-parallel-pulses-in-maxwelllink",
+        },{id: "post-wavelet-pulses-in-maxwelllink",
         
-          title: "Molecular and Photonic $k_\parallel$ Pulses in MaxwellLink",
+          title: "Wavelet Pulses in MaxwellLink",
         
         description: "A technical note on how MaxwellLink&#39;s k_parallel_pulse builds real-space molecular drives and mode-space photonic drives in the multimode Fabry-Perot cavity solver.",
         section: "Posts",

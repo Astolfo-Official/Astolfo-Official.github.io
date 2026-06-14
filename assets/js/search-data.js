@@ -51,7 +51,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "post-wavelet-pulses-in-maxwelllink",
+        },{id: "post-input-output-theory-for-planar-fabry-perot-cavities",
+        
+          title: "Input-Output Theory for Planar Fabry-Perot Cavities",
+        
+        description: "A derivation of the two-dimensional cavity photon field, coherent pumping, input-output relations, radiative losses, and the Lindblad master equation for planar Fabry-Perot cavities.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/input-output-theory-for-fabry-perot-cavities/";
+          
+        },
+      },{id: "post-wavelet-pulses-in-maxwelllink",
         
           title: "Wavelet Pulses in MaxwellLink",
         

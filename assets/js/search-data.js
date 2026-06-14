@@ -62,9 +62,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/input-output-theory-for-fabry-perot-cavities/";
           
         },
-      },{id: "post-building-k-parallel-wavelet-pulses-in-maxwelllink",
+      },{id: "post-building-mathbf-k-parallel-wavelet-pulses-in-maxwelllink",
         
-          title: "Building k-Parallel Wavelet Pulses in MaxwellLink",
+          title: "Building $\mathbf{k}_{\parallel}$ Wavelet Pulses in MaxwellLink",
         
         description: "A technical note on how MaxwellLink&#39;s k_parallel_pulse builds real-space molecular drives and mode-space photonic drives in the multimode Fabry-Perot cavity solver.",
         section: "Posts",

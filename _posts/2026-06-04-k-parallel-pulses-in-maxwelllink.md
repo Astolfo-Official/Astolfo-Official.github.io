@@ -112,6 +112,23 @@ As a concrete example, imagine stitching together three different plane waves ov
 
 <img src="/assets/img/blog_figures/20260604_fourier_time_frequency_tradeoff.png" alt="Two-column Fourier comparison showing stitched plane waves and summed plane waves in the time domain beside their frequency spectra" style="width: 82%; height: auto; display: block; margin: 1.2rem auto;">
 
+One way to keep both pieces of information visible is to stop using infinitely extended plane waves as the only analysis basis. The Fourier transform expands a signal in the basis $e^{i\omega t}$, whose frequency is perfectly sharp but whose time location is completely delocalized. Wavelet analysis replaces this by translated and rescaled localized oscillations. A common choice is a Gaussian packet multiplied by a plane wave,
+
+$$
+\psi_{t_0,\omega_0}(t)
+=
+\exp\left[
+-\frac{(t-t_0)^2}{2\sigma_t^2}
+\right]
+e^{i\omega_0(t-t_0)}.
+$$
+
+This object is called a Morlet wavelet, or Gabor wavelet depending on convention and normalization. It is not infinitely sharp in either time or frequency, but it has a controlled width in both. Sliding it along the signal and changing its central frequency gives a time-frequency map: bright regions mark where the signal locally resembles that wavelet.
+
+For example, the following synthetic signal contains three Gaussian wave packets placed at roughly equal time intervals. The first packet has a low carrier frequency and a long envelope, the second has an intermediate frequency and duration, and the third has a high carrier frequency and a short envelope. The wavelet scalogram reflects the useful side of the time-frequency tradeoff: at low frequency, the signal lasts long enough that precise timing is less important, so the map gives a narrow frequency band spread over a longer time interval; at high frequency, the signal is brief, so the map sacrifices some frequency sharpness while clearly locating when the packet appears.
+
+<img src="/assets/img/blog_figures/20260604_morlet_wavelet_scalogram.png" alt="Morlet wavelet scalogram of three Gaussian wave packets with low-frequency long-duration, intermediate, and high-frequency short-duration components" style="width: 86%; height: auto; display: block; margin: 1.2rem auto;">
+
 ## Wavelet pulse in MaxwellLink
 
 The `k_parallel_pulse` in `MaxwellLink` has the schematic real-space form

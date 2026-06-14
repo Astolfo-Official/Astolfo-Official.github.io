@@ -353,13 +353,15 @@
   }
 }
 
-.blog-card-title {
+.blog-index .blog-card h2.blog-card-title {
   margin: 0 0 0.65rem;
   font-size: clamp(1.16rem, 0.98rem + 0.72vw, 1.56rem);
   line-height: 1.2;
 
   a {
     color: var(--global-text-color);
+    font-size: inherit;
+    line-height: inherit;
     text-decoration: none;
 
     &:hover {

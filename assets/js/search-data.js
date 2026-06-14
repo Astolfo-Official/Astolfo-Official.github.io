@@ -95,17 +95,6 @@ ninja.data = [{
             window.location.href = "/blog/2026/gaussian-integral-complex-shift/";
           
         },
-      },{id: "post-how-to-get-the-casida-equation",
-        
-          title: "How to Get the Casida Equation",
-        
-        description: "A note-faithful walkthrough of how linear-response TDDFT becomes the Casida equation.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/how-to-get-casida-equation-in-tddft/";
-          
-        },
       },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
         
           title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",

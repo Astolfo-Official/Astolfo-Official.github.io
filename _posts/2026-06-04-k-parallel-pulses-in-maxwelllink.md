@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building k-Parallel Wavelet Pulses in MaxwellLink
+title: Building $\mathbf{k}_{\parallel}$ Wavelet Pulses in MaxwellLink
 post_title: k-Parallel Pulses in MaxwellLink
 date: 2026-06-04
 description: A technical note on how MaxwellLink's k_parallel_pulse builds real-space molecular drives and mode-space photonic drives in the multimode Fabry-Perot cavity solver.

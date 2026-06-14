@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Computing \(FSF^+\)
+title: Computing Large Matrices Product with Generalized Inverse \(FSF^+\)
+post_title: Computing \(FSF^+\)
 date: 2026-05-20
 description: A numerical linear algebra note on generalized inverses, SVD, scipy.linalg.solve, Cholesky decomposition, and LU decomposition for \(FSF^+\).
 tags: numerical-linear-algebra scipy matrix-computation

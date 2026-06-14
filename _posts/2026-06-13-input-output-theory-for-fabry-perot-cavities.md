@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Input-Output Theory for Planar Fabry-Perot Cavities
+post_title: Input-Output Theory
 date: 2026-06-13
 description: A derivation of the two-dimensional cavity photon field, coherent pumping, input-output relations, radiative losses, and the Lindblad master equation for planar Fabry-Perot cavities.
 tags: cavity-qed input-output-theory fabry-perot polaritonics CavMD

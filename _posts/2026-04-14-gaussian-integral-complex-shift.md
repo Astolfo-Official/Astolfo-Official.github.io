@@ -1,6 +1,7 @@
 ---
 layout: post
-title: Complex Gaussian Integral
+title: Complex-Shifted Gaussian Integral and the Heat Kernel
+post_title: Complex Gaussian Integral
 date: 2026-04-14
 description: A contour proof that a complex-shifted Gaussian integral equals the ordinary one, with an application to the free-particle heat kernel.
 tags: math complex-analysis statistical-mechanics

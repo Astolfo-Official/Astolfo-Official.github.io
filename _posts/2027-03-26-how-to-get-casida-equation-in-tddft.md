@@ -1,6 +1,7 @@
 ---
 layout: post
-title: How to Get the Casida Equation
+title: Deriving the Casida Equation from Linear-Response TDDFT
+post_title: Casida Equation in TDDFT
 date: 2027-03-26
 description: A note-faithful walkthrough of how linear-response TDDFT becomes the Casida equation.
 tags: tddft quantum-chemistry excited-states

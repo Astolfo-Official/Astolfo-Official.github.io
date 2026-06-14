@@ -355,7 +355,7 @@
 
 .blog-index .blog-card h2.blog-card-title {
   margin: 0 0 0.65rem;
-  font-size: clamp(1.16rem, 0.98rem + 0.72vw, 1.56rem);
+  font-size: clamp(1.12rem, 0.96rem + 0.62vw, 1.42rem);
   line-height: 1.2;
 
   a {
@@ -367,6 +367,10 @@
     &:hover {
       color: var(--global-theme-color);
     }
+  }
+
+  mjx-container {
+    font-size: 0.96em;
   }
 }
 

@@ -62,9 +62,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/input-output-theory-for-fabry-perot-cavities/";
           
         },
-      },{id: "post-wavelet-pulses-in-maxwelllink",
+      },{id: "post-building-k-parallel-wavelet-pulses-in-maxwelllink",
         
-          title: "Wavelet Pulses in MaxwellLink",
+          title: "Building k-Parallel Wavelet Pulses in MaxwellLink",
         
         description: "A technical note on how MaxwellLink&#39;s k_parallel_pulse builds real-space molecular drives and mode-space photonic drives in the multimode Fabry-Perot cavity solver.",
         section: "Posts",
@@ -73,9 +73,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/k-parallel-pulses-in-maxwelllink/";
           
         },
-      },{id: "post-computing-fsf",
+      },{id: "post-computing-large-matrices-product-with-generalized-inverse-fsf",
         
-          title: "Computing \(FSF^+\)",
+          title: "Computing Large Matrices Product with Generalized Inverse \(FSF^+\)",
         
         description: "A numerical linear algebra note on generalized inverses, SVD, scipy.linalg.solve, Cholesky decomposition, and LU decomposition for \(FSF^+\).",
         section: "Posts",
@@ -84,9 +84,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/computing-fsf-inverse/";
           
         },
-      },{id: "post-complex-gaussian-integral",
+      },{id: "post-complex-shifted-gaussian-integral-and-the-heat-kernel",
         
-          title: "Complex Gaussian Integral",
+          title: "Complex-Shifted Gaussian Integral and the Heat Kernel",
         
         description: "A contour proof that a complex-shifted Gaussian integral equals the ordinary one, with an application to the free-particle heat kernel.",
         section: "Posts",
@@ -95,9 +95,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/gaussian-integral-complex-shift/";
           
         },
-      },{id: "post-evaluate-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
+      },{id: "post-a-residue-theorem-evaluation-of-int-0-1-frac-ln-x-x-2-x-1-mathrm-d-x",
         
-          title: "Evaluate \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",
+          title: "A Residue-Theorem Evaluation of \(\int_0^1 \frac{\ln x}{x^2-x-1}\,\mathrm{d}x\)",
         
         description: "A residue theorem evaluation of a superhard real integral.",
         section: "Posts",

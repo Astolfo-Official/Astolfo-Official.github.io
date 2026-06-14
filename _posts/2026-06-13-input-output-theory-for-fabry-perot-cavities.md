@@ -301,28 +301,6 @@ $$
 
 这比单模记号 $\tau_c=1/\gamma$ 更精确：平面腔中的寿命原则上是 $\mathbf{k}$ 与偏振依赖的。
 
-一般来说，给定具体腔结构后，$\eta$、$\kappa$ 和 $\gamma$ 的数值并不能只靠输入输出理论本身决定，而需要求解电磁场穿过整个器件时的 Maxwell 方程。不过在前后镜相同的对称腔中，可以写出一些有用的简化关系：
-
-$$
-\eta^{\mathrm{fr}}_{\sigma}(\mathbf{k})
-=
-\eta^{\mathrm{back}}_{\sigma}(\mathbf{k}),
-\quad
-\kappa^{\mathrm{fr}}_{\sigma}(\mathbf{k})
-=
-\kappa^{\mathrm{back}}_{\sigma}(\mathbf{k}),
-$$
-
-此时辐射衰减率满足
-
-$$
-\gamma^{\mathrm{rad}}_{\sigma}(\mathbf{k})
-=
--2
-\eta_{\sigma}(\mathbf{k})
-\kappa_{\sigma}(\mathbf{k}).
-$$
-
 ## 3. 单模情形 $(\mathbf{k}_{\parallel}=0)$
 
 如果只保留一个被泵浦的模式，例如正入射时的 $\mathbf{k}=0$、固定偏振 $\sigma$，二维积分和偏振求和就退化为一个单模算符 $a$。此时自由腔场哈密顿量变成
@@ -361,7 +339,124 @@ i\hbar
 \right].
 $$
 
-若再加入前后镜导致的输入和损耗，上面的公式退化为熟悉的单模 Langevin 图像：
+现在从量子主方程得到一个普通微分方程。单模密度矩阵满足
+
+$$
+\frac{d\rho}{dt}
+=
+-\frac{i}{\hbar}
+\left[
+H_{\mathrm{single}}(t),
+\rho
+\right]
++
+\frac{\gamma}{2}
+\left(
+2a\rho a^\dagger
+-
+a^\dagger a\rho
+-
+\rho a^\dagger a
+\right).
+$$
+
+我们关心腔场振幅的一阶矩
+
+$$
+\alpha(t)
+=
+\langle a(t)\rangle
+=
+\mathrm{Tr}\left[a\rho(t)\right].
+$$
+
+因此
+
+$$
+\dot\alpha(t)
+=
+\mathrm{Tr}
+\left[
+a
+\frac{d\rho}{dt}
+\right].
+$$
+
+自由哈密顿量给出
+
+$$
+\frac{i}{\hbar}
+\left\langle
+\left[
+\hbar\omega_c a^\dagger a,
+a
+\right]
+\right\rangle
+=
+-i\omega_c\alpha,
+$$
+
+其中用到了
+
+$$
+\left[
+a^\dagger a,
+a
+\right]
+=
+-a.
+$$
+
+泵浦哈密顿量给出
+
+$$
+\frac{i}{\hbar}
+\left\langle
+\left[
+H_{\mathrm{pump}},
+a
+\right]
+\right\rangle
+=
+\eta E_{\mathrm{inc}}(t).
+$$
+
+Lindblad 损耗项给出
+
+$$
+\mathrm{Tr}
+\left[
+a
+\frac{\gamma}{2}
+\left(
+2a\rho a^\dagger
+-
+a^\dagger a\rho
+-
+\rho a^\dagger a
+\right)
+\right]
+=
+-\frac{\gamma}{2}
+\alpha.
+$$
+
+合起来得到振幅的 ODE：
+
+$$
+\dot\alpha
+=
+\left(
+-i\omega_c
+-
+\frac{\gamma}{2}
+\right)
+\alpha
++
+\eta E_{\mathrm{inc}}(t).
+$$
+
+这里并没有把量子系统强行变成经典系统，而是取了 $\langle a\rangle$ 这个一阶矩。由于单模空腔是线性的，一阶矩的方程自动闭合，不需要引入更高阶关联函数。若进一步保留输入噪声算符，上面的公式就对应熟悉的单模 Langevin 图像：
 
 $$
 \dot a
@@ -444,3 +539,289 @@ $$
 $$
 
 实际 DBR 微腔或含介质结构中，$\eta$、$\kappa$、$\gamma$ 一般需要由 Maxwell 方程的具体边界问题决定，而不是只靠这个金属镜近似。
+
+## 4. 对称二维 Fabry-Perot 腔中的模式分辨关系
+
+这一节直接给定简化的 Fabry-Perot 边界条件：纵向镜间距为 $\ell_z$，两面无损镜相同，镜子的透射振幅为 $T\ll 1$。如果需要把横向动量先离散化，可以取横向量子化长度为 $\ell_x$ 和 $\ell_y$，横向面积为
+
+$$
+A=\ell_x\ell_y.
+$$
+
+有限面积中允许的面内波矢是离散的，
+
+$$
+k_x=\frac{2\pi n_x}{\ell_x},
+\qquad
+k_y=\frac{2\pi n_y}{\ell_y},
+$$
+
+并且连续极限中有
+
+$$
+\frac{1}{A}
+\sum_{\mathbf{k}}
+\longrightarrow
+\int\frac{d^2k}{(2\pi)^2}.
+$$
+
+在这一组简化条件下，镜子的响应被看成 Markovian 且不显含 $\mathbf{k}$ 与偏振方向，因此把输入和输出系数近似为常数：
+
+$$
+\eta_{\sigma}^{\mathrm{fr}}(\mathbf{k})
+=
+\eta_{\sigma}^{\mathrm{back}}(\mathbf{k})
+\equiv
+\eta,
+\qquad
+\kappa_{\sigma}^{\mathrm{fr}}(\mathbf{k})
+=
+\kappa_{\sigma}^{\mathrm{back}}(\mathbf{k})
+\equiv
+\kappa.
+$$
+
+如果外场作用在整个平面上，并且是横向平面波，那么它只选择一个面内动量模式。此时每个被选中的模式都退化成单模问题，最终结果就是把单模公式中的 $\omega_c$ 换成该模式的 $\omega_{\mathbf{k}}$：
+
+$$
+\eta_{\mathrm{full}}(\mathbf{k})
+=
+\frac{cT}{2\ell_z}
+\sqrt{
+\frac{\ell_z}
+{\pi\hbar\omega_{\mathbf{k}}}
+},
+\qquad
+\kappa_{\mathrm{full}}(\mathbf{k})
+=
+-T
+\sqrt{
+\frac{\pi\hbar\omega_{\mathbf{k}}}
+{\ell_z}
+},
+$$
+
+$$
+\gamma_{\mathrm{full}}(\mathbf{k})
+=
+-2\eta_{\mathrm{full}}(\mathbf{k})
+\kappa_{\mathrm{full}}(\mathbf{k})
+=
+\frac{cT^2}{\ell_z}.
+$$
+
+如果外场不是作用在整个平面上，而是只作用在一个有限横向区域，可以把入射场写成时间包络乘以空间窗口。这里取前镜入射为例：
+
+$$
+E_{\sigma}^{\mathrm{fr}}(\mathbf{r},t)
+=
+E_{0,\sigma}(t)
+W_{L_x,L_y}(x,y),
+$$
+
+其中两个方向的 Hann window 范围分别为 $L_x$ 和 $L_y$。本文采用可分离的乘积形式：
+
+$$
+W_{L_x,L_y}(x,y)
+=
+w_{L_x}(x)w_{L_y}(y).
+$$
+
+若 $L$ 表示窗口的全长，则一维 Hann window 写成
+
+$$
+w_L(s)
+=
+\begin{cases}
+\frac{1}{2}
+\left[
+1+\cos\left(\frac{2\pi s}{L}\right)
+\right],
+&
+|s|\leq \frac{L}{2},
+\\
+0,
+&
+|s|>\frac{L}{2}.
+\end{cases}
+$$
+
+于是前镜入射场的模式分量为
+
+$$
+\widetilde{E}_{\sigma}^{\mathrm{fr}}(\mathbf{k},t)
+=
+E_{0,\sigma}(t)
+\widetilde{W}_{L_x,L_y}(\mathbf{k}),
+$$
+
+其中
+
+$$
+\widetilde{W}_{L_x,L_y}(\mathbf{k})
+=
+\int d^2r\,
+W_{L_x,L_y}(x,y)
+e^{-i\mathbf{k}\cdot\mathbf{r}}.
+$$
+
+这一步是有限激发区域影响动力学的地方：不同的 $L_x,L_y$ 会改变 $\widetilde{W}_{L_x,L_y}(\mathbf{k})$，从而改变每个 $\mathbf{k}$ 模的驱动力。
+
+于是固定一个二维腔模 $(\mathbf{k},\sigma)$ 后，记
+
+$$
+a_{\mathbf{k}\sigma}
+\equiv
+a_{\mathrm{C},\sigma}(\mathbf{k}).
+$$
+
+这个模式的主方程可写成
+
+$$
+\frac{d\rho}{dt}
+=
+-\frac{i}{\hbar}
+\left[
+H_{\mathbf{k}\sigma},
+\rho
+\right]
++
+\mathcal{L}^{\mathrm{rad}}_{\mathbf{k}\sigma}[\rho],
+$$
+
+其中
+
+$$
+H_{\mathbf{k}\sigma}
+=
+\hbar\omega_{\mathbf{k}}
+a_{\mathbf{k}\sigma}^{\dagger}a_{\mathbf{k}\sigma}
++
+i\hbar
+\left\{
+\eta
+\left[
+\widetilde{E}_{\sigma}^{\mathrm{fr}}(\mathbf{k},t)
++
+\widetilde{E}_{\sigma}^{\mathrm{back}}(\mathbf{k},t)
+\right]
+a_{\mathbf{k}\sigma}^{\dagger}
+-\mathrm{H.c.}
+\right\}
+$$
+
+以及
+
+$$
+\mathcal{L}^{\mathrm{rad}}_{\mathbf{k}\sigma}[\rho]
+=
+\frac{\gamma_{\mathrm{rad}}}{2}
+\left[
+2a_{\mathbf{k}\sigma}\rho a_{\mathbf{k}\sigma}^{\dagger}
+-
+a_{\mathbf{k}\sigma}^{\dagger}a_{\mathbf{k}\sigma}\rho
+-
+\rho a_{\mathbf{k}\sigma}^{\dagger}a_{\mathbf{k}\sigma}
+\right].
+$$
+
+和单模情况一样，对 $\alpha_{\mathbf{k}\sigma}(t)=\langle a_{\mathbf{k}\sigma}(t)\rangle$ 求导：
+
+$$
+\dot{\alpha}_{\mathbf{k}\sigma}
+=
+\mathrm{Tr}
+\left[
+a_{\mathbf{k}\sigma}
+\frac{d\rho}{dt}
+\right].
+$$
+
+自由项、泵浦项和 Lindblad 项分别给出
+
+$$
+\dot{\alpha}_{\mathbf{k}\sigma}
+=
+\left(
+-i\omega_{\mathbf{k}}
+-
+\frac{\gamma_{\mathrm{rad}}}{2}
+\right)
+\alpha_{\mathbf{k}\sigma}
++
+\eta
+\left[
+\widetilde{E}_{\sigma}^{\mathrm{fr}}(\mathbf{k},t)
++
+\widetilde{E}_{\sigma}^{\mathrm{back}}(\mathbf{k},t)
+\right].
+$$
+
+如果只从前镜入射，并且后镜输入取为 vacuum noise 的零均值部分，那么经典驱动方程可以简化为
+
+$$
+\dot{\alpha}_{\mathbf{k}\sigma}
+=
+\left(
+-i\omega_{\mathbf{k}}
+-
+\frac{\gamma_{\mathrm{rad}}}{2}
+\right)
+\alpha_{\mathbf{k}\sigma}
++
+\eta
+E_{0,\sigma}(t)
+\widetilde{W}_{L_x,L_y}(\mathbf{k}).
+$$
+
+因此，对于局部 Hann window 激发，进入运动方程的有效泵浦系数不是裸的 $\eta$，而是
+
+$$
+\eta_{\mathrm{eff},\sigma}(\mathbf{k})
+=
+\eta
+\widetilde{W}_{L_x,L_y}(\mathbf{k}).
+$$
+
+输入输出关系本身仍由镜子决定，因而输出系数不乘窗口函数：
+
+$$
+\widehat{E}_{\sigma}^{\mathrm{refl}}(\mathbf{k},t)
+=
+E_{\sigma}^{\mathrm{inc}}(\mathbf{k},t)
++
+\kappa a_{\mathbf{k}\sigma}(t),
+\qquad
+\widehat{E}_{\sigma}^{\mathrm{tr}}(\mathbf{k},t)
+=
+\kappa a_{\mathbf{k}\sigma}(t).
+$$
+
+在 RMP 的归一化约定下，腔内振幅损耗与两侧输出通道匹配给出
+
+$$
+\gamma_{\mathrm{rad}}
+=
+-2\eta\kappa.
+$$
+
+因此局部激发情形下可以把三个相关参数总结为
+
+$$
+\eta_{\mathrm{eff},\sigma}(\mathbf{k})
+=
+\eta
+\widetilde{W}_{L_x,L_y}(\mathbf{k}),
+\qquad
+\kappa_{\mathrm{eff}}(\mathbf{k})
+=
+\kappa,
+\qquad
+\gamma_{\mathrm{eff}}(\mathbf{k})
+=
+\gamma_{\mathrm{rad}}
+=
+-2\eta\kappa.
+$$
+
+也就是说，局部激发区域只改变量子化模式受到的外场投影，也就是 $\eta_{\mathrm{eff},\sigma}(\mathbf{k})$；它不改变镜子本身的输出系数 $\kappa$ 和辐射损耗 $\gamma_{\mathrm{rad}}$。在这个简化模型中，不同 $\mathbf{k}$ 模之间没有产生湮灭算符的耦合，所以多模问题仍然是许多彼此独立的单模方程并排出现；$\mathbf{k}$ 通过 $\omega_{\mathbf{k}}$ 和 $\widetilde{W}_{L_x,L_y}(\mathbf{k})$ 进入振幅方程。

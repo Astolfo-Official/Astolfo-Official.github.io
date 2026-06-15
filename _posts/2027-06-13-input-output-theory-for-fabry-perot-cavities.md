@@ -2,7 +2,7 @@
 layout: post
 title: Input-Output Theory for Planar Fabry-Perot Cavities
 post_title: Input-Output Theory
-date: 2026-06-13
+date: 2027-06-13
 description: A derivation of the two-dimensional cavity photon field, coherent pumping, input-output relations, radiative losses, and the Lindblad master equation for planar Fabry-Perot cavities.
 tags: cavity-qed input-output-theory fabry-perot polaritonics CavMD
 categories: physics
@@ -383,7 +383,29 @@ a
 \right].
 $$
 
-自由哈密顿量给出
+哈密顿量部分可以先化成一个统一的形式。利用 trace 的循环性质，
+
+$$
+\mathrm{Tr}
+\left[
+a
+\left(
+-\frac{i}{\hbar}
+\left[
+H_{\rm single},\rho
+\right]
+\right)
+\right]
+=
+\frac{i}{\hbar}
+\left\langle
+\left[
+H_{\rm single},a
+\right]
+\right\rangle .
+$$
+
+这就是下面从密度矩阵方程跳到对易子期望值的原因。自由哈密顿量给出
 
 $$
 \frac{i}{\hbar}
@@ -392,20 +414,18 @@ $$
 \hbar\omega_c a^\dagger a,
 a
 \right]
+\right\rangle=
+i\omega_c
+\left\langle
+\left[ a^\dagger a,a\right]
+\right\rangle
+=
+i\omega_c
+\left\langle
+\left[ a^\dagger,a\right] a
 \right\rangle
 =
 -i\omega_c\alpha,
-$$
-
-其中用到了
-
-$$
-\left[
-a^\dagger a,
-a
-\right]
-=
--a.
 $$
 
 泵浦哈密顿量给出
@@ -419,27 +439,37 @@ a
 \right]
 \right\rangle
 =
+\frac{i}{\hbar}
+\left\langle
+\left[
+i\hbar
+\left(
+\eta E_{\mathrm{inc}}(t)a^\dagger
+-
+\eta^*E_{\mathrm{inc}}^*(t)a
+\right),
+a
+\right]
+\right\rangle
+=
+\frac{i}{\hbar}
+\left(
+-i\hbar\eta E_{\mathrm{inc}}(t)
+\right)
+=
 \eta E_{\mathrm{inc}}(t).
 $$
 
 Lindblad 损耗项给出
 
 $$
-\mathrm{Tr}
-\left[
-a
-\frac{\gamma}{2}
-\left(
-2a\rho a^\dagger
--
-a^\dagger a\rho
--
-\rho a^\dagger a
-\right)
-\right]
-=
--\frac{\gamma}{2}
-\alpha.
+\begin{aligned}
+\mathrm{Tr}\left[a\frac{\gamma}{2}\left(2a\rho a^\dagger-a^\dagger a\rho-\rho a^\dagger a\right)\right]
+&=\frac{\gamma}{2}\mathrm{Tr}\left[2aa\rho a^\dagger-aa^\dagger a\rho-a\rho a^\dagger a\right]\\
+&=\frac{\gamma}{2}\mathrm{Tr}\left[2a^\dagger aa\rho-aa^\dagger a\rho-a^\dagger aa\rho \right]\\
+&=\frac{\gamma}{2}\mathrm{Tr}\left[a^\dagger aa\rho-aa^\dagger a\rho\right]\\
+&=\frac{\gamma}{2}\left\langle a^\dagger aa-aa^\dagger a\right\rangle=\frac{\gamma}{2}\left\langle \left[a^\dagger,a\right]a\right\rangle=-\frac{\gamma}{2}\alpha.
+\end{aligned}
 $$
 
 合起来得到振幅的 ODE：
@@ -457,7 +487,9 @@ $$
 \eta E_{\mathrm{inc}}(t).
 $$
 
-这里并没有把量子系统强行变成经典系统，而是取了 $\langle a\rangle$ 这个一阶矩。由于单模空腔是线性的，一阶矩的方程自动闭合，不需要引入更高阶关联函数。若进一步保留输入噪声算符，上面的公式就对应熟悉的单模 Langevin 图像：
+这里并没有把量子系统强行变成经典系统，而是取了 $\langle a\rangle$ 这个一阶矩。由于单模空腔是线性的，一阶矩的方程自动闭合，不需要引入更高阶关联函数。
+
+但 master equation 只描述 reduced density matrix。若要同时描述入射场、反射场和透射场，就要回到“腔模 + 外部连续模”的 Heisenberg 方程。把外部连续模形式解掉，并在 Markov 近似下代回腔模方程，会得到等价的 Langevin 图像：
 
 $$
 \dot a
@@ -472,21 +504,90 @@ $$
 \sqrt{\gamma_{\mathrm{back}}}\,b_{\mathrm{in}}^{\mathrm{back}}(t).
 $$
 
-若只从前镜入射，前端输入含有相干振幅，后端输入通常是 vacuum noise。输出关系则可写成
+这里 $b_{\mathrm{in}}(t)$ 是 photon-flux 归一化的输入算符，满足
+
+$$
+\left[
+b_{\mathrm{in}}(t),
+b_{\mathrm{in}}^\dagger(t')
+\right]
+=
+\delta(t-t').
+$$
+
+噪声项不是额外假设的经典随机力，而是被 trace out 的外部光场在 Heisenberg 图像里的残留。它有两个作用：第一，若输入端有相干态，$\langle b_{\mathrm{in}}^{\mathrm{fr}}(t)\rangle$ 就给出 coherent drive；第二，即使输入是真空，它也保证 $[a(t),a^\dagger(t)]=1$ 不会被阻尼项破坏。对 Langevin 方程取期望值，若后镜输入为真空、前镜输入有相干振幅 $\beta_{\mathrm{in}}(t)$，就得到
+
+$$
+\dot\alpha
+=
+\left(
+-i\omega_c
+-\frac{\gamma}{2}
+\right)
+\alpha
++
+\sqrt{\gamma_{\mathrm{fr}}}\,
+\beta_{\mathrm{in}}(t),
+$$
+
+这和上面的 master-equation 结果相同，只是 drive amplitude 的归一化不同：
+
+$$
+\eta E_{\mathrm{inc}}(t)
+\leftrightarrow
+\sqrt{\gamma_{\mathrm{fr}}}\,
+\beta_{\mathrm{in}}(t).
+$$
+
+因此 Langevin 方程不是新的动力学假设，而是同一个开放系统在 Heisenberg 图像里的写法；master equation 给出腔内平均值和关联函数，Langevin/input-output 形式进一步保留了外场通道。
+
+在 photon-flux 归一化下，输出关系通常写成
 
 $$
 b_{\mathrm{out}}^{\mathrm{fr}}(t)
 =
 b_{\mathrm{in}}^{\mathrm{fr}}(t)
 +
-\kappa_{\mathrm{fr}}a(t),
+\sqrt{\gamma_{\mathrm{fr}}}\,a(t),
 \quad
 b_{\mathrm{out}}^{\mathrm{back}}(t)
 =
-\kappa_{\mathrm{back}}a(t),
+b_{\mathrm{in}}^{\mathrm{back}}(t)
++
+\sqrt{\gamma_{\mathrm{back}}}\,a(t),
 $$
 
-其中整体符号取决于镜面反射相位约定。不同文献可能把第二项写成 $-\sqrt{\gamma}a$；物理结果不依赖这个符号本身，只要求泵浦、反射和透射的相位约定一致。
+其中整体符号取决于镜面反射相位约定。若只从前镜入射，前端输入含有相干振幅，后端输入通常是 vacuum noise。
+
+RMP 综述的 $\eta$ 和 $\kappa$ 采用的是物理电场归一化，而不是 photon-flux 归一化。对应的输出电场关系写成
+
+$$
+E_{\mathrm{out}}^{\mathrm{fr}}(t)
+=
+E_{\mathrm{inc}}^{\mathrm{fr}}(t)
++
+\kappa_{\mathrm{fr}}a(t),
+\quad
+E_{\mathrm{out}}^{\mathrm{back}}(t)
+=
+\kappa_{\mathrm{back}}a(t).
+$$
+
+这就是前面二维模式公式里写
+
+$$
+\widehat{E}^{\mathrm{refl}}
+=
+E^{\mathrm{inc}}
++
+\kappa^{\mathrm{fr}}a,
+\qquad
+\widehat{E}^{\mathrm{tr}}
+=
+\kappa^{\mathrm{back}}a,
+$$
+
+的单模版本。注意：$\sqrt{\gamma}$ 是 photon-flux 归一化的输出系数，$\kappa$ 是物理电场归一化的输出系数；二者描述同一泄漏过程，但单位不同。
 
 对于前后镜相同的对称腔，有
 
@@ -500,7 +601,48 @@ $$
 \kappa^{\mathrm{back}}_{\sigma}(\mathbf{k}).
 $$
 
-在最简单的正入射、空腔、Fabry-Perot 边界条件下，若两面无损金属镜相同、间距为 $\ell_z$，且镜子的透射振幅为 $T\ll 1$，RMP 综述给出的系数量级可写为
+这些系数不是从上面的 ODE 单独解出来的。ODE 只告诉我们动力学形式；$\eta$、$\kappa$、$\gamma$ 的数值要由 Maxwell 边界条件和场归一化决定。在最简单的正入射、空腔、Fabry-Perot 边界条件下，若两面无损金属镜相同、间距为 $\ell_z$，且镜子的透射振幅为 $T\ll 1$，推导思路是：
+
+1. 腔内单光子电场振幅由模式能量归一化给出，量级为
+
+$$
+E_{\mathrm{1ph}}
+\sim
+\sqrt{
+\frac{\pi\hbar\omega_{\mathrm{cav}}}{\ell_z}
+}.
+$$
+
+2. 腔内场穿过一面镜后，输出电场振幅等于透射振幅乘以腔内单光子场，并带上镜面相位：
+
+$$
+\kappa
+=
+-T E_{\mathrm{1ph}}
+=
+-T
+\sqrt{
+\frac{\pi\hbar\omega_{\mathrm{cav}}}
+{\ell_z}
+}.
+$$
+
+3. 外部入射电场每次往返都会向腔内注入一小段振幅。往返时间为 $2\ell_z/c$，所以注入速率带有 $c/(2\ell_z)$；再乘上镜子的透射振幅 $T$，并除以单光子电场归一化，得到
+
+$$
+\eta
+=
+\frac{cT}{2\ell_z}
+\frac{1}{E_{\mathrm{1ph}}}
+=
+\frac{cT}{2\ell_z}
+\sqrt{
+\frac{\ell_z}
+{\pi\hbar\omega_{\mathrm{cav}}}
+}.
+$$
+
+因此 RMP 综述给出的系数可写为
 
 $$
 \eta
@@ -519,7 +661,19 @@ $$
 }.
 $$
 
-对称腔中辐射衰减率可由输入输出系数写成
+对称腔中辐射衰减率也可以用同一个边界图像估算。腔内光在时间 $2\ell_z/c$ 内完成一次往返；每次碰到一面镜，泄漏概率量级是 $T^2$。两面镜相同，所以单位时间逃逸概率为
+
+$$
+2
+\times
+\frac{c}{2\ell_z}
+\times
+T^2
+=
+\frac{cT^2}{\ell_z}.
+$$
+
+这就是光子数衰减率 $\gamma_{\mathrm{rad}}$。用上面 RMP 的电场归一化系数代入，也可写成
 
 $$
 \gamma_{\mathrm{rad}}

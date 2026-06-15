@@ -51,18 +51,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "post-input-output-theory-for-planar-fabry-perot-cavities",
-        
-          title: "Input-Output Theory for Planar Fabry-Perot Cavities",
-        
-        description: "A derivation of the two-dimensional cavity photon field, coherent pumping, input-output relations, radiative losses, and the Lindblad master equation for planar Fabry-Perot cavities.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/input-output-theory-for-fabry-perot-cavities/";
-          
-        },
-      },{id: "post-building-mathbf-k-parallel-wavelet-pulses-in-maxwelllink",
+        },{id: "post-building-mathbf-k-parallel-wavelet-pulses-in-maxwelllink",
         
           title: "Building $\mathbf{k}_{\parallel}$ Wavelet Pulses in MaxwellLink",
         
@@ -73,9 +62,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/k-parallel-pulses-in-maxwelllink/";
           
         },
-      },{id: "post-computing-large-matrices-product-with-generalized-inverse-fsf",
+      },{id: "post-computing-matrices-product-with-generalized-inverse-fsf",
         
-          title: "Computing Large Matrices Product with Generalized Inverse \(FSF^+\)",
+          title: "Computing Matrices Product with Generalized Inverse \(FSF^+\)",
         
         description: "A numerical linear algebra note on generalized inverses, SVD, scipy.linalg.solve, Cholesky decomposition, and LU decomposition for \(FSF^+\).",
         section: "Posts",

@@ -28,7 +28,7 @@ _styles: |
 
 `CavMD` expands the scope of conventional molecular dynamics and can efficiently simulate collective vibrational strong coupling formed by a large collection of realistic molecules. Beyond the single-mode limit, the recently developed mesoscale CavMD approach propagates coupled light-matter dynamics for condensed-phase molecules confined in a wide range of cavity geometries, including the planar Fabry-Perot cavities commonly employed in experiments.
 
-Built on this framework, the project studies how cavity environments reshape molecular vibrations, energy transfer, and spectroscopic responses in realistic systems. Recent examples include selective excitation of IR-inactive modes via vibrational polaritons {% cite jiSelectiveExcitationIRInactive2025 %}, nonlinear signatures in two-dimensional IR-Raman spectroscopy of vibrational polaritons {% cite jiTwodimensionalIRRamanSpectroscopy2026 %}, and self-consistent light-matter simulations enabled by the MaxwellLink framework {% cite jiMaxwellLinkUnifiedFramework2026 %}.
+Built on this framework, the project studies how cavity environments reshape molecular vibrations, energy transfer, and spectroscopic responses in realistic systems. Recent examples include selective excitation of IR-inactive modes via vibrational polaritons {% cite jiSelectiveExcitationIRInactive2025 %}, nonlinear signatures in two-dimensional IR-Raman spectroscopy of vibrational polaritons {% cite jiTwodimensionalIRRaman2026 %}, and self-consistent light-matter simulations enabled by the MaxwellLink framework {% cite jiMaxwellLinkUnifiedFramework2026 %}.
 
 <div class="row">
   <div class="col-sm-8 mx-auto mt-3 mt-md-0">

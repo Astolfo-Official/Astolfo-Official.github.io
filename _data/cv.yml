@@ -83,10 +83,10 @@ cv:
         url: https://arxiv.org/pdf/2604.03460
 
       - title: Two-Dimensional IR-Raman Spectroscopy of Vibrational Polaritons Role of Dipole Surfaces
-        authors: Ji, Xinwei and Begusic, Tomislav and Li, Tao E.
-        citation: arXiv 2026, arXiv:2603.24521.
+        authors: Ji, Xinwei and Begušic, Tomislav and Li, Tao E.
+        citation: J. Chem. Phys. 2026, 164 (23), 234116.
         releaseDate: 2026
-        url: https://arxiv.org/abs/2603.24521
+        url: https://doi.org/10.1063/5.0321131
 
       - title: MaxwellLink A Unified Framework for Self-Consistent Light–Matter Simulations
         authors: Ji, Xinwei and Bocanegra Vargas, Andres Felipe and Meng, Gang and Li, Tao E.

@@ -9,7 +9,7 @@ related_publications: true
 
 My first contribution to i-PI has been included in [i-PI v3.2.0](https://github.com/i-pi/i-pi/releases/tag/v3.2.0)!
 
-The contribution implements the code functionality developed for our preprint on two-dimensional IR-Raman spectroscopy of vibrational polaritons {% cite jiTwodimensionalIRRamanSpectroscopy2026 %}.
+The contribution implements the code functionality developed for our preprint on two-dimensional IR-Raman spectroscopy of vibrational polaritons {% cite jiTwodimensionalIRRaman2026 %}.
 
 This feature enables cavity molecular dynamics (CavMD) simulations for linear and multidimensional spectroscopy with accurate dipole surfaces. In particular, it supports workflows where the same dipole surface model is used consistently during both the CavMD simulation and the spectroscopic post-processing, which is crucial for constructing reliable two-dimensional infrared-infrared-Raman (2D IIR) spectra of molecular systems under vibrational strong coupling.
 

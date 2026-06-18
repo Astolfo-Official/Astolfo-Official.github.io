@@ -175,6 +175,11 @@
   --blog-accent-soft: rgba(252, 126, 175, 0.12);
 }
 
+.post.blog-index .blog-index-hero > h1,
+.post.blog-post-detail .blog-post-hero > .post-title {
+  font-size: clamp(1.55rem, 2.6vw, 2rem);
+}
+
 .blog-index-hero,
 .blog-post-hero {
   position: relative;

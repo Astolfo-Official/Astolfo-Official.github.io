@@ -62,9 +62,9 @@ ninja.data = [{
             window.location.href = "/blog/2026/k-parallel-pulses-in-maxwelllink/";
           
         },
-      },{id: "post-computing-matrices-product-with-generalized-inverse-fsf",
+      },{id: "post-computing-large-scale-matrices-product-with-generalized-inverse-fsf",
         
-          title: "Computing Matrices Product with Generalized Inverse \(FSF^+\)",
+          title: "Computing Large Scale Matrices Product with Generalized Inverse \(FSF^+\)",
         
         description: "A numerical linear algebra note on generalized inverses, SVD, scipy.linalg.solve, Cholesky decomposition, and LU decomposition for \(FSF^+\).",
         section: "Posts",

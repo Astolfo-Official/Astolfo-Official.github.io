@@ -95,12 +95,6 @@ $$
 \Delta t\,\Delta\omega\geq \frac{1}{2}.
 $$
 
-Equivalently,
-
-$$
-\Delta t\,\Delta f\geq \frac{1}{4\pi}.
-$$
-
 The spatial analogue is
 
 $$

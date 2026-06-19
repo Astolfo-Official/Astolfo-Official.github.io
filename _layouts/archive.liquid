@@ -19,16 +19,15 @@ layout: default
     <div class="table-responsive">
       <table class="table table-sm table-borderless">
         {% for document in page.documents %}
-          {% assign display_title = document.post_title | default: document.title %}
           <tr>
             <th scope="row">{{ document.date | date: '%b %d, %Y' }}</th>
             <td>
               {% if document.redirect == blank %}
-                <a class="post-link" href="{{ document.url | relative_url }}">{{ display_title }}</a>
+                <a class="post-link" href="{{ document.url | relative_url }}">{{ document.title }}</a>
               {% elsif document.redirect contains '://' %}
-                <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ display_title }}</a>
+                <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ document.title }}</a>
               {% else %}
-                <a class="post-link" href="{{ document.redirect | relative_url }}">{{ display_title }}</a>
+                <a class="post-link" href="{{ document.redirect | relative_url }}">{{ document.title }}</a>
               {% endif %}
             </td>
           </tr>

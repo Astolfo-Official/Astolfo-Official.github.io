@@ -61,7 +61,6 @@ pagination:
       {% assign year = post.date | date: '%Y' %}
       {% assign tags = post.tags | join: '' %}
       {% assign categories = post.categories | join: '' %}
-      {% assign display_title = post.post_title | default: post.title %}
 
       {% if post.redirect == blank %}
         {% assign post_url = post.url | relative_url %}
@@ -85,7 +84,7 @@ pagination:
             {% endif %}
           </div>
           <h2 class="blog-card-title">
-            <a href="{{ post_url }}"{{ post_target }}>{{ display_title }}</a>
+            <a href="{{ post_url }}"{{ post_target }}>{{ post.title }}</a>
           </h2>
           {% if post.description %}
             <p class="blog-card-description">{{ post.description }}</p>
@@ -106,7 +105,7 @@ pagination:
         </div>
         {% if post.thumbnail %}
           <a class="blog-card-media" href="{{ post_url }}"{{ post_target }}>
-            <img src="{{ post.thumbnail | relative_url }}" alt="{{ display_title }}">
+            <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
           </a>
         {% endif %}
       </article>

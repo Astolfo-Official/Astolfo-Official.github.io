@@ -132,27 +132,31 @@ cv:
         url: /projects/aiagents/
 
     Personal Best:
-      - label: 1000 m
+      - label: 800 track
         details: "3:27 (Date: 2023-05-25)"
-      - label: 1k road
+      - label: 800 road
         details: TBD
-      - label: 1500 m
+      - label: 1000 track
+        details: "3:27 (Date: 2023-05-25)"
+      - label: 1000 road
+        details: TBD
+      - label: 1500 track
         details: "5:37 (Date: 2024-05-12)"
       - label: 1500 road
         details: "5:48 (Date: 2026-06-22)"
-      - label: 1 mile
+      - label: 1 mile track
         details: TBD
       - label: 1 mile road
         details: TBD
-      - label: 3000 m
+      - label: 3000 track
         details: "12:17 (Date: 2024-05-19)"
       - label: 3 k road
         details: "12:36 (Date: 2024-04-26)"
-      - label: 5000 m
+      - label: 5000 track
         details: "22:40 (Date: 2024-03-13)"
       - label: 5 k road
         details: "21:22 (Date: 2025-04-27)"
-      - label: 10000 m
+      - label: 10000 track
         details: TBD
       - label: 10 k road
         details: "44:38 (Date: 2026-03-24)"

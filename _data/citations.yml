@@ -1,8 +1,8 @@
 metadata:
-  last_updated: '2026-06-12'
+  last_updated: '2026-06-26'
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
-    citations: 11
+    citations: 12
     title: 'Selective excitation of IR-Inactive modes via vibrational polaritons: Insights from atomistic simulations'
     year: '2025'
   8WzTBusAAAAJ:WF5omc3nYNoC:
@@ -13,10 +13,6 @@ papers:
     citations: 1
     title: "MaxwellLink: A Unified Framework for Self-Consistent Light\u2013Matter Simulations"
     year: '2026'
-  8WzTBusAAAAJ:eQOLeE2rZwMC:
-    citations: 0
-    title: 'Two-dimensional IR-Raman spectroscopy of vibrational polaritons: Role of dipole surfaces'
-    year: '2026'
   8WzTBusAAAAJ:qjMakFHDy7sC:
     citations: 5
     title: On the entanglement of chromophore and solvent orbitals
@@ -25,3 +21,7 @@ papers:
     citations: 22
     title: Evaluating the transition state stabilization/destabilization effects of the electric fields from scaffold residues by a QM/MM approach
     year: '2023'
+  8WzTBusAAAAJ:ufrVoPGSRksC:
+    citations: 0
+    title: "Two-dimensional IR\u2013Raman spectroscopy of vibrational polaritons: Role of dipole surfaces"
+    year: '2026'

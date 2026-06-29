@@ -76,6 +76,12 @@ cv:
 
     Publications:
 
+      - title: Nonlinear Freezing of Vibrational Polariton Transport via Mesoscale Simulations
+        authors: Ji, Xinwei and Li, Tao E.
+        citation: arXiv 2026, arXiv:2606.27463.
+        releaseDate: 2026
+        url: https://arxiv.org/pdf/2606.27463
+
       - title: FermiLink A Unified Agent Framework for Multidomain Autonomous Scientific Simulations
         authors: Meng, Gang and Vargas, Andres Felipe Bocanegra and Ji, Xinwei and Garcia-Gaitan, Federico and Reyes-Osorio, Felipe and Varela-Manjarres, Jalil and Ren, Yafei and Dinpajooh, Mohammadhasan and Nikolic, Branislav K. and Li, Tao E.
         citation: arXiv 2026, arXiv:2604.03460.

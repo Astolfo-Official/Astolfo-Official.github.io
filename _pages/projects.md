@@ -41,7 +41,7 @@ _styles: |
 
   .research-entry__inner {
     display: grid;
-    grid-template-columns: minmax(12rem, 0.38fr) minmax(0, 1fr);
+    grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr);
     gap: 1.25rem;
     align-items: center;
   }
@@ -53,6 +53,9 @@ _styles: |
   .research-entry__media {
     position: relative;
     display: block;
+    justify-self: center;
+    width: min(100%, 14.5rem);
+    height: clamp(10.75rem, 17vw, 12rem);
     overflow: hidden;
     border: 1px solid var(--global-divider-color);
     border-radius: 8px;
@@ -81,8 +84,8 @@ _styles: |
     display: block;
     width: 100%;
     height: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
   }
 
   .research-entry__eyebrow {
@@ -155,6 +158,11 @@ _styles: |
     .research-entry__inner {
       grid-template-columns: 1fr;
       gap: 1.35rem;
+    }
+
+    .research-entry__media {
+      width: min(100%, 18rem);
+      height: 15rem;
     }
 
     .research-entry {

@@ -19,11 +19,6 @@ scholar:
   order: descending,descending
   group_by: year
   group_order: descending
-_styles: |
-  .post-description {
-    font-size: 1.02rem;
-    line-height: 1.55;
-  }
 ---
 
 `CavMD` is an efficient method for simulating collective vibrational strong coupling in large ensembles of realistic molecules, which expands the scope of conventional molecular dynamics. Beyond the single-mode limit, the recently developed mesoscale CavMD approach propagates coupled light-matter dynamics for condensed-phase molecules confined in a Fabry-Pérot cavity.
@@ -38,5 +33,5 @@ Recent mesoscale simulations further examine vibrational polariton transport bey
   </div>
 </div>
 <div class="caption">
-  Representative figures from CavMD-related studies.
+  Fabry-Pérot cavity setup in CavMD.
 </div>

@@ -19,11 +19,6 @@ scholar:
   order: descending,descending
   group_by: year
   group_order: descending
-_styles: |
-  .post-description {
-    font-size: 1.02rem;
-    line-height: 1.55;
-  }
 ---
 
 `AI-enhanced Research` explores how large language models and autonomous agents can assist scientific discovery by planning simulations, coordinating domain tools, and improving research code. The focus is on building reliable agentic workflows that remain grounded in physics, chemistry, and numerical constraints rather than treating scientific computing as a generic text-generation problem.
@@ -36,7 +31,5 @@ A representative direction in this effort is `FermiLink`, a unified agent framew
   </div>
 </div>
 <div class="caption">
-  Preview of FermiLink, a unified agent framework for multidomain autonomous scientific simulations.
+  FermiLink, a unified agent framework for multidomain autonomous scientific simulations.
 </div>
-
-Current themes in this project include LLM-driven scientific workflow automation, autonomous orchestration of simulation pipelines, code generation and optimization for scientific software, evaluation of agent reliability in research environments, and human-in-the-loop systems that accelerate discovery while preserving interpretability and reproducibility.

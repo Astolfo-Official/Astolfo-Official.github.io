@@ -63,8 +63,7 @@ _styles: |
   }
 
   .research-entry__media,
-  .research-entry__title a,
-  .research-entry__link {
+  .research-entry__title a {
     transition:
       color 0.2s ease,
       border-color 0.2s ease,
@@ -132,24 +131,6 @@ _styles: |
     line-height: 1.75;
   }
 
-  .research-entry__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.72rem 1.05rem;
-    border: 1px solid var(--global-divider-color);
-    border-radius: 999px;
-    color: var(--global-text-color);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .research-entry__link:hover {
-    color: var(--global-hover-text-color);
-    border-color: var(--global-theme-color);
-    background: var(--global-theme-color);
-  }
-
   @media (max-width: 767.98px) {
     .research-page {
       margin-top: 0.5rem;
@@ -207,7 +188,6 @@ _styles: |
                 <a href="{{ project_url }}">{{ project.title }}</a>
               </h3>
               <p class="research-entry__description">{{ project.description }}</p>
-              <a class="research-entry__link" href="{{ project_url }}">Read more</a>
             </div>
           </div>
         </section>

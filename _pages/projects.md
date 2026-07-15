@@ -2,7 +2,10 @@
 layout: page
 title: Research
 permalink: /research/
-description:
+description: >
+  I am foucsing on developing and using theoretical tools to study light–matter
+  interactions, with interests spanning molecular simulation, electronic
+  structure theory, and AI-enhanced scientific research.
 nav: true
 nav_order: 1
 _styles: |

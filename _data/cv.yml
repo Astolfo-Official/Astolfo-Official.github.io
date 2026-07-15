@@ -121,13 +121,13 @@ cv:
     Software:
       - label: MaxwellLink
         details: A Unified Framework for Self-Consistent Light–Matter Simulations
-        url: https://github.com/TaoELi/MaxwellLink
+        url: https://maxwelllink.org/
       - label: FermiLink
         details: A Unified Agent Framework for Autonomous Scientific Simulations
-        url: https://github.com/TaoELi/FermiLink
+        url: https://fermilink.org/
       - label: I-Pi
         details: A Python interface for multidomain molecular dynamics simulations
-        url: https://github.com/i-pi/i-pi
+        url: https://docs.ipi-code.org/
 
     Research Interests:
       - label: Computational Polaritonics
@@ -139,7 +139,7 @@ cv:
 
     Personal Best:
       - label: 800 track
-        details: "3:27 (Date: 2023-05-25)"
+        details: TBD
       - label: 800 road
         details: TBD
       - label: 1000 track

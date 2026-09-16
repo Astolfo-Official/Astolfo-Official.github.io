@@ -63,7 +63,6 @@ nav_order: 5
           <article
             class="blog-card{% if post.thumbnail %} blog-card--with-image{% endif %}"
             data-categories="{{ post.categories | join: '|' | downcase | escape }}"
-            data-blog-year="{{ year }}"
           >
             <div class="blog-card-copy">
               <div class="blog-card-meta">
@@ -147,12 +146,12 @@ nav_order: 5
         </div>
       </dl>
 
-      <section class="blog-insights__year-section" aria-labelledby="blog-years-title">
+      <section class="blog-insights__topic-section" aria-labelledby="blog-topics-title">
         <div class="blog-insights__section-heading">
-          <h3 id="blog-years-title">Blogs by year</h3>
+          <h3 id="blog-topics-title">Blogs by topic</h3>
           <span>{{ blog_posts_size }} total</span>
         </div>
-        <ol id="blog-year-chart" class="blog-year-chart"></ol>
+        <svg id="blog-topic-chart" class="blog-topic-chart" viewBox="0 0 320 280" role="group" aria-label="Blog posts by topic"></svg>
       </section>
     </aside>
 
@@ -165,102 +164,164 @@ nav_order: 5
     const filters = Array.from(document.querySelectorAll(".blog-category-filter"));
     const posts = Array.from(document.querySelectorAll(".blog-stream .blog-card"));
     const emptyState = document.querySelector(".blog-empty-state");
-    if (!searchInput || filters.length === 0 || posts.length === 0) return;
+    if (!searchInput || filters.length === 0) return;
 
     let activeCategory = "all";
 
-    const setFocusedChartYear = (focusedYear) => {
-      const yearBars = Array.from(document.querySelectorAll(".blog-year-bar"));
-      const hasMatchingYear = yearBars.some((bar) => bar.dataset.year === focusedYear);
-      if (!hasMatchingYear) return;
+    const topics = [
+      { key: "math", label: "Math" },
+      { key: "physics", label: "Physics" },
+      { key: "computation", label: "Computation" },
+    ];
+    const categoriesOf = (post) => (post.dataset.categories || "").split("|");
+    const chart = document.getElementById("blog-topic-chart");
+    const chartItems = [];
+    let hoveredTopics = null;
+    let focusedTopics = null;
 
-      yearBars.forEach((bar) => {
-        bar.classList.toggle("is-year-active", bar.dataset.year === focusedYear);
-        bar.classList.toggle("is-year-muted", bar.dataset.year !== focusedYear);
+    const updateHighlight = () => {
+      const selected = hoveredTopics || focusedTopics || [];
+      const hasSelection = selected.length > 0;
+      chartItems.forEach((item) => {
+        const matches = selected.includes(item.dataset.topic);
+        item.classList.toggle("is-topic-active", hasSelection && matches);
+        item.classList.toggle("is-topic-muted", hasSelection && !matches);
       });
-    };
-
-    const clearFocusedChartYear = () => {
-      document.querySelectorAll(".blog-year-bar").forEach((bar) => {
-        bar.classList.remove("is-year-active", "is-year-muted");
-      });
-    };
-
-    const setFocusedBlogYear = (focusedYear) => {
       posts.forEach((post) => {
-        post.classList.toggle("is-year-muted", post.dataset.blogYear !== focusedYear);
+        const matches = categoriesOf(post).some((category) => selected.includes(category));
+        post.classList.toggle("is-topic-active", hasSelection && matches);
+        post.classList.toggle("is-topic-muted", hasSelection && !matches);
       });
-      setFocusedChartYear(focusedYear);
     };
 
-    const clearFocusedBlogYear = () => {
-      posts.forEach((post) => post.classList.remove("is-year-muted"));
-      clearFocusedChartYear();
+    const bindHighlight = (element, keys) => {
+      element.addEventListener("pointerenter", () => {
+        hoveredTopics = keys;
+        updateHighlight();
+      });
+      element.addEventListener("pointerleave", () => {
+        hoveredTopics = null;
+        updateHighlight();
+      });
+      element.addEventListener("focusin", () => {
+        focusedTopics = keys;
+        updateHighlight();
+      });
+      element.addEventListener("focusout", (event) => {
+        if (element.contains(event.relatedTarget)) return;
+        focusedTopics = null;
+        updateHighlight();
+      });
     };
 
-    const createYearBar = (yearSummary, maximumPosts) => {
-      const item = document.createElement("li");
-      const button = document.createElement("button");
-      const value = document.createElement("span");
-      const track = document.createElement("span");
-      const fill = document.createElement("span");
-      const label = document.createElement("span");
-
-      button.type = "button";
-      button.className = "blog-year-bar";
-      button.dataset.year = yearSummary.year;
-      button.setAttribute("aria-label", `${yearSummary.year}: ${yearSummary.posts} blog posts`);
-
-      value.className = "blog-year-value";
-      value.textContent = yearSummary.posts;
-
-      track.className = "blog-year-track";
-      track.setAttribute("aria-hidden", "true");
-      fill.className = "blog-year-fill";
-      fill.style.setProperty("--blog-bar-ratio", `${maximumPosts > 0 ? (yearSummary.posts / maximumPosts) * 100 : 0}%`);
-      track.append(fill);
-
-      label.className = "blog-year-label";
-      label.textContent = yearSummary.year;
-
-      button.append(value, track, label);
-      button.addEventListener("pointerenter", () => setFocusedBlogYear(yearSummary.year));
-      button.addEventListener("pointerleave", clearFocusedBlogYear);
-      button.addEventListener("focus", () => setFocusedBlogYear(yearSummary.year));
-      button.addEventListener("blur", clearFocusedBlogYear);
-      item.append(button);
-      return item;
-    };
-
-    const buildYearChart = () => {
-      const yearCounts = posts.reduce((counts, post) => {
-        const year = post.dataset.blogYear;
-        if (year) counts.set(year, (counts.get(year) || 0) + 1);
-        return counts;
-      }, new Map());
-      const yearSummaries = Array.from(yearCounts, ([year, count]) => ({ year, posts: count })).sort(
-        (left, right) => Number(left.year) - Number(right.year)
-      );
-      if (yearSummaries.length === 0) return;
-
-      const maximumPosts = Math.max(...yearSummaries.map((summary) => summary.posts));
-      document
-        .getElementById("blog-year-chart")
-        ?.replaceChildren(...yearSummaries.map((summary) => createYearBar(summary, maximumPosts)));
-    };
-
-    const bindPostYearInteractions = () => {
-      posts.forEach((post) => {
-        const postYear = post.dataset.blogYear;
-        if (!postYear) return;
-
-        post.addEventListener("pointerenter", () => setFocusedChartYear(postYear));
-        post.addEventListener("pointerleave", clearFocusedChartYear);
-        post.addEventListener("focusin", () => setFocusedChartYear(postYear));
-        post.addEventListener("focusout", (event) => {
-          if (!post.contains(event.relatedTarget)) clearFocusedChartYear();
+    const buildTopicChart = () => {
+      const summaries = topics.map((topic) => ({
+        ...topic,
+        count: posts.filter((post) => categoriesOf(post).includes(topic.key)).length,
+      }));
+      // Posts in multiple topics contribute once to each topic's share.
+      const total = summaries.reduce((sum, topic) => sum + topic.count, 0);
+      const svgElement = (tag, attributes = {}) => {
+        const element = document.createElementNS("http://www.w3.org/2000/svg", tag);
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      };
+      const defs = svgElement("defs");
+      const sheen = svgElement("linearGradient", {
+        id: "blog-topic-sheen", x1: "0%", y1: "0%", x2: "35%", y2: "100%",
+      });
+      sheen.append(svgElement("stop", { offset: "0%", "stop-color": "#fff", "stop-opacity": "0.32" }));
+      sheen.append(svgElement("stop", { offset: "48%", "stop-color": "#fff", "stop-opacity": "0" }));
+      sheen.append(svgElement("stop", { offset: "100%", "stop-color": "#56344c", "stop-opacity": "0.09" }));
+      defs.append(sheen);
+      chart.append(defs);
+      // Draw every side below every top face so adjacent slices cannot overlap.
+      const depthLayer = svgElement("g", { class: "blog-topic-depth-layer", "aria-hidden": "true" });
+      chart.append(depthLayer);
+      let angle = -Math.PI / 2;
+      const labels = [];
+      summaries.forEach((topic) => {
+        if (topic.count === 0) return;
+        const share = topic.count / total;
+        const description = `${topic.label}: ${topic.count} posts (${Math.round(share * 100)}%)`;
+        const selectTopic = () => filters.find((filter) => filter.dataset.category === topic.key)?.click();
+        const end = angle + share * Math.PI * 2;
+        const middle = share === 1 ? -Math.PI / 2 : (angle + end) / 2;
+        const separation = share === 1 ? 0 : 2.5;
+        const offset = `translate(${separation * Math.cos(middle)} ${separation * Math.sin(middle)})`;
+        const point = (radians, radius) => [160 + radius * Math.cos(radians), 140 + radius * Math.sin(radians)];
+        const group = svgElement("g", {
+          class: "blog-topic-group",
+          transform: offset,
+          tabindex: "0",
+          role: "button",
+          "aria-label": description + ". Filter posts",
         });
+        group.dataset.topic = topic.key;
+        const title = svgElement("title");
+        title.textContent = description;
+        group.append(title);
+        const path = share === 1
+          ? "M 160 54 A 86 86 0 1 1 160 226 A 86 86 0 1 1 160 54 Z"
+          : `M 160 140 L ${point(angle, 86).join(" ")} A 86 86 0 ${share > 0.5 ? 1 : 0} 1 ${point(end, 86).join(" ")} Z`;
+        // Only the front-facing outer arc has a visible side wall. A full
+        // translated slice would show its rear edge through a faded top face.
+        const frontStart = Math.max(0, angle);
+        const frontEnd = Math.min(Math.PI, end);
+        if (frontEnd > frontStart) {
+          const topStart = point(frontStart, 86);
+          const topEnd = point(frontEnd, 86);
+          const bottomStart = [topStart[0], topStart[1] + 8];
+          const bottomEnd = [topEnd[0], topEnd[1] + 8];
+          const wall = `M ${topStart.join(" ")} A 86 86 0 0 1 ${topEnd.join(" ")} L ${bottomEnd.join(" ")} A 86 86 0 0 0 ${bottomStart.join(" ")} Z`;
+          const depth = svgElement("path", { d: wall, class: "blog-topic-depth", transform: offset });
+          depth.dataset.topic = topic.key;
+          chartItems.push(depth);
+          depthLayer.append(depth);
+        }
+        group.append(svgElement("path", { d: path, class: "blog-topic-slice", fill: "var(--topic-color)" }));
+        group.append(svgElement("path", { d: path, class: "blog-topic-sheen", fill: "url(#blog-topic-sheen)", "aria-hidden": "true" }));
+        // Area centroid of a circular sector: wide slices place their number
+        // closer to the center, while narrow slices move it toward the rim.
+        const halfAngle = share * Math.PI;
+        const numberRadius = (4 * 86 * Math.sin(halfAngle)) / (3 * (2 * halfAngle));
+        const [numberX, numberY] = share === 1 ? [160, 140] : point(middle, numberRadius);
+        const number = svgElement("text", { x: numberX, y: numberY, class: "blog-topic-count", "aria-hidden": "true" });
+        number.textContent = topic.count;
+        group.append(number);
+
+        const [edgeX, edgeY] = point(middle, 90);
+        const [outerX, outerY] = point(middle, 120);
+        const labelX = Math.max(57, Math.min(277, outerX));
+        labels.push({ group, topic, edgeX, edgeY, x: labelX, y: outerY, side: Math.cos(middle) < 0 ? -1 : 1 });
+        group.addEventListener("click", selectTopic);
+        group.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectTopic();
+          }
+        });
+        bindHighlight(group, [topic.key]);
+        chartItems.push(group);
+        chart.append(group);
+        angle = end;
       });
+      // Keep neighboring labels apart even when one topic has very few posts.
+      [-1, 1].forEach((side) => {
+        const sideLabels = labels.filter((label) => label.side === side).sort((a, b) => a.y - b.y);
+        sideLabels.forEach((label, index) => {
+          if (index > 0) label.y = Math.max(label.y, sideLabels[index - 1].y + 25);
+        });
+        const overflow = Math.max(0, (sideLabels.at(-1)?.y || 0) - 258);
+        sideLabels.forEach((label) => { label.y -= overflow; });
+      });
+      labels.forEach(({ group, topic, edgeX, edgeY, x, y }) => {
+        group.append(svgElement("line", { x1: edgeX, y1: edgeY, x2: x, y2: y, class: "blog-topic-leader" }));
+        const label = svgElement("text", { x, y: y < 140 ? y - 9 : y + 15, class: "blog-topic-label", "aria-hidden": "true" });
+        label.textContent = topic.label;
+        group.append(label);
+      });
+      chart.hidden = total === 0;
     };
 
     const applyBlogFilters = () => {
@@ -293,8 +354,8 @@ nav_order: 5
     });
 
     searchInput.addEventListener("input", applyBlogFilters);
-    buildYearChart();
-    bindPostYearInteractions();
+    buildTopicChart();
+    posts.forEach((post) => bindHighlight(post, topics.map((topic) => topic.key).filter((key) => categoriesOf(post).includes(key))));
     applyBlogFilters();
   });
 </script>

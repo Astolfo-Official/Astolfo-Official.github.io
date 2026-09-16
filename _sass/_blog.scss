@@ -446,7 +446,7 @@
   }
 }
 
-.blog-insights__year-section {
+.blog-insights__topic-section {
   padding: 1rem 1.1rem;
 }
 
@@ -475,103 +475,127 @@
   }
 }
 
-.blog-year-chart {
-  display: flex;
-  gap: 0.45rem;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0.7rem 0.45rem 0.55rem;
-  overflow-x: auto;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(252, 126, 175, 0.05), var(--blog-chart-surface)), var(--global-card-bg-color);
-  list-style: none;
-
-  > li {
-    width: 100%;
-    min-width: 2.8rem;
-    max-width: 4.2rem;
-  }
-}
-
-.blog-year-bar {
-  display: grid;
-  grid-template-rows: auto 5.25rem auto;
-  gap: 0.35rem;
-  width: 100%;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  transition:
-    opacity 180ms ease,
-    filter 180ms ease;
-
-  &:focus-visible {
-    border-radius: 6px;
-    outline: 2px solid color-mix(in srgb, var(--global-theme-color) 54%, transparent);
-    outline-offset: 3px;
-  }
-
-  &:hover .blog-year-value,
-  &:focus-visible .blog-year-value,
-  &.is-year-active .blog-year-value {
-    border-color: var(--global-theme-color);
-    color: var(--global-theme-color);
-  }
-}
-
-.blog-year-value {
+.blog-topic-chart {
   display: block;
-  min-width: 0;
-  padding: 0.15rem 0.2rem;
-  overflow: hidden;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 999px;
-  color: var(--global-text-color);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.68rem;
-  font-weight: 750;
-  line-height: 1.1;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 100%;
+  max-width: 23rem;
+  margin: 0 auto;
+  overflow: visible;
+
+  &[hidden] {
+    display: none;
+  }
 }
 
-.blog-year-track {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-width: 0;
+.blog-index [data-topic="math"] {
+  --topic-color: #ee9cbd;
+  --topic-ink: #633449;
 }
 
-.blog-year-fill {
-  width: clamp(0.72rem, 48%, 1.35rem);
-  height: max(0.24rem, var(--blog-bar-ratio, 0%));
-  border-radius: 999px 999px 0.25rem 0.25rem;
-  background: linear-gradient(180deg, var(--blog-chart-start), var(--blog-chart-end));
-  box-shadow: 0 5px 14px var(--blog-chart-shadow);
-  transition:
-    height 240ms ease,
-    opacity 180ms ease;
+.blog-index [data-topic="physics"] {
+  --topic-color: #b5a5ce;
+  --topic-ink: #433653;
 }
 
-.blog-year-label {
-  color: var(--global-theme-color);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  text-align: center;
+.blog-index [data-topic="computation"] {
+  --topic-color: #f4dce5;
+  --topic-ink: #6c4656;
 }
 
-.blog-year-bar.is-year-muted,
-.blog-card.is-year-muted {
-  opacity: 0.24;
-  filter: grayscale(0.55) saturate(0.35);
+.blog-topic-group {
+  cursor: pointer;
+  outline: none;
+  transition: opacity 180ms ease;
+
+  &.is-topic-active .blog-topic-slice {
+    filter: saturate(1.1) brightness(1.035);
+  }
+
+  &:focus-visible .blog-topic-slice {
+    stroke: var(--global-text-color);
+  }
+
+  &.is-topic-active .blog-topic-label {
+    font-weight: 650;
+  }
+}
+
+.blog-topic-depth-layer {
+  pointer-events: none;
+  filter: drop-shadow(0 7px 7px rgba(66, 38, 60, 0.2));
+}
+
+.blog-topic-depth {
+  fill: var(--topic-color);
+  stroke: var(--topic-color);
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  filter: brightness(0.82) saturate(0.95);
+  transition: opacity 180ms ease;
+}
+
+.blog-topic-sheen {
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .blog-topic-depth-layer {
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.4));
+}
+
+.blog-topic-slice {
+  stroke: var(--topic-color);
+  stroke-width: 0.6px;
+  stroke-linejoin: round;
+  transition: filter 180ms ease;
+}
+
+.blog-topic-count {
+  fill: var(--topic-ink);
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.blog-topic-leader {
+  stroke: var(--global-text-color-light);
+  stroke-width: 0.8px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.blog-topic-label {
+  fill: var(--global-text-color);
+  font-size: 13px;
+  font-weight: 500;
+  text-anchor: middle;
+  transition: fill 180ms ease;
+}
+
+.blog-topic-group.is-topic-muted,
+.blog-topic-depth.is-topic-muted {
+  opacity: 0.42;
+}
+
+.blog-card.is-topic-muted {
+  opacity: 0.3;
+}
+
+.blog-stream .blog-card.is-topic-active {
+  border-color: var(--global-theme-color);
+  box-shadow: var(--blog-card-shadow-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-topic-slice,
+  .blog-topic-label,
+  .blog-topic-group,
+  .blog-topic-depth,
+  .blog-stream .blog-card {
+    transition: none;
+  }
 }
 
 .blog-card.is-filtered {

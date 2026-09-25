@@ -539,7 +539,7 @@ _styles: |
   <div class="publication-workbench">
     <section class="publication-list-panel" aria-label="Publication list">
       <div class="publications">
-        {% bibliography %}
+        {% publications_bibliography %}
       </div>
     </section>
 
@@ -682,7 +682,9 @@ _styles: |
       });
 
       document.querySelectorAll(".publications-page h2.bibliography").forEach((heading) => {
-        heading.classList.toggle("is-year-muted", heading.textContent.trim() !== focusedYear);
+        const groupEntries = heading.nextElementSibling?.querySelectorAll(".publication-entry-column") || [];
+        const hasMatchingYear = Array.from(groupEntries).some((entry) => entry.dataset.publicationYear === focusedYear);
+        heading.classList.toggle("is-year-muted", !hasMatchingYear);
       });
 
       setFocusedChartYear(focusedYear);

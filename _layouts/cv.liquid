@@ -86,6 +86,17 @@ layout: default
                       <span class="cv-button-label">Google Scholar</span>
                     </a>
                   {% endif %}
+                  {% if site.data.socials.orcid_id %}
+                    <a
+                      href="https://orcid.org/{{ site.data.socials.orcid_id }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cv-button cv-button-secondary"
+                    >
+                      <i class="ai ai-orcid" aria-hidden="true"></i>
+                      <span class="cv-button-label">ORCID</span>
+                    </a>
+                  {% endif %}
                   {% if page.cv_pdf %}
                     <a
                       {% if page.cv_pdf contains '://' %}

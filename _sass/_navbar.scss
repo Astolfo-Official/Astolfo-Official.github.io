@@ -123,22 +123,30 @@
   }
 
   .navbar-brand.social {
-    padding-bottom: 0;
-    padding-top: 0;
-    font-size: 1.7rem;
+    gap: 0.06rem;
+    padding: 0 0.22rem;
+    font-size: 1.45rem;
 
     a {
+      display: inline-flex;
+      flex: 0 0 1.9rem;
+      align-items: center;
+      justify-content: center;
+      width: 1.9rem;
+      height: 2.15rem;
+      border-radius: 6px;
+      line-height: 1;
+
       img {
         width: 1.7rem;
         height: 1.7rem;
-        margin-bottom: 0.5rem;
-        // margin: 0.5rem;
+        margin-bottom: 0;
       }
 
       svg {
         width: 1.7rem;
         height: 1.7rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
 
         image {
           width: 1.7rem;

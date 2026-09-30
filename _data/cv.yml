@@ -57,6 +57,7 @@ cv:
         position: Research Assistant
         location: Newark, DE, US
         logo: /assets/img/institution_logos/ud_struttin_youdee.jpg
+        advisor: Prof. Tao E. Li
         start_date: Sep. 2024
         end_date: 
 
@@ -64,6 +65,7 @@ cv:
         position: Research Assistant
         location: Norman, OK, US
         logo: /assets/img/institution_logos/ou_seal.jpg
+        advisor: Prof. Yihan Shao
         start_date: Aug. 2023
         end_date: Jan. 2024
 

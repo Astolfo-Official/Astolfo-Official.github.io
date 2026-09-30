@@ -1,8 +1,8 @@
 {% comment %}
   Unified work/experience entry renderer for both RenderCV and JSONResume formats
   Handles both:
-  - RenderCV: company, position, start_date, end_date, location, url, summary, highlights
-  - JSONResume: name, position, startDate, endDate, location, url, summary, highlights
+  - RenderCV: company, position, advisor, start_date, end_date, location, url, summary, highlights
+  - JSONResume: name, position, advisor, startDate, endDate, location, url, summary, highlights
 {% endcomment %}
 
 <ul class="font-weight-light list-group list-group-flush">
@@ -40,6 +40,11 @@
         {% endcapture %}
         {% assign company_name = company_name | strip %}
 
+        {% capture advisor %}
+          {% if entry.advisor %}{{ entry.advisor }}{% endif %}
+        {% endcapture %}
+        {% assign advisor = advisor | strip %}
+
         <div class="col-xs-2 col-sm-2 col-md-2 text-center cv-logo-column">
           {% if entry.logo %}
             <img
@@ -72,6 +77,12 @@
 
           {% if company_name != '' %}
             <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ company_name }}</h6>
+          {% endif %}
+
+          {% if advisor != '' %}
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; font-style: italic">
+              Advisor: {{ advisor | markdownify | remove: '<p>' | remove: '</p>' }}
+            </h6>
           {% endif %}
 
           {% if date != '' or location != '' %}

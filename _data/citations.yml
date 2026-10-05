@@ -1,11 +1,11 @@
 citations_by_year:
   '2023': 3
   '2024': 11
-  '2025': 16
-  '2026': 19
+  '2025': 15
+  '2026': 21
 h_index: 3
 metadata:
-  last_updated: '2026-09-02'
+  last_updated: '2026-10-05'
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
     citations: 14
@@ -32,6 +32,6 @@ papers:
     title: Evaluating the transition state stabilization/destabilization effects of the electric fields from scaffold residues by a QM/MM approach
     year: '2023'
   8WzTBusAAAAJ:ufrVoPGSRksC:
-    citations: 0
+    citations: 1
     title: "Two-dimensional IR\u2013Raman spectroscopy of vibrational polaritons: Role of dipole surfaces"
     year: '2026'

@@ -60,6 +60,10 @@ on:
       - "!INSTALL.md"
       - "!README.md"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Google Scholar Citations"]
+    types: [completed]
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -72,11 +76,18 @@ concurrency:
 
 jobs:
   build:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
     # available images: https://github.com/actions/runner-images#available-images
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        with:
+          # The citation job pushes a new commit after its triggering SHA.
+          ref: ${{ github.event_name == 'workflow_run' && github.event.repository.default_branch || github.sha }}
       - name: Configure Pages ⚙️
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5

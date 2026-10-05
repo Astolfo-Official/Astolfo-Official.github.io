@@ -7,6 +7,9 @@ on:
     - cron: "0 0 * * 5" # Friday
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update-citations:
     runs-on: ubuntu-latest
@@ -14,9 +17,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      # See CUSTOMIZE.md for details on how to set up PAT for triggering subsequent workflows
-      #        with:
-      #          token: ${{ secrets.PAT }}
+      # Deploy site runs via workflow_run after a successful citation update.
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,6 +29,7 @@ jobs:
           echo "🔧 Installing dependencies..."
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          python -c "from scholarly import scholarly; from bibtexparser.bibdatabase import BibDatabase"
 
       - name: Save current citations.yml hash
         id: before
@@ -49,7 +51,7 @@ jobs:
           set +e
           echo "🚀 Running citation update script (single attempt)..."
           start_time=$(date)
-          timeout 90 python bin/update_scholar_citations.py
+          timeout 90 python -u bin/update_scholar_citations.py
           status=$?
           end_time=$(date)
           if [ $status -eq 0 ]; then

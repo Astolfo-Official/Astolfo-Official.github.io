@@ -5,7 +5,8 @@ citations_by_year:
   '2026': 21
 h_index: 3
 metadata:
-  last_updated: '2026-10-05'
+  last_updated: '2026-10-09'
+  source: serpapi
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
     citations: 14

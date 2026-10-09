@@ -2,9 +2,7 @@ name: Update Google Scholar Citations
 
 on:
   schedule:
-    - cron: "0 0 * * 1" # Monday
-    - cron: "0 0 * * 3" # Wednesday
-    - cron: "0 0 * * 5" # Friday
+    - cron: "17 6 * * *" # Daily at 06:17 UTC; off-minute scheduling reduces runner congestion.
   workflow_dispatch:
 
 permissions:
@@ -13,16 +11,23 @@ permissions:
 jobs:
   update-citations:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: update-google-scholar-citations
+      cancel-in-progress: false
+    env:
+      SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       # Deploy site runs via workflow_run after a successful citation update.
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
@@ -49,19 +54,33 @@ jobs:
         shell: bash
         run: |
           set +e
-          echo "🚀 Running citation update script (single attempt)..."
+          max_attempts=2
           start_time=$(date)
-          timeout 90 python -u bin/update_scholar_citations.py
-          status=$?
+          status=1
+
+          for attempt in $(seq 1 $max_attempts); do
+            echo "🚀 Running citation update attempt $attempt of $max_attempts..."
+            timeout 240 python -u bin/update_scholar_citations.py
+            status=$?
+
+            if [ $status -eq 0 ]; then
+              end_time=$(date)
+              echo "✅ Citation update succeeded (started at $start_time, ended at $end_time)."
+              echo "✅ Citation update succeeded on attempt $attempt." >> $GITHUB_STEP_SUMMARY
+              exit 0
+            fi
+
+            echo "⚠️ Citation update attempt $attempt failed with exit code $status."
+            if [ $attempt -lt $max_attempts ]; then
+              echo "⏳ Waiting 60 seconds before the final attempt..."
+              sleep 60
+            fi
+          done
+
           end_time=$(date)
-          if [ $status -eq 0 ]; then
-            echo "✅ Citation update succeeded (started at $start_time, ended at $end_time)."
-            echo "✅ Citation update succeeded." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Citation update script failed with exit code $status (started at $start_time, ended at $end_time)."
-            echo "❌ Citation update script failed with exit code $status." >> $GITHUB_STEP_SUMMARY
-            exit $status
-          fi
+          echo "❌ Citation update failed after $max_attempts attempts (started at $start_time, ended at $end_time)."
+          echo "❌ Citation update failed after $max_attempts attempts; final exit code: $status." >> $GITHUB_STEP_SUMMARY
+          exit $status
 
       - name: Save new citations.yml hash
         id: after

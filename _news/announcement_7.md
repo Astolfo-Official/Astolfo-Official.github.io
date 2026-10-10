@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-New mile road PB 5:55 today!
+New mile PB 5:55 today!

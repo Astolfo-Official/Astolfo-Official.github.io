@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-New 3k road PB 11:53 today!
+New 3k PB 11:53 today!

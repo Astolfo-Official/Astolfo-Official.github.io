@@ -2,7 +2,7 @@ cv:
   name: Xinwei Ji
   label: Graduate Student
   email: astolfo@udel.edu
-#  location: Newark, DE
+  #  location: Newark, DE
   image: "prof_pic.jpg"
   summary: |
     Xinwei Ji (纪鑫炜) is a third-year Ph.D. student in the Department of
@@ -28,11 +28,11 @@ cv:
     - MD_simulations.yml
     - scientific_agents.ai
 
-#  address:
-#    lines:
-#      - Department of Physics and Astronomy
-#      - University of Delaware
-#      - Newark, DE 19716
+  #  address:
+  #    lines:
+  #      - Department of Physics and Astronomy
+  #      - University of Delaware
+  #      - Newark, DE 19716
 
   sections:
     Education:
@@ -59,7 +59,7 @@ cv:
         logo: /assets/img/institution_logos/ud_struttin_youdee.jpg
         advisor: Prof. Tao E. Li
         start_date: Sep. 2024
-        end_date: 
+        end_date:
 
       - company: University of Oklahoma
         position: Research Assistant
@@ -107,29 +107,17 @@ cv:
         details: TBD
       - label: 800
         details: TBD
-      - label: 1000 track
+      - label: 1000
         details: "3:27 (Date: 2023-05-25)"
-      - label: 1000 road
-        details: "3:33 (Date: 2026-08-15)"
-      - label: 1500 track
-        details: "5:37 (Date: 2024-05-12)"
-      - label: 1500 road
+      - label: 1500
         details: "5:31 (Date: 2026-10-10)"
-      - label: 1 mile track
-        details: TBD
-      - label: 1 mile road
+      - label: 1 mile
         details: "5:55 (Date: 2026-10-10)"
-      - label: 3000 track
-        details: "12:17 (Date: 2024-05-19)"
-      - label: 3 k road
+      - label: 3000
         details: "11:53 (Date: 2026-09-19)"
-      - label: 5000 track
-        details: "22:40 (Date: 2024-03-13)"
-      - label: 5 k road
+      - label: 5000
         details: "21:22 (Date: 2025-04-27)"
-      - label: 10000 track
-        details: TBD
-      - label: 10 k road
+      - label: 10000
         details: "44:38 (Date: 2026-03-24)"
       - label: Half Marathon
         details: "1:45:29 (Date: 2024-04-14)"

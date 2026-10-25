@@ -532,6 +532,7 @@ _styles: |
 
 <div class="home-page">
   <section class="home-hero" aria-label="Xinwei Ji home">
+    {% include home_field.liquid %}
     <div class="home-hero__content">
       <p class="home-kicker">Chemical Physics · Light-Matter Interaction</p>
       <h1 class="home-title">Xinwei Ji</h1>

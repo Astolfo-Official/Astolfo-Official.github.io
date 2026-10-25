@@ -1,0 +1,116 @@
+/* Decorative motion stays separate from the existing hero image and content. */
+.home-field {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+
+.home-field__canvas,
+.home-field__equations {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-field__canvas {
+  display: block;
+  // Fade the light field without dimming the equations on the dark side.
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.8) 57%, #000 80%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.8) 57%, #000 80%);
+}
+
+.home-field__equation-row {
+  position: absolute;
+  top: 3%;
+  left: 5%;
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 4vw, 4rem);
+  opacity: 0.58;
+}
+
+.home-field__equation-row .home-field__equation {
+  opacity: 1;
+}
+
+.home-field__equation-row,
+.home-field__equation--schrodinger {
+  will-change: transform;
+}
+
+.home-field__equation {
+  position: absolute;
+  color: #fff5fa;
+  font-family: "Cambria Math", "STIX Two Math", Georgia, serif;
+  font-size: clamp(1rem, 1.75vw, 1.5rem);
+  font-style: italic;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0.58;
+  text-shadow:
+    0 0 18px rgba(252, 126, 175, 0.5),
+    0 1px 6px rgba(17, 25, 29, 0.3);
+
+  &--coordinate,
+  &--momentum {
+    position: relative;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+  }
+
+  &--schrodinger {
+    bottom: 4.5%;
+    left: 22%;
+  }
+}
+
+/* Added only after JS has registered an observer; normal content is visible by default. */
+.motion-pending {
+  opacity: 0;
+}
+
+@media (max-width: 560px) {
+  .home-field__canvas {
+    -webkit-mask-image: linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.15) 45%, #000);
+    mask-image: linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.15) 45%, #000);
+  }
+
+  .home-hero .home-hero__content {
+    // Reserve formula bands on narrow screens without changing the copy itself.
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .home-field__equation-row {
+    top: 12px;
+    left: 8%;
+    gap: clamp(1rem, 3.8vw, 1.5rem);
+  }
+
+  .home-field__equation--coordinate,
+  .home-field__equation--momentum {
+    font-size: clamp(0.6rem, 3vw, 0.9rem);
+  }
+
+  .home-field__equation--schrodinger {
+    bottom: 12px;
+    left: 22%;
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-field__equation-row,
+  .home-field__equation--schrodinger {
+    will-change: auto;
+  }
+
+  .motion-pending {
+    opacity: 1;
+  }
+}

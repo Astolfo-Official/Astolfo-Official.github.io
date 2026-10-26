@@ -102,8 +102,8 @@
     if (!context) return;
 
     const hero = field.closest(".home-hero");
-    // Keep the Hamiltonian pair together while both groups ride existing field lines.
-    const equations = [...field.querySelectorAll(".home-field__equation-row, .home-field__equation--schrodinger")];
+    // Each formula rides a field line and has its own measured collision box.
+    const equations = [...field.querySelectorAll(".home-field__equation")];
     const equationStates = equations.map((element, index) => ({
       element,
       index,
@@ -122,7 +122,7 @@
     const colors = ["252, 126, 175", "169, 219, 235", "242, 178, 210", "173, 196, 229"];
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const pointer = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5, strength: 0, targetStrength: 0 };
-    const pointerGain = 0.8;
+    const pointerGain = 0.7;
     let width = 0;
     let height = 0;
     let compact = false;
@@ -131,7 +131,6 @@
     let frameId = null;
     let lastFrame = 0;
     let elapsed = 0;
-    let equationOrder = 0;
 
     const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
@@ -145,7 +144,6 @@
     };
 
     const resetEquations = () => {
-      equationOrder = 0;
       equationStates.forEach((state) => {
         state.renderX = null;
         state.renderY = null;
@@ -179,9 +177,7 @@
       state.renderY = clamp(state.renderY, state.marginY, height - state.marginY);
     };
 
-    const separateEquations = (distance) => {
-      const upper = equationOrder > 0 ? equationStates[0] : equationStates[1];
-      const lower = equationOrder > 0 ? equationStates[1] : equationStates[0];
+    const separateEquations = (upper, lower, distance) => {
       const roomAbove = Math.max(0, upper.renderY - upper.marginY);
       const roomBelow = Math.max(0, height - lower.marginY - lower.renderY);
       let moveUp = Math.min(distance / 2, roomAbove);
@@ -192,31 +188,45 @@
     };
 
     const avoidEquationOverlap = (seconds) => {
-      const [first, second] = equationStates;
-      if (!first || !second) return;
+      const gap = compact ? 28 : 44;
+      const buffer = compact ? 32 : 48;
+      const ordered = [...equationStates].sort((first, second) => first.previousY - second.previousY || first.index - second.index);
+      const overlapsHorizontally = (first, second) => Math.abs(second.renderX - first.renderX) < first.halfWidth + second.halfWidth + gap;
 
-      const gap = compact ? 12 : 18;
-      const buffer = compact ? 24 : 32;
-      const horizontalDistance = Math.abs(second.renderX - first.renderX);
-      const contactWidth = first.halfWidth + second.halfWidth + gap;
-      if (horizontalDistance >= contactWidth + buffer) {
-        equationOrder = 0;
-        return;
+      ordered.forEach((upper, index) => {
+        ordered.slice(index + 1).forEach((lower) => {
+          const distanceX = Math.abs(lower.renderX - upper.renderX);
+          const contactWidth = upper.halfWidth + lower.halfWidth + gap;
+          const proximity = clamp((contactWidth + buffer - distanceX) / buffer, 0, 1);
+          const distanceY = lower.renderY - upper.renderY;
+          const contactHeight = upper.halfHeight + lower.halfHeight + gap;
+          const softPush = Math.max(0, contactHeight + buffer - distanceY) * proximity * (1 - Math.exp(-seconds * 4));
+          separateEquations(upper, lower, softPush);
+        });
+      });
+
+      // Reserve space for every lower neighbor before resolving all three boxes.
+      // A single pairwise pass could push a formula into the third one or an edge.
+      const ceilings = ordered.map((state) => height - state.marginY);
+      for (let index = ordered.length - 1; index >= 0; index--) {
+        const upper = ordered[index];
+        for (let next = index + 1; next < ordered.length; next++) {
+          const lower = ordered[next];
+          if (overlapsHorizontally(upper, lower)) {
+            ceilings[index] = Math.min(ceilings[index], ceilings[next] - upper.halfHeight - lower.halfHeight - gap);
+          }
+        }
       }
-
-      // Keep their vertical order while their collision boxes cross horizontally.
-      // This also prevents a fast cursor sweep from pushing one through the other.
-      if (!equationOrder) equationOrder = Math.sign(second.previousY - first.previousY) || 1;
-      const contactHeight = first.halfHeight + second.halfHeight + gap;
-      const verticalDistance = () => (second.renderY - first.renderY) * equationOrder;
-      const proximity = clamp((contactWidth + buffer - horizontalDistance) / buffer, 0, 1);
-      const softPush = Math.max(0, contactHeight + buffer - verticalDistance()) * proximity * (1 - Math.exp(-seconds * 4));
-      separateEquations(softPush);
-
-      if (horizontalDistance < contactWidth) {
-        // Resolve any remaining penetration after smoothing, including at edges.
-        separateEquations(Math.max(0, contactHeight - verticalDistance()));
-      }
+      ordered.forEach((lower, index) => {
+        let floor = lower.marginY;
+        for (let previous = 0; previous < index; previous++) {
+          const upper = ordered[previous];
+          if (overlapsHorizontally(upper, lower)) {
+            floor = Math.max(floor, upper.renderY + upper.halfHeight + lower.halfHeight + gap);
+          }
+        }
+        lower.renderY = clamp(lower.renderY, floor, ceilings[index]);
+      });
     };
 
     const drawEquations = (time, seconds) => {
@@ -227,7 +237,7 @@
 
       const smoothing = 1 - Math.exp(-seconds * 7);
       equationStates.forEach((state) => {
-        const lane = state.index === 0 ? 0 : compact ? 1 : 3;
+        const lane = state.index === 2 ? (compact ? 1 : 3) : state.index;
         const drift = Math.sin(time * 0.13 + state.phase) * width * (compact ? 0.055 : 0.11);
         const pull = (pointer.x - 0.5) * width * pointer.strength * pointerGain * 0.36;
         const marginX = Math.min(width / 2, state.width / 2 + 18);

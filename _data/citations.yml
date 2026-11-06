@@ -2,26 +2,30 @@ citations_by_year:
   '2023': 3
   '2024': 11
   '2025': 15
-  '2026': 24
+  '2026': 27
 h_index: 4
 metadata:
-  last_updated: '2026-11-05'
+  last_updated: '2026-11-06'
   source: serpapi
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
-    citations: 15
+    citations: 16
     title: 'Selective excitation of IR-Inactive modes via vibrational polaritons: Insights from atomistic simulations'
     year: '2025'
+  8WzTBusAAAAJ:LkGwnXOMwfcC:
+    citations: 0
+    title: Atomistic Emergence of Vibrational Polariton Condensation
+    year: '2026'
   8WzTBusAAAAJ:WF5omc3nYNoC:
     citations: 1
     title: 'FermiLink: A Unified Agent Framework for Multidomain Autonomous Scientific Simulations'
     year: '2026'
   8WzTBusAAAAJ:YsMSGLbcyi4C:
-    citations: 4
+    citations: 5
     title: "MaxwellLink: A Unified Framework for Self-Consistent Light\u2013Matter Simulations"
     year: '2026'
   8WzTBusAAAAJ:_FxGoFyzp5QC:
-    citations: 2
+    citations: 3
     title: Nonlinear Freezing of Vibrational Polariton Transport via Mesoscale Simulations
     year: '2026'
   8WzTBusAAAAJ:qjMakFHDy7sC:

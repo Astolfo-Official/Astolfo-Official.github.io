@@ -193,12 +193,6 @@ _styles: |
     border-radius: 6px;
   }
 
-  .publications-page .publications ol.bibliography li .abbr .preview-container {
-    border: 1px solid var(--global-divider-color);
-    border-radius: 6px;
-    background: linear-gradient(135deg, var(--publication-accent-soft), transparent), var(--global-bg-color);
-  }
-
   .publications-page .publications ol.bibliography li .resource-links .resource-link,
   .publications-page .publications ol.bibliography li .links a.btn {
     border-color: var(--global-divider-color);

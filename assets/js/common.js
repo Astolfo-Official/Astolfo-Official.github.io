@@ -17,26 +17,6 @@ $(document).ready(function () {
   });
   $("a").removeClass("waves-effect waves-light");
 
-  // Fit publication previews consistently on publication and research-detail pages.
-  const updatePublicationPreviewFit = (preview) => {
-    if (!preview.naturalWidth || !preview.naturalHeight) return;
-
-    const frame = preview.closest(".preview-container");
-    if (!frame) return;
-
-    const frameRatio = frame.clientWidth && frame.clientHeight ? frame.clientWidth / frame.clientHeight : 4 / 3;
-    const imageRatio = preview.naturalWidth / preview.naturalHeight;
-    preview.classList.toggle("is-wider-than-frame", imageRatio > frameRatio);
-  };
-
-  document.querySelectorAll(".preview-container .preview").forEach((preview) => {
-    if (preview.complete) {
-      updatePublicationPreviewFit(preview);
-    } else {
-      preview.addEventListener("load", () => updatePublicationPreviewFit(preview), { once: true });
-    }
-  });
-
   // Navigate between top-level site sections with the left and right arrow keys.
   const sectionNavigation = document.querySelector("[data-section-navigation]");
   if (sectionNavigation) {

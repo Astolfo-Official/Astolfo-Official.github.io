@@ -52,6 +52,13 @@
         flex: 0 0 25%;
         max-width: 25%;
         padding-left: 2.35rem;
+
+        @media (max-width: 575.98px) {
+          // Stack the preview above the text instead of squeezing it to a tiny icon.
+          flex-basis: 100%;
+          max-width: 100%;
+          margin-bottom: 0.85rem;
+        }
       }
 
       .publication-entry-column {
@@ -82,32 +89,41 @@
         }
 
         .preview-container {
+          // Keep the list aligned while giving each diagram its own proportions.
           width: 100%;
           max-width: 180px;
           aspect-ratio: 4 / 3;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 0.35rem;
           overflow: hidden;
-          border-radius: 0.25rem;
+          border: 1px solid var(--global-divider-color);
+          border-radius: 6px;
+          // A paper-colored mat also preserves transparent diagrams in dark mode.
+          background: #fff;
 
           figure,
           picture {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             height: 100%;
+            min-width: 0;
+            min-height: 0;
             margin: 0;
           }
 
           .preview {
             display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            // Natural image bounds also give click-to-zoom the correct aspect ratio.
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             object-position: center;
-
-            &.is-wider-than-frame {
-              object-fit: fill;
-            }
           }
         }
       }
@@ -403,12 +419,6 @@
 
     .abbr abbr {
       border-radius: 6px;
-    }
-
-    .abbr .preview-container {
-      border: 1px solid var(--global-divider-color);
-      border-radius: 6px;
-      background: linear-gradient(135deg, var(--publication-accent-soft), transparent), var(--global-bg-color);
     }
 
     .resource-links .resource-link,

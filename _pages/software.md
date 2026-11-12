@@ -163,19 +163,19 @@ _styles: |
       {% case software.label %}
         {% when "MaxwellLink" %}
           {% assign software_name = "MaxwellLink" %}
-          {% assign software_image = "assets/img/publication_preview/jiMaxwellLinkUnifiedFramework2026.png" %}
+          {% assign software_image = "assets/img/software_figures/maxwelllink.png" %}
           {% assign software_image_class = "software-card__image" %}
           {% assign software_website = "https://maxwelllink.org/" %}
           {% assign software_description = "A general-purpose framework for self-consistent light–matter simulations that connects multiple electromagnetic solvers with molecular dynamics and electronic-structure engines through a flexible socket interface." %}
         {% when "FermiLink" %}
           {% assign software_name = "FermiLink" %}
-          {% assign software_image = "assets/img/publication_preview/mengFermiLinkUnifiedAgent2026.png" %}
+          {% assign software_image = "assets/img/software_figures/fermilink.png" %}
           {% assign software_image_class = "software-card__image" %}
           {% assign software_website = "https://fermilink.org/" %}
           {% assign software_description = "A unified agent framework for multidomain autonomous scientific simulations, designed to plan, execute, and refine computational workflows across different simulation backends and code optimization." %}
         {% when "I-Pi" %}
           {% assign software_name = "i-PI" %}
-          {% assign software_image = "assets/img/ipi-logo.png" %}
+          {% assign software_image = "assets/img/software_figures/ipi-logo.png" %}
           {% assign software_image_class = "software-card__image" %}
           {% assign software_website = "https://docs.ipi-code.org/" %}
           {% assign software_description = "An open-source Python interface for advanced molecular simulations. I contribute to its ecosystem for multidomain molecular dynamics and light–matter simulation workflows." %}

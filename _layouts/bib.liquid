@@ -1,9 +1,8 @@
 ---
 ---
 <div class="row">
-  {% assign is_publications_page = page.url == '/publications/' %}
-  {% assign show_publication_number = is_publications_page %}
-  {% if page.related_publications %}
+  {% assign show_publication_number = false %}
+  {% if page.url == '/publications/' or page.related_publications %}
     {% assign show_publication_number = true %}
   {% endif %}
   {% if site.enable_publication_thumbnails %}
@@ -97,17 +96,9 @@
   {% endfor %}
   {% assign publication_entry_column_class = '' %}
   {% if site.enable_publication_thumbnails %}
-    {% if is_publications_page %}
-      {% assign publication_entry_column_class = 'col-sm-9' %}
-    {% else %}
-      {% assign publication_entry_column_class = 'col-sm-8' %}
-    {% endif %}
+    {% assign publication_entry_column_class = 'col-sm-9' %}
   {% else %}
-    {% if is_publications_page %}
-      {% assign publication_entry_column_class = 'col-sm-12' %}
-    {% else %}
-      {% assign publication_entry_column_class = 'col-sm-10' %}
-    {% endif %}
+    {% assign publication_entry_column_class = 'col-sm-12' %}
   {% endif %}
   <div
     id="{{ entry.key }}"

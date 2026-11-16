@@ -5,11 +5,11 @@ citations_by_year:
   '2026': 27
 h_index: 4
 metadata:
-  last_updated: '2026-11-15'
+  last_updated: '2026-11-16'
   source: serpapi
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
-    citations: 16
+    citations: 17
     title: 'Selective excitation of IR-Inactive modes via vibrational polaritons: Insights from atomistic simulations'
     year: '2025'
   8WzTBusAAAAJ:LkGwnXOMwfcC:
@@ -21,7 +21,7 @@ papers:
     title: "MaxwellLink: A Unified Framework for Self-Consistent Light\u2013Matter Simulations"
     year: '2026'
   8WzTBusAAAAJ:_FxGoFyzp5QC:
-    citations: 3
+    citations: 2
     title: Nonlinear Freezing of Vibrational Polariton Transport via Mesoscale Simulations
     year: '2026'
   8WzTBusAAAAJ:qjMakFHDy7sC:

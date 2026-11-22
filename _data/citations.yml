@@ -2,10 +2,10 @@ citations_by_year:
   '2023': 3
   '2024': 11
   '2025': 15
-  '2026': 27
+  '2026': 28
 h_index: 4
 metadata:
-  last_updated: '2026-11-21'
+  last_updated: '2026-11-22'
   source: serpapi
 papers:
   8WzTBusAAAAJ:IjCSPb-OGe4C:
@@ -29,9 +29,9 @@ papers:
     title: On the entanglement of chromophore and solvent orbitals
     year: '2025'
   8WzTBusAAAAJ:roLk4NBRz8UC:
-    citations: 1
+    citations: 2
     title: 'FermiLink: An Agent Harness for Multidomain Scientific Simulations'
-    year: Unknown Year
+    year: '2026'
   8WzTBusAAAAJ:u5HHmVD_uO8C:
     citations: 23
     title: Evaluating the transition state stabilization/destabilization effects of the electric fields from scaffold residues by a QM/MM approach
